@@ -7,10 +7,19 @@ import Qt5Compat.GraphicalEffects
 
 Rectangle {
     id: root
-    property alias attackNameText: attackName.text
-    property alias attackDropNameText: nameDropText.text
+    property alias nameText: nameText.text
+
+    property alias cost1Text: cost1Text.text
+    property alias cost2Text: cost2Text.text
+    property alias cost3Text: cost3Text.text
+    property alias cost4Text: cost4Text.text
+
+    property alias descText: descriptionText.text
+
 
     // Exposed properties
+    property color blockBG: "#ff0000"
+    property color blockBorderColor:"#00ff0000"
     property color mainColor: "#c80d0d"
     property color bezelColor: "#b2b2b2"
     property color bezelBorderColor: "#616161"
@@ -25,18 +34,24 @@ Rectangle {
     // Width and Height
     width: 250 // Default value, can be overridden
     height: 200
-    color: "#00616161"
+    color: blockBG
+    radius: 4
+    border.color: blockBorderColor
     border.width: 0 // Default value, can be overridden
 
     Rectangle {
         id: attackNameBlock
-        width: 250
         height: 40
         color: mainColor
         radius: 8
         border.color: borderColor
         border.width: 2
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.leftMargin: 2
+        anchors.rightMargin: 2
+        anchors.topMargin: 2
         // Fill the parent rectangle
 
         Rectangle {
@@ -46,10 +61,10 @@ Rectangle {
             border.color: bezelBorderColor
             border.width: 2
             anchors.fill: parent
-            anchors.leftMargin: 4
-            anchors.rightMargin: 4
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
+            anchors.leftMargin: 2
+            anchors.rightMargin: 2
+            anchors.topMargin: 2
+            anchors.bottomMargin: 2
 
             Rectangle {
                 id: attackNameScreen
@@ -64,29 +79,35 @@ Rectangle {
                 anchors.bottomMargin: 4
 
                 Text {
-                    id: attackName
+                    id: nameText
                     color: textColor
-                    text: "Attack 1 Name"
+                    text: "Attack Name"
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
                     fontSizeMode: Text.HorizontalFit
                     font.styleName: "ExtraBold Italic"
+
+                    onTextChanged: {
+                        nameDropText.text = nameText.text
+                    }
                 }
 
                 Text {
                     id: nameDropText
                     color: dropTextColor
-                    text: attackName.text
+                    text: nameText.text
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
+                    font.pointSize: nameText.font.pointSize
                     minimumPointSize: 10
                     minimumPixelSize: 10
                     fontSizeMode: Text.HorizontalFit
                     font.styleName: "ExtraBold Italic"
+
                 }
 
                 Rectangle {
@@ -107,14 +128,17 @@ Rectangle {
 
     Rectangle {
         id: costBlock
-        y: 40
-        width: 245
         height: 40
-        color: mainColor
+        color: "#00c80d0d"
         radius: 6
-        border.color: borderColor
+        border.color: "#006c0101"
         border.width: 0
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: attackNameBlock.bottom
+        anchors.leftMargin: 2
+        anchors.rightMargin: 2
+        anchors.topMargin: 2
 
         Flow {
             id: costFlow
@@ -141,10 +165,10 @@ Rectangle {
                     border.color: bezelBorderColor
                     border.width: 2
                     anchors.fill: parent
-                    anchors.leftMargin: 4
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 4
-                    anchors.bottomMargin: 4
+                    anchors.leftMargin: 2
+                    anchors.rightMargin: 2
+                    anchors.topMargin: 2
+                    anchors.bottomMargin: 2
                     Layout.preferredHeight: 60
                     Layout.preferredWidth: 60
                     Layout.fillHeight: true
@@ -159,20 +183,24 @@ Rectangle {
                         border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
-                        anchors.leftMargin: 6
-                        anchors.rightMargin: 6
-                        anchors.topMargin: 6
-                        anchors.bottomMargin: 6
+                        anchors.leftMargin: 4
+                        anchors.rightMargin: 4
+                        anchors.topMargin: 4
+                        anchors.bottomMargin: 4
                         Text {
                             id: cost1Text
-                            color: "#c5002a02"
-                            text: "Cost"
+                            color: textColor
+                            text: "Cost 1"
                             anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
                             state: "base state4"
-                            z: 1
+                            z: 0
                             minimumPointSize: 4
                             minimumPixelSize: 4
                             fontSizeMode: Text.Fit
@@ -183,6 +211,7 @@ Rectangle {
                         DropShadow {
                             id: cost1DropShadow
                             opacity: 0.8
+                            visible: false
                             color: "#095f0c"
                             radius: 3.8
                             anchors.fill: cost1Text
@@ -194,19 +223,23 @@ Rectangle {
 
                         Text {
                             id: cost1DropText
-                            visible: false
-                            color: "#2a7b2d"
+                            visible: true
+                            color: dropTextColor
                             text: cost1Text.text
                             anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
+                            font.pointSize: cost1Text.font.pointSize
                             z: 0
                             minimumPointSize: 4
                             minimumPixelSize: 4
                             fontSizeMode: Text.Fit
                             font.styleName: "Bold Italic"
-                            font.pointSize: 30
                         }
 
                         Rectangle {
@@ -230,7 +263,7 @@ Rectangle {
             }
 
             Rectangle {
-                id: attack1Cost2Block
+                id: cost2Block
                 width: 59
                 height: 40
                 visible: true
@@ -239,22 +272,22 @@ Rectangle {
                 border.color: "#6c0101"
                 border.width: 2
                 Rectangle {
-                    id: attack1Cost2Bezel
+                    id: cost2Bezel
                     color: "#b2b2b2"
                     radius: 8
                     border.color: bezelBorderColor
                     border.width: 2
                     anchors.fill: parent
-                    anchors.leftMargin: 4
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 4
-                    anchors.bottomMargin: 4
+                    anchors.leftMargin: 2
+                    anchors.rightMargin: 2
+                    anchors.topMargin: 2
+                    anchors.bottomMargin: 2
                     Layout.preferredWidth: 60
                     Layout.preferredHeight: 60
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     Rectangle {
-                        id: attack1Cost2Screen
+                        id: cost2Screen
                         x: 7
                         y: 4
                         color: screenColor
@@ -262,48 +295,19 @@ Rectangle {
                         border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
-                        anchors.leftMargin: 6
-                        anchors.rightMargin: 6
-                        anchors.topMargin: 6
-                        anchors.bottomMargin: 6
+                        anchors.leftMargin: 4
+                        anchors.rightMargin: 4
+                        anchors.topMargin: 4
+                        anchors.bottomMargin: 4
                         Text {
-                            id: attack1Cost2Text
-                            color: "#c5002a02"
-                            text: "Cost"
+                            id: cost2Text
+                            color: textColor
+                            text: "Cost 2"
                             anchors.fill: parent
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            wrapMode: Text.Wrap
-                            z: 1
-                            minimumPointSize: 4
-                            minimumPixelSize: 4
-                            fontSizeMode: Text.Fit
-                            font.styleName: "Bold Italic"
-                            font.pointSize: 30
-                        }
-
-                        DropShadow {
-                            id: attack1Cost2DropShadow
-                            opacity: 0.8
-                            color: "#095f0c"
-                            radius: 3.8
-                            anchors.fill: attack1Cost2Text
-                            source: attack1Cost2Text
-                            verticalOffset: 3
-                            samples: 16
-                            horizontalOffset: 3
-                        }
-
-                        Text {
-                            id: attack1Cost2DropText
-                            visible: false
-                            color: "#2a7b2d"
-                            text: attack1Cost2Text.text
-                            anchors.fill: parent
-                            anchors.leftMargin: 4
-                            anchors.rightMargin: 4
-                            anchors.topMargin: 4
-                            anchors.bottomMargin: 4
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
@@ -315,8 +319,42 @@ Rectangle {
                             font.pointSize: 30
                         }
 
+                        DropShadow {
+                            id: cost2DropShadow
+                            opacity: 0.8
+                            visible: false
+                            color: "#095f0c"
+                            radius: 3.8
+                            anchors.fill: cost2Text
+                            source: cost2Text
+                            verticalOffset: 3
+                            samples: 16
+                            horizontalOffset: 3
+                        }
+
+                        Text {
+                            id: cost2DropText
+                            visible: true
+                            color: dropTextColor
+                            text: cost2Text.text
+                            anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            wrapMode: Text.Wrap
+                            font.pointSize: cost2Text.font.pointSize
+                            z: 0
+                            minimumPointSize: 4
+                            minimumPixelSize: 4
+                            fontSizeMode: Text.Fit
+                            font.styleName: "Bold Italic"
+                        }
+
                         Rectangle {
-                            id: attack1Cost2BlockHighlight
+                            id: cost2BlockHightlight
                             x: -8
                             y: -4
                             color: "#00ffffff"
@@ -335,7 +373,7 @@ Rectangle {
             }
 
             Rectangle {
-                id: attack1Cost3Block
+                id: cost3Block
                 width: 59
                 height: 40
                 visible: true
@@ -344,18 +382,18 @@ Rectangle {
                 border.color: "#6c0101"
                 border.width: 2
                 Rectangle {
-                    id: attack1Cost3Bezel
+                    id: cost3Bezel
                     color: "#b2b2b2"
                     radius: 8
                     border.color: bezelBorderColor
                     border.width: 2
                     anchors.fill: parent
-                    anchors.leftMargin: 4
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 4
-                    anchors.bottomMargin: 4
+                    anchors.leftMargin: 2
+                    anchors.rightMargin: 2
+                    anchors.topMargin: 2
+                    anchors.bottomMargin: 2
                     Rectangle {
-                        id: attack1Cost3Screen
+                        id: cost3Screen
                         x: 7
                         y: 4
                         color: screenColor
@@ -363,19 +401,23 @@ Rectangle {
                         border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
-                        anchors.leftMargin: 6
-                        anchors.rightMargin: 6
-                        anchors.topMargin: 6
-                        anchors.bottomMargin: 6
+                        anchors.leftMargin: 4
+                        anchors.rightMargin: 4
+                        anchors.topMargin: 4
+                        anchors.bottomMargin: 4
                         Text {
-                            id: attack1Cost3Text
-                            color: "#c5002a02"
-                            text: "Cost"
+                            id: cost3Text
+                            color: textColor
+                            text: "Cost 3"
                             anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
-                            z: 1
+                            z: 0
                             minimumPointSize: 4
                             minimumPixelSize: 4
                             fontSizeMode: Text.Fit
@@ -384,40 +426,42 @@ Rectangle {
                         }
 
                         DropShadow {
-                            id: attack1Cost3DropShadow
+                            id: cost3DropShadow
                             opacity: 0.8
+                            visible: false
                             color: "#095f0c"
                             radius: 3.8
-                            anchors.fill: attack1Cost3Text
-                            source: attack1Cost3Text
+                            anchors.fill: cost3Text
+                            source: cost3Text
                             verticalOffset: 3
                             samples: 16
                             horizontalOffset: 3
                         }
 
                         Text {
-                            id: attack1Cost3DropText
-                            visible: false
-                            color: "#2a7b2d"
-                            text: attack1Cost3Text.text
+                            id: cost3DropText
+                            visible: true
+                            color: dropTextColor
+                            text: cost3Text.text
+
                             anchors.fill: parent
-                            anchors.leftMargin: 4
-                            anchors.rightMargin: 4
-                            anchors.topMargin: 4
-                            anchors.bottomMargin: 4
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
+                            font.pointSize: cost3Text.font.pointSize
                             z: 0
                             minimumPointSize: 6
                             minimumPixelSize: 6
                             fontSizeMode: Text.Fit
                             font.styleName: "Bold Italic"
-                            font.pointSize: 30
                         }
 
                         Rectangle {
-                            id: attack1Cost3BlockHighlight
+                            id: cost3BlockHightlight
                             x: -8
                             y: -4
                             color: "#00ffffff"
@@ -440,7 +484,7 @@ Rectangle {
             }
 
             Rectangle {
-                id: attack1Cost4Block
+                id: cost4Block
                 width: 59
                 height: 40
                 visible: true
@@ -450,18 +494,18 @@ Rectangle {
                 border.width: 2
 
                 Rectangle {
-                    id: attack1Cost4Bezel
+                    id: cost4Bezel
                     color: "#b2b2b2"
                     radius: 8
                     border.color: bezelBorderColor
                     border.width: 2
                     anchors.fill: parent
-                    anchors.leftMargin: 4
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 4
-                    anchors.bottomMargin: 4
+                    anchors.leftMargin: 2
+                    anchors.rightMargin: 2
+                    anchors.topMargin: 2
+                    anchors.bottomMargin: 2
                     Rectangle {
-                        id: attack1Cost4Screen
+                        id: cost4Screen
                         x: 7
                         y: 4
                         color: screenColor
@@ -469,19 +513,23 @@ Rectangle {
                         border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
-                        anchors.leftMargin: 6
-                        anchors.rightMargin: 6
-                        anchors.topMargin: 6
-                        anchors.bottomMargin: 6
+                        anchors.leftMargin: 4
+                        anchors.rightMargin: 4
+                        anchors.topMargin: 4
+                        anchors.bottomMargin: 4
                         Text {
-                            id: attack1Cost4Text
-                            color: "#c5002a02"
-                            text: "Cost"
+                            id: cost4Text
+                            color: textColor
+                            text: "Cost 4"
                             anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
-                            z: 1
+                            z: 0
                             minimumPointSize: 4
                             minimumPixelSize: 4
                             fontSizeMode: Text.Fit
@@ -490,40 +538,41 @@ Rectangle {
                         }
 
                         DropShadow {
-                            id: attack1Cost4DropShadow
+                            id: cost4DropShadow
                             opacity: 0.8
+                            visible: false
                             color: "#095f0c"
                             radius: 3.8
-                            anchors.fill: attack1Cost4Text
-                            source: attack1Cost4Text
+                            anchors.fill: cost4Text
+                            source: cost4Text
                             verticalOffset: 3
                             samples: 16
                             horizontalOffset: 3
                         }
 
                         Text {
-                            id: attack1Cost4DropText
-                            visible: false
-                            color: "#2a7b2d"
-                            text: attack1Cost4Text.text
+                            id: cost4DropText
+                            visible: true
+                            color: dropTextColor
+                            text: cost4Text.text
                             anchors.fill: parent
-                            anchors.leftMargin: 4
-                            anchors.rightMargin: 4
-                            anchors.topMargin: 4
-                            anchors.bottomMargin: 4
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             wrapMode: Text.Wrap
+                            font.pointSize: cost4Text.font.pointSize
                             z: 0
                             minimumPointSize: 6
                             minimumPixelSize: 6
                             fontSizeMode: Text.Fit
                             font.styleName: "Bold Italic"
-                            font.pointSize: 30
                         }
 
                         Rectangle {
-                            id: attack1Cost4BlockHighlight
+                            id: cost4BlockHighlight
                             x: -8
                             y: -4
                             color: "#00ffffff"
@@ -549,41 +598,50 @@ Rectangle {
     }
 
     Rectangle {
-        id: attack1DescriptionBlock
-        y: 80
-        width: 250
-        height: 120
+        id: descriptionBlock
+        x: 0
         color: mainColor
         radius: 8
         border.color: borderColor
         border.width: 2
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: costBlock.bottom
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 2
+        anchors.rightMargin: 2
+        anchors.topMargin: 2
+        anchors.bottomMargin: 2
 
         Rectangle {
-            id: attack1TextBezel
+            id: descriptionTextBezel
             color: bezelColor
             radius: 8
             border.color: bezelBorderColor
             border.width: 2
             anchors.fill: parent
-            anchors.leftMargin: 4
-            anchors.rightMargin: 4
-            anchors.topMargin: 4
-            anchors.bottomMargin: 4
+            anchors.leftMargin: 2
+            anchors.rightMargin: 2
+            anchors.topMargin: 2
+            anchors.bottomMargin: 2
 
             Rectangle {
-                id: attack1Screen
+                id: textScreen
                 color: screenColor
                 radius: 6
                 border.color: screenHighlightColor
                 border.width: 2
                 anchors.fill: parent
+                anchors.leftMargin: 4
+                anchors.rightMargin: 4
+                anchors.topMargin: 4
+                anchors.bottomMargin: 4
 
                 Text {
-                    id: attack1DescriptionDropText
-                    visible: false
+                    id: descriptionDropText
+                    visible: true
                     color: dropTextColor
-                    text: "Attack 1 Description"
+                    text: descriptionText.text
                     anchors.fill: parent
                     anchors.leftMargin: 4
                     anchors.rightMargin: 4
@@ -592,7 +650,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
-                    font.pointSize: attack1DescriptionText.font.pointSize
+                    font.pointSize: descriptionText.font.pointSize
                     minimumPointSize: 6
                     minimumPixelSize: 6
                     z: 1
@@ -601,10 +659,10 @@ Rectangle {
                 }
 
                 Text {
-                    id: attack1DescriptionText
-                    visible: false
+                    id: descriptionText
+                    visible: true
                     color: textColor
-                    text: attack1DescriptionDropText.text
+                    text: "Attack Description"
                     anchors.fill: parent
                     anchors.leftMargin: 4
                     anchors.rightMargin: 4
@@ -613,7 +671,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
-                    font.pointSize: attack1DescriptionDropText.font.pointSize
+                    font.pointSize: 15
                     minimumPointSize: 6
                     minimumPixelSize: 6
                     z: 0
@@ -622,7 +680,7 @@ Rectangle {
                 }
 
                 Rectangle {
-                    id: rectangle24
+                    id: descriptionScreenShadeBorder
                     color: "#00ffffff"
                     radius: 4
                     border.color: screenShadeColor
