@@ -8,31 +8,39 @@ import Qt5Compat.GraphicalEffects
 Rectangle {
     id: root
     property alias attackNameText: attackName.text
-    property alias attackDropNameText: attackDropName.text
+    property alias attackDropNameText: nameDropText.text
 
     // Exposed properties
     property color mainColor: "#c80d0d"
     property color bezelColor: "#b2b2b2"
     property color bezelBorderColor: "#616161"
     property color screenColor: "#02d20b"
-    property color screenBorderColor: "#128c17"
+    property color screenShadeColor: "#128c17"
+    property color screenHighlightColor: "#25fb2e"
     property color textColor: "#095f0c"
     property color dropTextColor: "#c5002a02"
     property color borderColor: "#6c0101"
     property color dropBorderColor: "#25fb2e"
 
     // Width and Height
-    width: 200 // Default value, can be overridden
-    height: 50 // Default value, can be overridden
+    width: 250 // Default value, can be overridden
+    height: 200
+    color: "#00616161"
+    border.width: 0 // Default value, can be overridden
 
     Rectangle {
+        id: attackNameBlock
+        width: 250
+        height: 40
         color: mainColor
         radius: 8
         border.color: borderColor
         border.width: 2
-        anchors.fill: parent // Fill the parent rectangle
+        anchors.horizontalCenter: parent.horizontalCenter
+        // Fill the parent rectangle
 
         Rectangle {
+            id: attackNameBezel
             color: bezelColor
             radius: 8
             border.color: bezelBorderColor
@@ -44,21 +52,21 @@ Rectangle {
             anchors.bottomMargin: 4
 
             Rectangle {
-                x: 10
-                y: 4
+                id: attackNameScreen
                 color: screenColor
                 radius: 4
-                border.color: screenBorderColor
+                border.color: screenShadeColor
                 border.width: 2
                 anchors.fill: parent
-                anchors.leftMargin: 5
-                anchors.rightMargin: 5
-                anchors.topMargin: 6
-                anchors.bottomMargin: 6
+                anchors.leftMargin: 4
+                anchors.rightMargin: 4
+                anchors.topMargin: 4
+                anchors.bottomMargin: 4
 
                 Text {
                     id: attackName
                     color: textColor
+                    text: "Attack 1 Name"
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -68,8 +76,9 @@ Rectangle {
                 }
 
                 Text {
-                    id: attackDropName
+                    id: nameDropText
                     color: dropTextColor
+                    text: attackName.text
                     anchors.fill: parent
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -81,7 +90,7 @@ Rectangle {
                 }
 
                 Rectangle {
-                    id: rectangle13
+                    id: screenHighlight
                     color: "#00ffffff"
                     radius: 4
                     border.color: dropBorderColor
@@ -97,7 +106,8 @@ Rectangle {
     }
 
     Rectangle {
-        id: attack1CostBlock
+        id: costBlock
+        y: 40
         width: 245
         height: 40
         color: mainColor
@@ -107,14 +117,14 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Flow {
-            id: attack1CostFlow
+            id: costFlow
             anchors.fill: parent
             layoutDirection: Qt.LeftToRight
             spacing: 3
             flow: Flow.LeftToRight
 
             Rectangle {
-                id: attack1Cost1Block
+                id: cost1Block
                 width: 59
                 height: 40
                 visible: true
@@ -124,7 +134,7 @@ Rectangle {
                 border.width: 2
 
                 Rectangle {
-                    id: attack1Cost1Bezel
+                    id: cost1Bezel
                     visible: true
                     color: "#b2b2b2"
                     radius: 8
@@ -141,12 +151,12 @@ Rectangle {
                     Layout.fillWidth: true
 
                     Rectangle {
-                        id: attack1Cost1Screen
+                        id: cost1Screen
                         x: 7
                         y: 4
                         color: screenColor
                         radius: 4
-                        border.color: screenBorderColor
+                        border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
                         anchors.leftMargin: 6
@@ -154,7 +164,7 @@ Rectangle {
                         anchors.topMargin: 6
                         anchors.bottomMargin: 6
                         Text {
-                            id: attack1Cost1Text
+                            id: cost1Text
                             color: "#c5002a02"
                             text: "Cost"
                             anchors.fill: parent
@@ -171,22 +181,22 @@ Rectangle {
                         }
 
                         DropShadow {
-                            id: attack1Cost1DropShadow
+                            id: cost1DropShadow
                             opacity: 0.8
                             color: "#095f0c"
                             radius: 3.8
-                            anchors.fill: attack1Cost1Text
-                            source: attack1Cost1Text
+                            anchors.fill: cost1Text
+                            source: cost1Text
                             verticalOffset: 3
                             samples: 16
                             horizontalOffset: 3
                         }
 
                         Text {
-                            id: attack1Cost1DropText
+                            id: cost1DropText
                             visible: false
                             color: "#2a7b2d"
-                            text: attack1Cost1Text.text
+                            text: cost1Text.text
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
@@ -200,7 +210,7 @@ Rectangle {
                         }
 
                         Rectangle {
-                            id: attack1Cost1BlockHighlight
+                            id: cost1BlockHightlight
                             x: -8
                             y: -4
                             color: "#00ffffff"
@@ -249,7 +259,7 @@ Rectangle {
                         y: 4
                         color: screenColor
                         radius: 4
-                        border.color: screenBorderColor
+                        border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
                         anchors.leftMargin: 6
@@ -350,7 +360,7 @@ Rectangle {
                         y: 4
                         color: screenColor
                         radius: 4
-                        border.color: screenBorderColor
+                        border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
                         anchors.leftMargin: 6
@@ -456,7 +466,7 @@ Rectangle {
                         y: 4
                         color: screenColor
                         radius: 4
-                        border.color: screenBorderColor
+                        border.color: screenShadeColor
                         border.width: 2
                         anchors.fill: parent
                         anchors.leftMargin: 6
@@ -540,16 +550,18 @@ Rectangle {
 
     Rectangle {
         id: attack1DescriptionBlock
+        y: 80
         width: 250
         height: 120
         color: mainColor
         radius: 8
-        border.color: "#6c0101"
+        border.color: borderColor
         border.width: 2
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Rectangle {
             id: attack1TextBezel
-            color: "#b2b2b2"
+            color: bezelColor
             radius: 8
             border.color: bezelBorderColor
             border.width: 2
@@ -561,22 +573,16 @@ Rectangle {
 
             Rectangle {
                 id: attack1Screen
-                x: 10
-                y: 4
                 color: screenColor
                 radius: 6
-                border.color: screenBorderColor
+                border.color: screenHighlightColor
                 border.width: 2
                 anchors.fill: parent
-                anchors.leftMargin: 6
-                anchors.rightMargin: 6
-                anchors.topMargin: 6
-                anchors.bottomMargin: 6
 
                 Text {
                     id: attack1DescriptionDropText
-                    visible: true
-                    color: "#c5002a02"
+                    visible: false
+                    color: dropTextColor
                     text: "Attack 1 Description"
                     anchors.fill: parent
                     anchors.leftMargin: 4
@@ -596,7 +602,8 @@ Rectangle {
 
                 Text {
                     id: attack1DescriptionText
-                    color: "#095f0c"
+                    visible: false
+                    color: textColor
                     text: attack1DescriptionDropText.text
                     anchors.fill: parent
                     anchors.leftMargin: 4
@@ -616,20 +623,18 @@ Rectangle {
 
                 Rectangle {
                     id: rectangle24
-                    x: -7
-                    y: 167
                     color: "#00ffffff"
                     radius: 4
-                    border.color: "#25fb2e"
+                    border.color: screenShadeColor
                     border.width: 1
                     anchors.fill: parent
-                    anchors.leftMargin: 3
-                    anchors.rightMargin: 3
-                    anchors.topMargin: 3
-                    anchors.bottomMargin: 3
                 }
             }
         }
+    }
+
+    Item {
+        id: __materialLibrary__
     }
 
 
