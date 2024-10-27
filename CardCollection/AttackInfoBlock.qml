@@ -9,6 +9,23 @@ Rectangle {
     id: root
     property alias nameText: nameText.text
 
+    property alias cost1Visible: cost1Block.visible
+    property alias cost2Visible: cost2Block.visible
+    property alias cost3Visible: cost3Block.visible
+    property alias cost4Visible: cost4Block.visible
+
+    property alias cost1Width: cost1Block.width
+    property alias cost1Height: cost1Block.height
+
+    property alias cost2Width: cost2Block.width
+    property alias cost2Height: cost2Block.height
+
+    property alias cost3Width: cost3Block.width
+    property alias cost3Height: cost3Block.height
+
+    property alias cost4Width: cost4Block.width
+    property alias cost4Height: cost4Block.height
+
     property alias cost1Text: cost1Text.text
     property alias cost2Text: cost2Text.text
     property alias cost3Text: cost3Text.text
@@ -38,6 +55,46 @@ Rectangle {
     radius: 4
     border.color: blockBorderColor
     border.width: 0 // Default value, can be overridden
+
+    function updateVisibilityAndWidth() {
+        // Count visible blocks
+        const visibleBlocks = [cost1Block, cost2Block, cost3Block, cost4Block]
+            .filter(block => block.visible);
+
+        const visibleCount = visibleBlocks.length;
+
+        // Calculate width for each visible block with a slight reduction for spacing
+        const margin = 5; // Margin between blocks
+        const spacing = 3; // Current spacing in Flow
+        const totalSpacing = spacing * (visibleCount - 1); // Total space taken by margins
+        const proportionalWidth = visibleCount > 0 ? (costBlock.width - totalSpacing) / visibleCount : 0;
+
+        // Set the width of each block based on visibility
+        visibleBlocks.forEach(block => {
+            block.width = proportionalWidth > 0 ? proportionalWidth : 0; // Ensure non-negative width
+        });
+    }
+
+
+    function updateCostTexts(costs) {
+        const defaultCost1 = "Cost 1";
+        const defaultCost2 = "Cost 2";
+        const defaultCost3 = "Cost 3";
+        const defaultCost4 = "Cost 4";
+
+        cost1Text.text = costs.cost1 || defaultCost1;
+        cost2Text.text = costs.cost2 || defaultCost2;
+        cost3Text.text = costs.cost3 || defaultCost3;
+        cost4Text.text = costs.cost4 || defaultCost4;
+
+        cost1Visible = cost1Text.text !== defaultCost1;
+        cost2Visible = cost2Text.text !== defaultCost2;
+        cost3Visible = cost3Text.text !== defaultCost3;
+        cost4Visible = cost4Text.text !== defaultCost4;
+
+        updateVisibilityAndWidth(); // Trigger width recalculation
+    }
+
 
     Rectangle {
         id: attackNameBlock
@@ -146,6 +203,8 @@ Rectangle {
             layoutDirection: Qt.LeftToRight
             spacing: 3
             flow: Flow.LeftToRight
+
+              property int visibleCount: 0
 
             Rectangle {
                 id: cost1Block
@@ -595,6 +654,8 @@ Rectangle {
 
             }
         }
+
+
     }
 
     Rectangle {
@@ -690,6 +751,8 @@ Rectangle {
             }
         }
     }
+
+
 
     Item {
         id: __materialLibrary__

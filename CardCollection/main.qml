@@ -16,10 +16,8 @@ Window {
     maximumWidth: 500
     maximumHeight: 600
 
-
     visible: true
     color: "#611b1b"
-
 
     title: qsTr("Card Collection")
 
@@ -28,56 +26,58 @@ Window {
     property int selectedTabIndex: 0
 
     // Define color scheme properties
-        property color primaryColor: "#c80d0d"
-        property color bezelColor: "#b2b2b2"
-        property color bezelBorderColor: "#616161"
-        property color screenColor: "#02d20b"
-        property color screenShadeColor: "#128c17"
-        property color screenHighlightColor: "#25fb2e"
-        property color textColor: "#095f0c"
-        property color dropTextColor: "#c5002a02"
-        property color borderColor: "#6c0101"
-        property color dropBorderColor: "#25fb2e"
+    property color primaryColor: "#c80d0d"
+    property color bezelColor: "#b2b2b2"
+    property color bezelBorderColor: "#616161"
+    property color screenColor: "#02d20b"
+    property color screenShadeColor: "#128c17"
+    property color screenHighlightColor: "#25fb2e"
+    property color textColor: "#095f0c"
+    property color dropTextColor: "#c5002a02"
+    property color borderColor: "#6c0101"
+    property color dropBorderColor: "#25fb2e"
 
     function updateAttackCost() {
-        // Default cost values
+        // Default costs to pass if the selected card does not have values
         const defaultCost1 = "Cost 1";
         const defaultCost2 = "Cost 2";
         const defaultCost3 = "Cost 3";
         const defaultCost4 = "Cost 4";
 
-        // // Assign text to each block's child text element and set block visibility
-        attack1Block.cost1Text = cards[selectedIndex].attack1Cost1 || defaultCost1;
-        attack1Block.cost2Text = cards[selectedIndex].attack1Cost2 || defaultCost2;
-        attack1Block.cost3Text = cards[selectedIndex].attack1Cost3 || defaultCost3;
-        attack1Block.cost4Text = cards[selectedIndex].attack1Cost4 || defaultCost4;
+        // Create costs objects from the selected card for each attack
+        const attack1Costs = {
+            cost1: cards[selectedIndex].attack1Cost1 || defaultCost1,
+            cost2: cards[selectedIndex].attack1Cost2 || defaultCost2,
+            cost3: cards[selectedIndex].attack1Cost3 || defaultCost3,
+            cost4: cards[selectedIndex].attack1Cost4 || defaultCost4
+        };
 
-        //attack1Block.visible = attack1Block.cost1Text !== defaultCost1;
-        // attack1Cost1Block.visible = attack1Cost1Text.text !== defaultCost1;
+        const attack2Costs = {
+            cost1: cards[selectedIndex].attack2Cost1 || defaultCost1,
+            cost2: cards[selectedIndex].attack2Cost2 || defaultCost2,
+            cost3: cards[selectedIndex].attack2Cost3 || defaultCost3,
+            cost4: cards[selectedIndex].attack2Cost4 || defaultCost4
+        };
 
-        // attack1Cost2Text.text = cards[selectedIndex].attack1Cost2 || defaultCost2;
-        // attack1Cost2Block.visible = attack1Cost2Text.text !== defaultCost2;
-        //attack1Block.cost2Text = cards[selectedIndex].attack1Cost2 || defaultCost2;
-        //attack1Block.visible = attack1Block.cost2Text !== defaultCost2;
+        const attack3Costs = {
+            cost1: cards[selectedIndex].attack3Cost1 || defaultCost1,
+            cost2: cards[selectedIndex].attack3Cost2 || defaultCost2,
+            cost3: cards[selectedIndex].attack3Cost3 || defaultCost3,
+            cost4: cards[selectedIndex].attack3Cost4 || defaultCost4
+        };
 
-        // attack1Cost3Text.text = cards[selectedIndex].attack1Cost3 || defaultCost3;
-        // attack1Cost3Block.visible = attack1Cost3Text.text !== defaultCost3;
+        const attack4Costs = {
+            cost1: cards[selectedIndex].attack4Cost1 || defaultCost1,
+            cost2: cards[selectedIndex].attack4Cost2 || defaultCost2,
+            cost3: cards[selectedIndex].attack4Cost3 || defaultCost3,
+            cost4: cards[selectedIndex].attack4Cost4 || defaultCost4
+        };
 
-        // attack1Cost4Text.text = cards[selectedIndex].attack1Cost4 || defaultCost4;
-        // attack1Cost4Block.visible = attack1Cost4Text.text !== defaultCost4;
-
-        // // Calculate proportional width for visible blocks
-        // const baseWidth = 59;
-        // const visibleBlocks = [attack1Cost1Block, attack1Cost2Block, attack1Cost3Block, attack1Cost4Block].filter(block => block.visible);
-        // const totalVisible = visibleBlocks.length;
-
-        // // Set width proportionally for each visible block
-        // if (totalVisible > 0) {
-        //     const newWidth = baseWidth * (4 / totalVisible);
-        //     for (let block of visibleBlocks) {
-        //         block.width = newWidth;
-        //     }
-        // }
+        // Call the updateCostTexts function for each attack block
+        attack1Block.updateCostTexts(attack1Costs); // Ensure attack1Block has access to the function
+        attack2Block.updateCostTexts(attack2Costs); // Ensure attack2Block has access to the function
+        attack3Block.updateCostTexts(attack3Costs); // Ensure attack3Block has access to the function
+        attack4Block.updateCostTexts(attack4Costs); // Ensure attack4Block has access to the function
     }
 
 
@@ -101,33 +101,7 @@ Window {
             attack4Block.nameText = cards[selectedIndex].attack4Name || "Attack 4"
             attack4Block.descText = cards[selectedIndex].attack4Text || "No description available."
 
-            // // Set visibility for each attack based on the card data
-            // attack1NameBlock.visible = cards[selectedIndex].attack1Name !== "Attack 1"
-            //         && cards[selectedIndex].attack1Name !== ""
-            // attack1DescriptionBlock.visible = attack1NameBlock.visible
-            // attack1DescriptionBlock.height = attack1DescriptionBlock.visible
-            //         && attack1DescriptionDropText.text === "No description available." ? 75 : 120
-
-            // attack2NameBlock.visible = cards[selectedIndex].attack2Name !== "Attack 2"
-            //         && cards[selectedIndex].attack2Name !== ""
-            // attack2DescriptionBlock.visible = attack2NameBlock.visible
-            // attack2DescriptionBlock.height = attack2DescriptionBlock.visible
-            //         && attack2DescriptionText.text === "No description available." ? 75 : 120
-
-            // attack3NameBlock.visible = cards[selectedIndex].attack3Name !== "Attack 3"
-            //         && cards[selectedIndex].attack3Name !== ""
-            // attack3DescriptionBlock.visible = attack3NameBlock.visible
-            // attack3DescriptionBlock.height = attack3DescriptionBlock.visible
-            //         && attack3DescriptionText.text === "No description available." ? 75 : 120
-
-            // attack4NameBlock.visible = cards[selectedIndex].attack4Name !== "Attack 4"
-            //         && cards[selectedIndex].attack4Name !== ""
-            // attack4DescriptionBlock.visible = attack4NameBlock.visible
-            // attack4DescriptionBlock.height = attack4DescriptionBlock.visible
-            //         && attack4DescriptionText.text === "No description available." ? 75 : 120
-
             updateAttackCost();
-//        console.log(cards[selectedIndex].imageUrl)
         }
     }
 
@@ -201,12 +175,12 @@ Window {
 
         if (subtype1Block.visible && !subtype2Block.visible && !subtype3Block.visible && !subtype4Block.visible ||
                 subtype1Block.visible && subtype2Block.visible && subtype3Block.visible && !subtype4Block.visible) {
-                subtype1Block.width = 175;
-            } else if (subtype1Block.visible && subtype2Block.visible && !subtype3Block.visible && !subtype4Block.visible) {
-                subtype1Block.width = 85;
-            } else {
-                subtype1Block.width = 85; // Set a fallback width if needed
-            }        //subtype2Block.width = subtype3Block.visible ? 85 : 175
+            subtype1Block.width = 175;
+        } else if (subtype1Block.visible && subtype2Block.visible && !subtype3Block.visible && !subtype4Block.visible) {
+            subtype1Block.width = 85;
+        } else {
+            subtype1Block.width = 85; // Set a fallback width if needed
+        }        //subtype2Block.width = subtype3Block.visible ? 85 : 175
 
         subtypeBlock.height = subtype3Block.visible ? subtype1Block.height * 2 : subtype1Block.height
     }
@@ -217,7 +191,7 @@ Window {
                     || "Super Type"
         }
 
-     }
+    }
 
     function updateTypeInfo() {
         if(cards[selectedIndex]) {
@@ -228,7 +202,7 @@ Window {
         if(cards[selectedIndex]) {
             type2Text.text = cards[selectedIndex].type2
                     || "Type 2"
-}
+        }
 
         // Set visibility for each ability based on the card data
         type1Block.visible = type1Text.text !== "Type 1" && cards[selectedIndex].type1 !== ""
@@ -239,7 +213,7 @@ Window {
     }
 
     function resetCardRotation() {
-           cube.rotationY = 0
+        cube.rotationY = 0
     }
     function resetLeftColumnScroll() {
         leftScrollView.contentX = 0;
@@ -486,7 +460,7 @@ Window {
                             // property int toolbarWidth: 400
                             // property int toolbarHeight: 64
 
-                           // width: toolbarWidth
+                            // width: toolbarWidth
                             //height: toolbarHeight
                             RowLayout {
                                 id: searchRow
@@ -2798,7 +2772,7 @@ Window {
                                         height: 1132
                                         anchors.top: parent.top
                                         anchors.topMargin: 4
-                                        spacing: 3
+                                        spacing: 8
 
                                         AttackInfoBlock {
                                             id: attack1Block
@@ -2859,1176 +2833,6 @@ Window {
                                             dropBorderColor: window.dropBorderColor
                                             anchors.horizontalCenter: parent.horizontalCenter
                                         }
-
-                                        // Rectangle {
-                                        //     id: attack1NameBlock
-                                        //     width: 200
-                                        //     height: 50
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     anchors.horizontalCenter: parent.horizontalCenter
-
-                                        //     Rectangle {
-                                        //         id: attack1NameBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 4
-                                        //         anchors.bottomMargin: 4
-
-                                        //         Rectangle {
-                                        //             id: attack1NameScreen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: "#02d20b"
-                                        //             radius: 4
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 5
-                                        //             anchors.rightMargin: 5
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-
-                                        //             Text {
-                                        //                 id: attack1Name
-                                        //                 color: "#095f0c"
-                                        //                 text: "Attack 1"
-                                        //                 anchors.fill: parent
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 0
-                                        //                 fontSizeMode: Text.HorizontalFit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack1DropName
-                                        //                 color: "#c5002a02"
-                                        //                 text: attack1Name.text
-                                        //                 anchors.fill: parent
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 minimumPointSize: 10
-                                        //                 minimumPixelSize: 10
-                                        //                 z: 1
-                                        //                 fontSizeMode: Text.HorizontalFit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle13
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack1CostBlock
-                                        //     width: 245
-                                        //     height: 40
-                                        //     color: "#00c80d0d"
-                                        //     radius: 6
-                                        //     border.color: "#006c0101"
-                                        //     border.width: 0
-                                        //     anchors.horizontalCenter: parent.horizontalCenter
-
-                                        //     Flow {
-                                        //         id: attack1CostFlow
-                                        //         anchors.fill: parent
-                                        //         layoutDirection: Qt.LeftToRight
-                                        //         spacing: 3
-                                        //         flow: Flow.LeftToRight
-
-                                        //         Rectangle {
-                                        //             id: attack1Cost1Block
-                                        //             width: 59
-                                        //             height: 40
-                                        //             visible: true
-                                        //             color: "#c80d0d"
-                                        //             radius: 6
-                                        //             border.color: "#6c0101"
-                                        //             border.width: 2
-
-                                        //             Rectangle {
-                                        //                 id: attack1Cost1Bezel
-                                        //                 visible: true
-                                        //                 color: "#b2b2b2"
-                                        //                 radius: 8
-                                        //                 border.color: "#616161"
-                                        //                 border.width: 2
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 Layout.preferredHeight: 60
-                                        //                 Layout.preferredWidth: 60
-                                        //                 Layout.fillHeight: true
-                                        //                 Layout.fillWidth: true
-
-                                        //                 Rectangle {
-                                        //                     id: attack1Cost1Screen
-                                        //                     x: 7
-                                        //                     y: 4
-                                        //                     color: screenColor
-                                        //                     radius: 4
-                                        //                     border.color: "#128c17"
-                                        //                     border.width: 2
-                                        //                     anchors.fill: parent
-                                        //                     anchors.leftMargin: 6
-                                        //                     anchors.rightMargin: 6
-                                        //                     anchors.topMargin: 6
-                                        //                     anchors.bottomMargin: 6
-                                        //                     Text {
-                                        //                         id: attack1Cost1Text
-                                        //                         color: "#c5002a02"
-                                        //                         text: "Cost"
-                                        //                         anchors.fill: parent
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         state: "base state4"
-                                        //                         z: 1
-                                        //                         minimumPointSize: 4
-                                        //                         minimumPixelSize: 4
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     DropShadow {
-                                        //                         id: attack1Cost1DropShadow
-                                        //                         opacity: 0.8
-                                        //                         color: "#095f0c"
-                                        //                         radius: 3.8
-                                        //                         anchors.fill: attack1Cost1Text
-                                        //                         source: attack1Cost1Text
-                                        //                         verticalOffset: 3
-                                        //                         samples: 16
-                                        //                         horizontalOffset: 3
-                                        //                     }
-
-                                        //                     Text {
-                                        //                         id: attack1Cost1DropText
-                                        //                         visible: false
-                                        //                         color: "#2a7b2d"
-                                        //                         text: attack1Cost1Text.text
-                                        //                         anchors.fill: parent
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 0
-                                        //                         minimumPointSize: 4
-                                        //                         minimumPixelSize: 4
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     Rectangle {
-                                        //                         id: attack1Cost1BlockHighlight
-                                        //                         x: -8
-                                        //                         y: -4
-                                        //                         color: "#00ffffff"
-                                        //                         radius: 4
-                                        //                         border.color: "#25fb2e"
-                                        //                         border.width: 1
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 3
-                                        //                         anchors.rightMargin: 3
-                                        //                         anchors.topMargin: 3
-                                        //                         anchors.bottomMargin: 3
-                                        //                     }
-                                        //                     clip: true
-                                        //                 }
-                                        //             }
-
-                                        //         }
-
-                                        //         Rectangle {
-                                        //             id: attack1Cost2Block
-                                        //             width: 59
-                                        //             height: 40
-                                        //             visible: true
-                                        //             color: "#c80d0d"
-                                        //             radius: 6
-                                        //             border.color: "#6c0101"
-                                        //             border.width: 2
-                                        //             Rectangle {
-                                        //                 id: attack1Cost2Bezel
-                                        //                 color: "#b2b2b2"
-                                        //                 radius: 8
-                                        //                 border.color: "#616161"
-                                        //                 border.width: 2
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 Layout.preferredWidth: 60
-                                        //                 Layout.preferredHeight: 60
-                                        //                 Layout.fillHeight: true
-                                        //                 Layout.fillWidth: true
-                                        //                 Rectangle {
-                                        //                     id: attack1Cost2Screen
-                                        //                     x: 7
-                                        //                     y: 4
-                                        //                     color: screenColor
-                                        //                     radius: 4
-                                        //                     border.color: "#128c17"
-                                        //                     border.width: 2
-                                        //                     anchors.fill: parent
-                                        //                     anchors.leftMargin: 6
-                                        //                     anchors.rightMargin: 6
-                                        //                     anchors.topMargin: 6
-                                        //                     anchors.bottomMargin: 6
-                                        //                     Text {
-                                        //                         id: attack1Cost2Text
-                                        //                         color: "#c5002a02"
-                                        //                         text: "Cost"
-                                        //                         anchors.fill: parent
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 1
-                                        //                         minimumPointSize: 4
-                                        //                         minimumPixelSize: 4
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     DropShadow {
-                                        //                         id: attack1Cost2DropShadow
-                                        //                         opacity: 0.8
-                                        //                         color: "#095f0c"
-                                        //                         radius: 3.8
-                                        //                         anchors.fill: attack1Cost2Text
-                                        //                         source: attack1Cost2Text
-                                        //                         verticalOffset: 3
-                                        //                         samples: 16
-                                        //                         horizontalOffset: 3
-                                        //                     }
-
-                                        //                     Text {
-                                        //                         id: attack1Cost2DropText
-                                        //                         visible: false
-                                        //                         color: "#2a7b2d"
-                                        //                         text: attack1Cost2Text.text
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 4
-                                        //                         anchors.rightMargin: 4
-                                        //                         anchors.topMargin: 4
-                                        //                         anchors.bottomMargin: 4
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 0
-                                        //                         minimumPointSize: 4
-                                        //                         minimumPixelSize: 4
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     Rectangle {
-                                        //                         id: attack1Cost2BlockHighlight
-                                        //                         x: -8
-                                        //                         y: -4
-                                        //                         color: "#00ffffff"
-                                        //                         radius: 4
-                                        //                         border.color: "#25fb2e"
-                                        //                         border.width: 1
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 3
-                                        //                         anchors.rightMargin: 3
-                                        //                         anchors.topMargin: 3
-                                        //                         anchors.bottomMargin: 3
-                                        //                     }
-                                        //                     clip: true
-                                        //                 }
-                                        //             }
-                                        //         }
-
-                                        //         Rectangle {
-                                        //             id: attack1Cost3Block
-                                        //             width: 59
-                                        //             height: 40
-                                        //             visible: true
-                                        //             color: "#c80d0d"
-                                        //             radius: 6
-                                        //             border.color: "#6c0101"
-                                        //             border.width: 2
-                                        //             Rectangle {
-                                        //                 id: attack1Cost3Bezel
-                                        //                 color: "#b2b2b2"
-                                        //                 radius: 8
-                                        //                 border.color: "#616161"
-                                        //                 border.width: 2
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 Rectangle {
-                                        //                     id: attack1Cost3Screen
-                                        //                     x: 7
-                                        //                     y: 4
-                                        //                     color: screenColor
-                                        //                     radius: 4
-                                        //                     border.color: "#128c17"
-                                        //                     border.width: 2
-                                        //                     anchors.fill: parent
-                                        //                     anchors.leftMargin: 6
-                                        //                     anchors.rightMargin: 6
-                                        //                     anchors.topMargin: 6
-                                        //                     anchors.bottomMargin: 6
-                                        //                     Text {
-                                        //                         id: attack1Cost3Text
-                                        //                         color: "#c5002a02"
-                                        //                         text: "Cost"
-                                        //                         anchors.fill: parent
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 1
-                                        //                         minimumPointSize: 4
-                                        //                         minimumPixelSize: 4
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     DropShadow {
-                                        //                         id: attack1Cost3DropShadow
-                                        //                         opacity: 0.8
-                                        //                         color: "#095f0c"
-                                        //                         radius: 3.8
-                                        //                         anchors.fill: attack1Cost3Text
-                                        //                         source: attack1Cost3Text
-                                        //                         verticalOffset: 3
-                                        //                         samples: 16
-                                        //                         horizontalOffset: 3
-                                        //                     }
-
-                                        //                     Text {
-                                        //                         id: attack1Cost3DropText
-                                        //                         visible: false
-                                        //                         color: "#2a7b2d"
-                                        //                         text: attack1Cost3Text.text
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 4
-                                        //                         anchors.rightMargin: 4
-                                        //                         anchors.topMargin: 4
-                                        //                         anchors.bottomMargin: 4
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 0
-                                        //                         minimumPointSize: 6
-                                        //                         minimumPixelSize: 6
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     Rectangle {
-                                        //                         id: attack1Cost3BlockHighlight
-                                        //                         x: -8
-                                        //                         y: -4
-                                        //                         color: "#00ffffff"
-                                        //                         radius: 4
-                                        //                         border.color: "#25fb2e"
-                                        //                         border.width: 1
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 3
-                                        //                         anchors.rightMargin: 3
-                                        //                         anchors.topMargin: 3
-                                        //                         anchors.bottomMargin: 3
-                                        //                     }
-                                        //                     clip: true
-                                        //                 }
-                                        //                 Layout.preferredWidth: 60
-                                        //                 Layout.preferredHeight: 60
-                                        //                 Layout.fillWidth: true
-                                        //                 Layout.fillHeight: true
-                                        //             }
-                                        //         }
-
-                                        //         Rectangle {
-                                        //             id: attack1Cost4Block
-                                        //             width: 59
-                                        //             height: 40
-                                        //             visible: true
-                                        //             color: "#c80d0d"
-                                        //             radius: 6
-                                        //             border.color: "#6c0101"
-                                        //             border.width: 2
-
-                                        //             Rectangle {
-                                        //                 id: attack1Cost4Bezel
-                                        //                 color: "#b2b2b2"
-                                        //                 radius: 8
-                                        //                 border.color: "#616161"
-                                        //                 border.width: 2
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 Rectangle {
-                                        //                     id: attack1Cost4Screen
-                                        //                     x: 7
-                                        //                     y: 4
-                                        //                     color: screenColor
-                                        //                     radius: 4
-                                        //                     border.color: "#128c17"
-                                        //                     border.width: 2
-                                        //                     anchors.fill: parent
-                                        //                     anchors.leftMargin: 6
-                                        //                     anchors.rightMargin: 6
-                                        //                     anchors.topMargin: 6
-                                        //                     anchors.bottomMargin: 6
-                                        //                     Text {
-                                        //                         id: attack1Cost4Text
-                                        //                         color: "#c5002a02"
-                                        //                         text: "Cost"
-                                        //                         anchors.fill: parent
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 1
-                                        //                         minimumPointSize: 4
-                                        //                         minimumPixelSize: 4
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     DropShadow {
-                                        //                         id: attack1Cost4DropShadow
-                                        //                         opacity: 0.8
-                                        //                         color: "#095f0c"
-                                        //                         radius: 3.8
-                                        //                         anchors.fill: attack1Cost4Text
-                                        //                         source: attack1Cost4Text
-                                        //                         verticalOffset: 3
-                                        //                         samples: 16
-                                        //                         horizontalOffset: 3
-                                        //                     }
-
-                                        //                     Text {
-                                        //                         id: attack1Cost4DropText
-                                        //                         visible: false
-                                        //                         color: "#2a7b2d"
-                                        //                         text: attack1Cost4Text.text
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 4
-                                        //                         anchors.rightMargin: 4
-                                        //                         anchors.topMargin: 4
-                                        //                         anchors.bottomMargin: 4
-                                        //                         horizontalAlignment: Text.AlignHCenter
-                                        //                         verticalAlignment: Text.AlignVCenter
-                                        //                         wrapMode: Text.Wrap
-                                        //                         z: 0
-                                        //                         minimumPointSize: 6
-                                        //                         minimumPixelSize: 6
-                                        //                         fontSizeMode: Text.Fit
-                                        //                         font.styleName: "Bold Italic"
-                                        //                         font.pointSize: 30
-                                        //                     }
-
-                                        //                     Rectangle {
-                                        //                         id: attack1Cost4BlockHighlight
-                                        //                         x: -8
-                                        //                         y: -4
-                                        //                         color: "#00ffffff"
-                                        //                         radius: 4
-                                        //                         border.color: "#25fb2e"
-                                        //                         border.width: 1
-                                        //                         anchors.fill: parent
-                                        //                         anchors.leftMargin: 3
-                                        //                         anchors.rightMargin: 3
-                                        //                         anchors.topMargin: 3
-                                        //                         anchors.bottomMargin: 3
-                                        //                     }
-                                        //                     clip: true
-                                        //                 }
-                                        //                 Layout.preferredWidth: 60
-                                        //                 Layout.preferredHeight: 60
-                                        //                 Layout.fillWidth: true
-                                        //                 Layout.fillHeight: true
-                                        //             }
-
-                                        //         }
-                                        //     }
-                                        // }
-
-                                        // Rectangle {
-                                        //     id: attack1DescriptionBlock
-                                        //     width: 250
-                                        //     height: 120
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-
-                                        //     Rectangle {
-                                        //         id: attack1TextBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 4
-                                        //         anchors.bottomMargin: 4
-
-                                        //         Rectangle {
-                                        //             id: attack1Screen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 6
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 6
-                                        //             anchors.rightMargin: 6
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-
-                                        //             Text {
-                                        //                 id: attack1DescriptionDropText
-                                        //                 visible: true
-                                        //                 color: "#c5002a02"
-                                        //                 text: "Attack 1 Description"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 font.pointSize: attack1DescriptionText.font.pointSize
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 z: 1
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack1DescriptionText
-                                        //                 color: "#095f0c"
-                                        //                 text: attack1DescriptionDropText.text
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 font.pointSize: attack1DescriptionDropText.font.pointSize
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 z: 0
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle24
-                                        //                 x: -7
-                                        //                 y: 167
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack2NameBlock
-                                        //     width: 200
-                                        //     height: 45
-                                        //     visible: true
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     anchors.horizontalCenter: parent.horizontalCenter
-                                        //     Rectangle {
-                                        //         id: attack2NameBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 3
-                                        //         anchors.bottomMargin: 3
-                                        //         Rectangle {
-                                        //             id: attack2NameScreen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 4
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 5
-                                        //             anchors.rightMargin: 5
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-                                        //             Text {
-                                        //                 id: attack2NameText
-                                        //                 color: "#c5002a02"
-                                        //                 text: "Attack 2"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 2
-                                        //                 anchors.bottomMargin: 2
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 minimumPointSize: 10
-                                        //                 minimumPixelSize: 10
-                                        //                 z: 1
-                                        //                 fontSizeMode: Text.HorizontalFit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack2NameDrop
-                                        //                 color: "#2a7b2d"
-                                        //                 text: attack2NameText.text
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 2
-                                        //                 anchors.bottomMargin: 2
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 minimumPointSize: 10
-                                        //                 minimumPixelSize: 10
-                                        //                 z: 0
-                                        //                 fontSizeMode: Text.HorizontalFit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle14
-                                        //                 x: -6
-                                        //                 y: -6
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack2DescriptionBlock
-                                        //     width: 250
-                                        //     height: 120
-                                        //     visible: true
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     Rectangle {
-                                        //         id: attack2DescriptionBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 4
-                                        //         anchors.bottomMargin: 4
-                                        //         Rectangle {
-                                        //             id: attack2Screen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 6
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 6
-                                        //             anchors.rightMargin: 6
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-                                        //             Text {
-                                        //                 id: attack2DescriptionDropText
-                                        //                 visible: true
-                                        //                 color: "#c5002a02"
-                                        //                 text: attack2DescriptionText.text
-                                        //                 anchors.right: parent.right
-                                        //                 anchors.bottom: parent.bottom
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 font.pointSize: attack2DescriptionText.font.pointSize
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 minimumPointSize: 6
-                                        //                 z: 1
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack2DescriptionText
-                                        //                 visible: true
-                                        //                 color: "#095f0c"
-                                        //                 text: "Attack 2 Description"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 z: 0
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle23
-                                        //                 x: -3
-                                        //                 y: -3
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack3NameBlock
-                                        //     width: 200
-                                        //     height: 45
-                                        //     visible: true
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     anchors.horizontalCenter: parent.horizontalCenter
-                                        //     Rectangle {
-                                        //         id: attack3NameBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 3
-                                        //         anchors.bottomMargin: 3
-                                        //         Rectangle {
-                                        //             id: attack3NameScreen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 4
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 5
-                                        //             anchors.rightMargin: 5
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-                                        //             Text {
-                                        //                 id: attack3NameText
-                                        //                 color: "#c5002a02"
-                                        //                 text: "Attack 3"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 2
-                                        //                 anchors.bottomMargin: 2
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 z: 1
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack3NameDrop
-                                        //                 color: "#2a7b2d"
-                                        //                 text: attack3NameText.text
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 2
-                                        //                 anchors.bottomMargin: 2
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 z: 0
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle15
-                                        //                 x: -6
-                                        //                 y: -6
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack3DescriptionBlock
-                                        //     width: 250
-                                        //     height: 120
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     Rectangle {
-                                        //         id: attack3DescriptionBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 4
-                                        //         anchors.bottomMargin: 4
-                                        //         Rectangle {
-                                        //             id: attack3DescriptionScreen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 6
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 6
-                                        //             anchors.rightMargin: 6
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-                                        //             Text {
-                                        //                 id: attack3DescriptionDropText
-                                        //                 visible: true
-                                        //                 color: "#c5002a02"
-                                        //                 text: attack3DescriptionText.text
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 1
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //                 font.pointSize: attack3DescriptionText.font.pointSize
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack3DescriptionText
-                                        //                 visible: true
-                                        //                 color: "#095f0c"
-                                        //                 text: "Attack 3 Description"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 0
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle22
-                                        //                 x: -7
-                                        //                 y: 8
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack4NameBlock
-                                        //     width: 200
-                                        //     height: 45
-                                        //     visible: true
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     Rectangle {
-                                        //         id: attack4NameBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 3
-                                        //         anchors.bottomMargin: 3
-                                        //         Rectangle {
-                                        //             id: attack4NameScreen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 4
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 5
-                                        //             anchors.rightMargin: 5
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-                                        //             Text {
-                                        //                 id: attack4NameText
-                                        //                 color: "#c5002a02"
-                                        //                 text: "Attack 4"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 2
-                                        //                 anchors.bottomMargin: 2
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 1
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack4NameDrop
-                                        //                 color: "#2a7b2d"
-                                        //                 text: attack4NameText.text
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 2
-                                        //                 anchors.bottomMargin: 2
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 0
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle33
-                                        //                 x: -6
-                                        //                 y: -6
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        //     anchors.horizontalCenter: parent.horizontalCenter
-                                        // }
-
-
-                                        // Rectangle {
-                                        //     id: attack4DescriptionBlock
-                                        //     width: 250
-                                        //     height: 120
-                                        //     color: "#c80d0d"
-                                        //     radius: 8
-                                        //     border.color: "#6c0101"
-                                        //     border.width: 2
-                                        //     Rectangle {
-                                        //         id: attack4DescriptionBezel
-                                        //         color: "#b2b2b2"
-                                        //         radius: 8
-                                        //         border.color: "#616161"
-                                        //         border.width: 2
-                                        //         anchors.fill: parent
-                                        //         anchors.leftMargin: 4
-                                        //         anchors.rightMargin: 4
-                                        //         anchors.topMargin: 4
-                                        //         anchors.bottomMargin: 4
-                                        //         Rectangle {
-                                        //             id: attack4DescriptionScreen
-                                        //             x: 10
-                                        //             y: 4
-                                        //             color: screenColor
-                                        //             radius: 6
-                                        //             border.color: "#128c17"
-                                        //             border.width: 2
-                                        //             anchors.fill: parent
-                                        //             anchors.leftMargin: 6
-                                        //             anchors.rightMargin: 6
-                                        //             anchors.topMargin: 6
-                                        //             anchors.bottomMargin: 6
-                                        //             Text {
-                                        //                 id: attack4DescriptionDropText
-                                        //                 visible: true
-                                        //                 color: "#c5002a02"
-                                        //                 text: attack4DescriptionText.text
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 1
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //                 font.pointSize: attack4DescriptionText.font.pointSize
-                                        //             }
-
-                                        //             Text {
-                                        //                 id: attack4DescriptionText
-                                        //                 visible: true
-                                        //                 color: "#095f0c"
-                                        //                 text: "Attack 4 Description"
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 4
-                                        //                 anchors.rightMargin: 4
-                                        //                 anchors.topMargin: 4
-                                        //                 anchors.bottomMargin: 4
-                                        //                 horizontalAlignment: Text.AlignHCenter
-                                        //                 verticalAlignment: Text.AlignVCenter
-                                        //                 wrapMode: Text.Wrap
-                                        //                 z: 0
-                                        //                 minimumPointSize: 6
-                                        //                 minimumPixelSize: 6
-                                        //                 fontSizeMode: Text.Fit
-                                        //                 font.styleName: "ExtraBold Italic"
-                                        //             }
-
-                                        //             Rectangle {
-                                        //                 id: rectangle34
-                                        //                 x: -7
-                                        //                 y: 8
-                                        //                 color: "#00ffffff"
-                                        //                 radius: 4
-                                        //                 border.color: "#25fb2e"
-                                        //                 border.width: 1
-                                        //                 anchors.fill: parent
-                                        //                 anchors.leftMargin: 3
-                                        //                 anchors.rightMargin: 3
-                                        //                 anchors.topMargin: 3
-                                        //                 anchors.bottomMargin: 3
-                                        //             }
-                                        //         }
-                                        //     }
-                                        // }
-
 
                                         Rectangle {
                                             id: ability1NameBlock
@@ -4759,7 +3563,7 @@ Window {
                                                       "attack1Cost2": card.attack1Cost2 || "Cost 2",
                                                       "attack1Cost3": card.attack1Cost3 || "Cost 3",
                                                       "attack1Cost4": card.attack1Cost4 || "Cost 4",
-                                                     // "attack1Cost5": card.attack1Cost5 || "Cost 5",
+                                                      // "attack1Cost5": card.attack1Cost5 || "Cost 5",
 
                                                       // Attack 2
                                                       "attack2Name": card.attack2Name || "",
@@ -4792,7 +3596,7 @@ Window {
                                                       "attack4Cost2": card.attack4Cost2 || "Cost 2",
                                                       "attack4Cost3": card.attack4Cost3 || "Cost 3",
                                                       "attack4Cost4": card.attack4Cost4 || "Cost 4",
-                                                     // "attack4Cost5": card.attack4Cost5 || "",
+                                                      // "attack4Cost5": card.attack4Cost5 || "",
 
                                                       // Subtypes
                                                       "subtype1" : card.subtype1 || "",
