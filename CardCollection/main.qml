@@ -193,7 +193,10 @@ Window {
     }
 
     function resetCardRotation() {
-        cube.rotationY = 0
+        momentumTimer.stop()
+
+        cardNode.eulerRotation.y = 0;
+        //TODO
     }
     function resetLeftColumnScroll() {
         leftScrollView.contentX = 0;
@@ -216,6 +219,7 @@ Window {
             updateTypeInfo();
             resetLeftColumnScroll();
             resetRightColumnScroll();
+            resetCardRotation();
         }
     }
 
@@ -230,6 +234,7 @@ Window {
             updateTypeInfo();
             resetLeftColumnScroll();
             resetRightColumnScroll();
+            resetCardRotation();
         }
     }
 
@@ -750,6 +755,7 @@ Window {
                                         id: view
                                         anchors.fill: parent
                                         z: 3
+                                        visible: false
 
                                         PerspectiveCamera {
                                             y: 0
@@ -3517,6 +3523,7 @@ Window {
                         updateTypeInfo();
                         resetLeftColumnScroll();
                         resetRightColumnScroll();
+                        view.visible = true
                     }
                 }
             }
