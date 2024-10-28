@@ -4,6 +4,19 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
 import Qt5Compat.GraphicalEffects
 
+/*
+https://images.pokemontcg.io/sm1/162_hires.png
+https://images.pokemontcg.io/sm1/163_hires.png
+https://images.pokemontcg.io/sm1/164_hires.png
+https://images.pokemontcg.io/sm1/165_hires.png
+https://images.pokemontcg.io/sm1/166_hires.png
+https://images.pokemontcg.io/sm1/167_hires.png
+https://images.pokemontcg.io/sm1/168_hires.png
+https://images.pokemontcg.io/sm1/169_hires.png
+https://images.pokemontcg.io/sm1/170_hires.png
+https://images.pokemontcg.io/sm1/171_hires.png
+https://images.pokemontcg.io/sm1/172_hires.png
+*/
 
 Rectangle {
     id: root
@@ -37,6 +50,9 @@ Rectangle {
     property alias cost4Text: cost4Text.text
     property alias cost5Text: cost5Text.text
 
+    property alias cost1Source: cost1Image.source
+    property alias cost2Source: cost2Image.source
+
 
     property alias descText: descriptionText.text
 
@@ -48,6 +64,7 @@ Rectangle {
     property color bezelColor: "#b2b2b2"
     property color bezelBorderColor: "#616161"
     property color screenColor: "#02d20b"
+    property color dimScreenColor: "#1c3e1d"
     property color screenShadeColor: "#128c17"
     property color screenHighlightColor: "#25fb2e"
     property color textColor: "#095f0c"
@@ -66,7 +83,7 @@ Rectangle {
     function updateVisibilityAndWidth() {
         // Count visible blocks
         const visibleBlocks = [cost1Block, cost2Block, cost3Block, cost4Block, cost5Block]
-            .filter(block => block.visible);
+        .filter(block => block.visible);
 
         const visibleCount = visibleBlocks.length;
 
@@ -78,8 +95,8 @@ Rectangle {
 
         // Set the width of each block based on visibility
         visibleBlocks.forEach(block => {
-            block.width = proportionalWidth > 0 ? proportionalWidth : 0; // Ensure non-negative width
-        });
+                                  block.width = proportionalWidth > 0 ? proportionalWidth : 0; // Ensure non-negative width
+                              });
     }
 
     function updateAttack(attackName, attackText, attackIndex, costs) {
@@ -101,22 +118,58 @@ Rectangle {
         const defaultCost4 = "Cost 4";
         const defaultCost5 = "Cost 5";
 
+        const costImageMap = {
+            "grass": "https://images.pokemontcg.io/sm1/164_hires.png",
+            "fire": "https://images.pokemontcg.io/sm1/165_hires.png",
+            "water": "https://images.pokemontcg.io/sm1/166_hires.png",
+            "lightning": "https://images.pokemontcg.io/sm1/167_hires.png",
+            "psychic": "https://images.pokemontcg.io/sm1/168_hires.png",
+            "fighting": "https://images.pokemontcg.io/sm1/169_hires.png",
+            "darkness": "https://images.pokemontcg.io/sm1/170_hires.png",
+            "metal": "https://images.pokemontcg.io/sm1/171_hires.png",
+            "fairy": "https://images.pokemontcg.io/sm1/172_hires.png",
+            "dragon": "https://images.pokemontcg.io/xy6/97_hires.png",
+            "colorless": "https://images.pokemontcg.io/swsh3/176_hires.png"
+        };
+
+        // Update cost texts for all costs
         cost1Text.text = costs.cost1 || defaultCost1;
         cost2Text.text = costs.cost2 || defaultCost2;
         cost3Text.text = costs.cost3 || defaultCost3;
         cost4Text.text = costs.cost4 || defaultCost4;
         cost5Text.text = costs.cost5 || defaultCost5;
 
+        // Normalize costs for image source assignment
+        const normalizedCost1 = costs.cost1 ? costs.cost1.trim().toLowerCase() : null;
+        const normalizedCost2 = costs.cost2 ? costs.cost2.trim().toLowerCase() : null;
+        const normalizedCost3 = costs.cost3 ? costs.cost3.trim().toLowerCase() : null;
+        const normalizedCost4 = costs.cost4 ? costs.cost4.trim().toLowerCase() : null;
+        const normalizedCost5 = costs.cost5 ? costs.cost5.trim().toLowerCase() : null;
 
-        cost1Visible = cost1Text.text !== defaultCost1;
-        cost2Visible = cost2Text.text !== defaultCost2;
-        cost3Visible = cost3Text.text !== defaultCost3;
-        cost4Visible = cost4Text.text !== defaultCost4;
-        cost5Visible = cost5Text.text !== defaultCost5;
+        // Update cost images for cost1, cost2, cost3, cost4, and cost5
+        cost1Image.source = costImageMap[normalizedCost1] || "";
+        cost2Image.source = costImageMap[normalizedCost2] || "";
+        cost3Image.source = costImageMap[normalizedCost3] || "";
+        cost4Image.source = costImageMap[normalizedCost4] || "";
+        cost5Image.source = costImageMap[normalizedCost5] || "";
 
+        // Determine visibility based on whether costs were provided
+        const cost1Visible = cost1Text.text !== defaultCost1;
+        const cost2Visible = cost2Text.text !== defaultCost2;
+        const cost3Visible = cost3Text.text !== defaultCost3;
+        const cost4Visible = cost4Text.text !== defaultCost4;
+        const cost5Visible = cost5Text.text !== defaultCost5;
+
+        // Update visibility of cost texts
+        cost1Text.visible = cost1Visible;
+        cost2Text.visible = cost2Visible;
+        cost3Text.visible = cost3Visible;
+        cost4Text.visible = cost4Visible;
+        cost5Text.visible = cost5Visible;
 
         updateVisibilityAndWidth(); // Trigger width recalculation
     }
+
 
     Rectangle {
         id: attackNameBlock
@@ -207,7 +260,7 @@ Rectangle {
 
     Rectangle {
         id: costBlock
-        height: 46
+        height: 50
         color: "#00c80d0d"
         radius: 6
         border.color: "#006c0101"
@@ -222,15 +275,15 @@ Rectangle {
         Row {
             id: costFlow
             layoutDirection: Qt.LeftToRight
-            spacing: 4
+            spacing: -1
 
-              property int visibleCount: 0
+            property int visibleCount: 0
             anchors.fill: parent
 
             Rectangle {
                 id: cost1Block
-                width: 46
-                height: 46
+                width: 50
+                height: 50
                 visible: true
                 color: mainColor
                 radius: 6
@@ -258,9 +311,10 @@ Rectangle {
                         id: cost1Screen
                         x: 7
                         y: 4
-                        color: screenColor
+                        visible: true
+                        color: dimScreenColor
                         radius: 4
-                        border.color: screenShadeColor
+                        border.color: "#00128c17"
                         border.width: 2
                         anchors.fill: parent
                         anchors.leftMargin: 4
@@ -269,6 +323,7 @@ Rectangle {
                         anchors.bottomMargin: 4
                         Text {
                             id: cost1Text
+                            visible: false
                             color: textColor
                             text: "Cost 1"
                             anchors.fill: parent
@@ -303,7 +358,7 @@ Rectangle {
 
                         Text {
                             id: cost1DropText
-                            visible: true
+                            visible: false
                             color: dropTextColor
                             text: cost1Text.text
                             anchors.fill: parent
@@ -326,17 +381,82 @@ Rectangle {
                             id: cost1BlockHightlight
                             x: -8
                             y: -4
+                            visible: false
                             color: "#00ffffff"
                             radius: 4
                             border.color: "#25fb2e"
                             border.width: 1
                             anchors.fill: parent
-                            anchors.leftMargin: 3
-                            anchors.rightMargin: 3
-                            anchors.topMargin: 3
-                            anchors.bottomMargin: 3
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
+                            clip: false
+                            z: 4
                         }
-                        clip: true
+
+                        // Define the circular mask
+
+                        Rectangle {
+                            id: cost1ImageBlock
+                            color: "#00ffffff"
+                            radius: 10
+                            border.color: "#0002d20b"
+                            border.width: 0
+                            anchors.fill: parent
+                            clip: true
+                            scale: 0.9
+
+                            Image {
+                                id: cost1Image
+                                x: -158
+                                y: -158
+                                width: 350
+                                height: 350
+                                sourceSize.height: 0
+                                sourceSize.width: 0
+                                opacity: 1
+                                visible: true
+                                clip: false
+                                fillMode: Image.Pad
+                                scale: 0.1
+
+                                layer.enabled: true
+                                layer.effect: OpacityMask {
+                                    width: 34
+                                    height: 34
+                                    opacity: 0
+                                    visible: true
+                                    layer.textureSize.height: 0
+                                    enabled: true
+                                    layer.textureSize.width: 0
+                                    scale: 1
+                                    clip: false
+                                    layer.enabled: true
+                                    maskSource: mask
+                                }
+                            }
+
+                            Rectangle {
+                                id: mask
+                                x: 0
+                                y: 0
+                                width: 34
+                                height: 34
+                                border.width: 0
+                                scale: 1
+                                layer.textureSize.width: 0
+                                layer.enabled: true
+                                enabled: true
+                                clip: false
+                                visible: false
+                                color: "#ffffff"
+                                radius: 46
+                            }
+                        }
+
+
+                        clip: false
                     }
                 }
 
@@ -344,8 +464,8 @@ Rectangle {
 
             Rectangle {
                 id: cost2Block
-                width: 46
-                height: 46
+                width: 50
+                height: 50
                 visible: true
                 color: mainColor
                 radius: 6
@@ -370,7 +490,7 @@ Rectangle {
                         id: cost2Screen
                         x: 7
                         y: 4
-                        color: screenColor
+                        color: dimScreenColor
                         radius: 4
                         border.color: screenShadeColor
                         border.width: 2
@@ -381,6 +501,7 @@ Rectangle {
                         anchors.bottomMargin: 4
                         Text {
                             id: cost2Text
+                            visible: false
                             color: textColor
                             text: "Cost 2"
                             anchors.fill: parent
@@ -414,7 +535,7 @@ Rectangle {
 
                         Text {
                             id: cost2DropText
-                            visible: true
+                            visible: false
                             color: dropTextColor
                             text: cost2Text.text
                             anchors.fill: parent
@@ -437,6 +558,7 @@ Rectangle {
                             id: cost2BlockHightlight
                             x: -8
                             y: -4
+                            visible: false
                             color: "#00ffffff"
                             radius: 4
                             border.color: "#25fb2e"
@@ -447,6 +569,64 @@ Rectangle {
                             anchors.topMargin: 3
                             anchors.bottomMargin: 3
                         }
+
+                        Rectangle {
+                            id: cost2ImageBlock
+                            x: -6
+                            y: -6
+                            color: "#00ffffff"
+                            radius: 10
+                            border.color: "#0002d20b"
+                            border.width: 0
+                            anchors.fill: parent
+                            scale: 0.9
+                            Image {
+                                id: cost2Image
+                                x: -158
+                                y: -158
+                                width: 350
+                                height: 350
+                                opacity: 1
+                                visible: true
+                                sourceSize.width: 0
+                                sourceSize.height: 0
+                                scale: 0.1
+                                layer.enabled: true
+                                layer.effect: OpacityMask {
+                                    width: 34
+                                    height: 34
+                                    opacity: 0
+                                    visible: true
+                                    scale: 1
+                                    maskSource: mask2
+                                    layer.textureSize.width: 0
+                                    layer.textureSize.height: 0
+                                    layer.enabled: true
+                                    enabled: true
+                                    clip: false
+                                }
+                                fillMode: Image.Pad
+                                clip: false
+                            }
+
+                            Rectangle {
+                                id: mask2
+                                x: 0
+                                y: 0
+                                width: 34
+                                height: 34
+                                visible: false
+                                color: "#ffffff"
+                                radius: 46
+                                border.width: 0
+                                scale: 1
+                                layer.textureSize.width: 0
+                                layer.enabled: true
+                                enabled: true
+                                clip: false
+                            }
+                            clip: true
+                        }
                         clip: true
                     }
                 }
@@ -454,8 +634,8 @@ Rectangle {
 
             Rectangle {
                 id: cost3Block
-                width: 46
-                height: 46
+                width: 50
+                height: 50
                 visible: true
                 color: mainColor
                 radius: 6
@@ -476,7 +656,7 @@ Rectangle {
                         id: cost3Screen
                         x: 7
                         y: 4
-                        color: screenColor
+                        color: dimScreenColor
                         radius: 4
                         border.color: screenShadeColor
                         border.width: 2
@@ -487,6 +667,7 @@ Rectangle {
                         anchors.bottomMargin: 4
                         Text {
                             id: cost3Text
+                            visible: false
                             color: textColor
                             text: "Cost 3"
                             anchors.fill: parent
@@ -520,7 +701,7 @@ Rectangle {
 
                         Text {
                             id: cost3DropText
-                            visible: true
+                            visible: false
                             color: dropTextColor
                             text: cost3Text.text
 
@@ -544,6 +725,7 @@ Rectangle {
                             id: cost3BlockHightlight
                             x: -8
                             y: -4
+                            visible: false
                             color: "#00ffffff"
                             radius: 4
                             border.color: "#25fb2e"
@@ -554,6 +736,65 @@ Rectangle {
                             anchors.topMargin: 3
                             anchors.bottomMargin: 3
                         }
+
+                        Rectangle {
+                            id: cost3ImageBlock
+                            x: -6
+                            y: -6
+                            color: "#00ffffff"
+                            radius: 10
+                            border.color: "#0002d20b"
+                            border.width: 0
+                            anchors.fill: parent
+                            scale: 0.9
+                            Image {
+                                id: cost3Image
+                                x: -158
+                                y: -158
+                                width: 350
+                                height: 350
+                                opacity: 1
+                                visible: true
+                                sourceSize.width: 0
+                                sourceSize.height: 0
+                                scale: 0.1
+                                layer.enabled: true
+                                layer.effect: OpacityMask {
+                                    width: 34
+                                    height: 34
+                                    opacity: 0
+                                    visible: true
+                                    scale: 1
+                                    maskSource: mask3
+                                    layer.textureSize.width: 0
+                                    layer.textureSize.height: 0
+                                    layer.enabled: true
+                                    enabled: true
+                                    clip: false
+                                }
+                                fillMode: Image.Pad
+                                clip: false
+                            }
+
+                            Rectangle {
+                                id: mask3
+                                x: 0
+                                y: 0
+                                width: 34
+                                height: 34
+                                visible: false
+                                color: "#ffffff"
+                                radius: 46
+                                border.width: 0
+                                scale: 1
+                                layer.textureSize.width: 0
+                                layer.enabled: true
+                                enabled: true
+                                clip: false
+                            }
+                            clip: true
+                        }
+
                         clip: true
                     }
                     Layout.preferredWidth: 60
@@ -565,8 +806,8 @@ Rectangle {
 
             Rectangle {
                 id: cost4Block
-                width: 46
-                height: 46
+                width: 50
+                height: 50
                 visible: true
                 color: mainColor
                 radius: 6
@@ -588,7 +829,7 @@ Rectangle {
                         id: cost4Screen
                         x: 7
                         y: 4
-                        color: screenColor
+                        color: dimScreenColor
                         radius: 4
                         border.color: screenShadeColor
                         border.width: 2
@@ -599,6 +840,7 @@ Rectangle {
                         anchors.bottomMargin: 4
                         Text {
                             id: cost4Text
+                            visible: false
                             color: textColor
                             text: "Cost 4"
                             anchors.fill: parent
@@ -632,7 +874,7 @@ Rectangle {
 
                         Text {
                             id: cost4DropText
-                            visible: true
+                            visible: false
                             color: dropTextColor
                             text: cost4Text.text
                             anchors.fill: parent
@@ -655,6 +897,7 @@ Rectangle {
                             id: cost4BlockHighlight
                             x: -8
                             y: -4
+                            visible: false
                             color: "#00ffffff"
                             radius: 4
                             border.color: "#25fb2e"
@@ -665,6 +908,65 @@ Rectangle {
                             anchors.topMargin: 3
                             anchors.bottomMargin: 3
                         }
+
+                        Rectangle {
+                            id: cost4ImageBlock
+                            x: -6
+                            y: -6
+                            color: "#00ffffff"
+                            radius: 10
+                            border.color: "#0002d20b"
+                            border.width: 0
+                            anchors.fill: parent
+                            scale: 0.9
+                            Image {
+                                id: cost4Image
+                                x: -158
+                                y: -158
+                                width: 350
+                                height: 350
+                                opacity: 1
+                                visible: true
+                                sourceSize.width: 0
+                                sourceSize.height: 0
+                                scale: 0.1
+                                layer.enabled: true
+                                layer.effect: OpacityMask {
+                                    width: 34
+                                    height: 34
+                                    opacity: 0
+                                    visible: true
+                                    scale: 1
+                                    maskSource: mask4
+                                    layer.textureSize.width: 0
+                                    layer.textureSize.height: 0
+                                    layer.enabled: true
+                                    enabled: true
+                                    clip: false
+                                }
+                                fillMode: Image.Pad
+                                clip: false
+                            }
+
+                            Rectangle {
+                                id: mask4
+                                x: 0
+                                y: 0
+                                width: 34
+                                height: 34
+                                visible: false
+                                color: "#ffffff"
+                                radius: 46
+                                border.width: 0
+                                scale: 1
+                                layer.textureSize.width: 0
+                                layer.enabled: true
+                                enabled: true
+                                clip: false
+                            }
+                            clip: true
+                        }
+
                         clip: true
                     }
                     Layout.preferredWidth: 60
@@ -677,8 +979,8 @@ Rectangle {
 
             Rectangle {
                 id: cost5Block
-                width: 46
-                height: 46
+                width: 50
+                height: 50
                 visible: true
                 color: mainColor
                 radius: 6
@@ -706,7 +1008,7 @@ Rectangle {
                         id: cost5Screen
                         x: 7
                         y: 4
-                        color: screenColor
+                        color: dimScreenColor
                         radius: 4
                         border.color: screenShadeColor
                         border.width: 2
@@ -717,6 +1019,7 @@ Rectangle {
                         anchors.bottomMargin: 4
                         Text {
                             id: cost5Text
+                            visible: false
                             color: textColor
                             text: "Cost 5"
                             anchors.fill: parent
@@ -751,7 +1054,7 @@ Rectangle {
 
                         Text {
                             id: cost5DropText
-                            visible: true
+                            visible: false
                             color: dropTextColor
                             text: cost5Text.text
                             anchors.fill: parent
@@ -774,6 +1077,7 @@ Rectangle {
                             id: cost5BlockHightlight
                             x: -8
                             y: -4
+                            visible: false
                             color: "#00ffffff"
                             radius: 4
                             border.color: "#25fb2e"
@@ -784,6 +1088,65 @@ Rectangle {
                             anchors.topMargin: 3
                             anchors.bottomMargin: 3
                         }
+
+                        Rectangle {
+                            id: cost5ImageBlock
+                            x: -6
+                            y: -6
+                            color: "#00ffffff"
+                            radius: 10
+                            border.color: "#0002d20b"
+                            border.width: 0
+                            anchors.fill: parent
+                            scale: 0.9
+                            Image {
+                                id: cost5Image
+                                x: -158
+                                y: -158
+                                width: 350
+                                height: 350
+                                opacity: 1
+                                visible: true
+                                sourceSize.width: 0
+                                sourceSize.height: 0
+                                scale: 0.1
+                                layer.enabled: true
+                                layer.effect: OpacityMask {
+                                    width: 34
+                                    height: 34
+                                    opacity: 0
+                                    visible: true
+                                    scale: 1
+                                    maskSource: mask5
+                                    layer.textureSize.width: 0
+                                    layer.textureSize.height: 0
+                                    layer.enabled: true
+                                    enabled: true
+                                    clip: false
+                                }
+                                fillMode: Image.Pad
+                                clip: false
+                            }
+
+                            Rectangle {
+                                id: mask5
+                                x: 0
+                                y: 0
+                                width: 34
+                                height: 34
+                                visible: false
+                                color: "#ffffff"
+                                radius: 46
+                                border.width: 0
+                                scale: 1
+                                layer.textureSize.width: 0
+                                layer.enabled: true
+                                enabled: true
+                                clip: false
+                            }
+                            clip: true
+                        }
+
                         clip: true
                     }
                 }

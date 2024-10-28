@@ -40,7 +40,9 @@ Window {
     // Function to update attack information based on selectedIndex
     function updateAttackInfo() {
         if (cards[selectedIndex]) {
-
+            //TODO
+            console.log(cards[selectedIndex].id)
+            console.log(cards[selectedIndex].imageUrl)
             const defaultCost1 = "Cost 1";
             const defaultCost2 = "Cost 2";
             const defaultCost3 = "Cost 3";
@@ -194,9 +196,7 @@ Window {
 
     function resetCardRotation() {
         momentumTimer.stop()
-
         cardNode.eulerRotation.y = 0;
-        //TODO
     }
     function resetLeftColumnScroll() {
         leftScrollView.contentX = 0;
@@ -3440,6 +3440,7 @@ Window {
                     } else {
                         cards = data.map(card => ({
                                                       "name": card.name,
+                                                      "id": card.id,
                                                       "supertype": card.supertype,
                                                       "type1": card.type1,
                                                       "type2": card.type2,
@@ -3568,6 +3569,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:32;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0}D{i:34;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
