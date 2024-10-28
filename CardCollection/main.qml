@@ -388,50 +388,17 @@ Window {
                             }
                         }
 
-                        // MySearchTools {
-                        //     id: searchTools
-                        //     //Layout.fillHeight: false
-                        //     //Layout.fillWidth: true
-                        //     bottomPadding: 0
-                        //     contentHeight: 48
-                        //     contentWidth: parent.width
-                        //     width: parent.width
-                        //     height: 48
-                        //     anchors.verticalCenter: searchFilterTools.verticalCenter
-                        //     //anchors.left: searchFilterTools.right
-                        //     //anchors.right: searchFilterTools.left
-                        //     anchors.top: searchFilterTools.bottom
-                        //     //anchors.bottom: searchFilterTools.top
-                        //     //anchors.leftMargin: -500
-                        //     //anchors.rightMargin: -500
-                        //     //anchors.topMargin: 0
-                        //     //anchors.bottomMargin: -84
-                        //     //anchors.horizontalCenter: searchFilterTools.horizontalCenter
-                        //     //Layout.fillHeight: false
-                        //     //Layout.fillWidth: false
-                        //     //toolbarWidth: parent.width
-                        //     toolbarHeight: 48
-                        //     horizontalPadding: 0
-
-                        //     z: 0
-                        // }
-
                         ToolBar {
                             id: searchTools
                             width: 500
                             height: 40
-                            horizontalPadding: 0
-                            bottomPadding: 0
-                            z: 0
-                            Layout.preferredWidth: 500
-                            Layout.preferredHeight: 40
-                            Layout.fillHeight: false
-                            Layout.fillWidth: true
-                            // property int toolbarWidth: 400
-                            // property int toolbarHeight: 64
-
-                            // width: toolbarWidth
-                            //height: toolbarHeight
+                            anchors.verticalCenter: searchFilterTools.verticalCenter
+                            anchors.left: searchFilterTools.right
+                            anchors.right: searchFilterTools.left
+                            anchors.top: searchFilterTools.bottom
+                            anchors.bottom: searchFilterTools.top
+                            anchors.leftMargin: -500
+                            anchors.rightMargin: -500
                             RowLayout {
                                 id: searchRow
                                 anchors.fill: parent
@@ -507,7 +474,6 @@ Window {
 
 
                                     onClicked: {
-                                        // console.log("Search Button clicked...");
                                         // Initialize an empty array for the search parameters
                                         var searchParams = []
 
@@ -576,26 +542,19 @@ Window {
 
                                         // Call the request_search function with the built tuples if there are any
                                         if (searchParams.length > 0) {
-                                            //console.log("Search Button Pressed...")
-                                            //console.log("Calling backendController.request_search with parameters:")
                                             //Print each tuple as a string to the console
                                             for (var i = 0; i < searchParams.length; i++) {
                                                 var tupleString = "[" + searchParams[i][0] + ", "
                                                         + searchParams[i][1] + ", "
                                                         + searchParams[i][2] + "]"
 
-                                                //console.log(tupleString);
                                             }
-                                            //  console.log("search button is calling request_search");
                                             backendController.request_search(
                                                         searchParams)
-                                            //  console.log("Search button regains control after request search");
                                             resetLeftColumnScroll()
                                         }
                                     }
                                 }
-
-
                             }
 
                             Rectangle {
@@ -892,37 +851,6 @@ Window {
                                             }
                                         }
                                     }
-
-
-                                    // Image {
-                                    //     id: cardImage
-                                    //     anchors.fill: parent
-
-                                    //     // Initially try the high-res image URL
-                                    //     source: (selectedIndex >= 0
-                                    //              && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl // Try to load the card image
-                                    //                                               : ""
-
-                                    //     Layout.fillHeight: false
-                                    //     Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                                    //     Layout.preferredHeight: 500
-                                    //     Layout.preferredWidth: 480
-                                    //     Layout.fillWidth: true
-                                    //     scale: 1
-                                    //     fillMode: Image.PreserveAspectFit
-
-                                    // }
-                                    // // Apply a DropShadow effect to the image
-                                    // DropShadow {
-                                    //     anchors.fill: cardImage
-                                    //     source: cardImage // The image to which we are applying the shadow
-                                    //     horizontalOffset: 5 // Adjust X-axis shadow offset
-                                    //     verticalOffset: 5 // Adjust Y-axis shadow offset
-                                    //     radius: 3.8 // Blur effect, adjust for smoothness
-                                    //     samples: 16 // Higher value for smoother shadows
-                                    //     color: "#095f0c" // Color of the shadow
-                                    //     opacity: 0.8 // Transparency of the shadow
-                                    // }
                                 }
 
                                 Rectangle {
@@ -963,26 +891,7 @@ Window {
                                     ballButton.scale = 0.6
                                 }
                                 onClicked: {
-                                    // if (customDrawer.x < 0) {
-
-                                    //     customDrawer.x = 0
-                                    //     _item.isDrawerOpen = true
-
-                                    //     // Animate ball button rotation on drawer open
-                                    //     rotateAnimation.from = ballButton.rotation
-                                    //     rotateAnimation.to = 270 // Rotate by 90 degrees
-                                    //     rotateAnimation.start()
-                                    // } else {
-
-                                    //     customDrawer.x = -customDrawer.width + 12 // hide drawer
-                                    //     _item.isDrawerOpen = false
-
-                                    //     // Animate rotation on drawer close
-                                    //     rotateAnimation.from = ballButton.rotation
-                                    //     rotateAnimation.to = 90 // Reset to 0 degrees rotation
-                                    //     rotateAnimation.start()
-                                    // }
-                                    _item.toggleDrawer();
+                                   _item.toggleDrawer();
                                 }
 
                                 // Background of the button
@@ -1049,28 +958,28 @@ Window {
                                         }
 
                                         onClicked: {
-                                            // if (customDrawer.x < 0) {
-                                            //     customDrawer.x = 0
-                                            //     //customDrawer.isHoverEnabled = false
+                                            if (customDrawer.x < 0) {
+                                                customDrawer.x = 0
+                                                //customDrawer.isHoverEnabled = false
 
-                                            //     // Slide in
-                                            //     _item.isDrawerOpen = true
-                                            //     // Animate rotation on drawer open
-                                            //     rotateAnimation.from = ballButton.rotation
-                                            //     rotateAnimation.to = 270 // Rotate by 90 degrees
-                                            //     rotateAnimation.start()
-                                            // } else {
-                                            //     customDrawer.x = -customDrawer.width
-                                            //             + 12 // Slide out
+                                                // Slide in
+                                                _item.isDrawerOpen = true
+                                                // Animate rotation on drawer open
+                                                rotateAnimation.from = ballButton.rotation
+                                                rotateAnimation.to = 270 // Rotate by 90 degrees
+                                                rotateAnimation.start()
+                                            } else {
+                                                customDrawer.x = -customDrawer.width
+                                                        + 12 // Slide out
 
-                                            //     //customDrawer.isHoverEnabled = true
-                                            //     _item.isDrawerOpen = false
-                                            //     // Animate rotation on drawer close
-                                            //     rotateAnimation.from = ballButton.rotation
-                                            //     rotateAnimation.to
-                                            //             = 90 // Reset to 0 degrees rotation
-                                            //     rotateAnimation.start()
-                                            // }
+                                                //customDrawer.isHoverEnabled = true
+                                                _item.isDrawerOpen = false
+                                                // Animate rotation on drawer close
+                                                rotateAnimation.from = ballButton.rotation
+                                                rotateAnimation.to
+                                                        = 90 // Reset to 0 degrees rotation
+                                                rotateAnimation.start()
+                                            }
                                             _item.toggleDrawer();
                                         }
                                     }
@@ -3579,7 +3488,6 @@ Window {
 
                         selectedIndex = 0; // Start with the first card
                         updateAttackInfo();
-                        updateAttackCost();
                         updateAbilityInfo();
                         updateSubTypeInfo();
                         updateSuperTypeInfo();
@@ -3630,6 +3538,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:0}D{i:32;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:58}D{i:59}D{i:147}
+    D{i:0}D{i:32;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
