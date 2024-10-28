@@ -614,26 +614,26 @@ Window {
                         property bool isDrawerOpen: false // Start with the drawer closed
 
 
-                        function toggleDrawer() {
-                            if (customDrawer.x < 0) {
-                                customDrawer.x = 0
-                                _item.isDrawerOpen = true
+                        // function toggleDrawer() {
+                        //     if (customDrawer.x < 0) {
+                        //         customDrawer.x = 0
+                        //         _item.isDrawerOpen = true
 
-                                // Animate rotation on drawer open
-                                rotateAnimation.from = ballButton.rotation
-                                rotateAnimation.to = 270 // Rotate by 90 degrees
-                                rotateAnimation.start()
-                            } else {
-                                customDrawer.x = -customDrawer.width + 12
-                                _item.isDrawerOpen = false
+                        //         // Animate rotation on drawer open
+                        //         rotateAnimation.from = ballButton.rotation
+                        //         rotateAnimation.to = 270 // Rotate by 90 degrees
+                        //         rotateAnimation.start()
+                        //     } else {
+                        //         customDrawer.x = -customDrawer.width + 12
+                        //         _item.isDrawerOpen = false
 
-                                // Animate rotation on drawer close
-                                rotateAnimation.from = ballButton.rotation
-                                rotateAnimation.to
-                                        = 90 // Reset to 0 degrees rotation
-                                rotateAnimation.start()
-                            }
-                        }
+                        //         // Animate rotation on drawer close
+                        //         rotateAnimation.from = ballButton.rotation
+                        //         rotateAnimation.to
+                        //                 = 90 // Reset to 0 degrees rotation
+                        //         rotateAnimation.start()
+                        //     }
+                        // }
 
                         // The main Pane with no margin or padding
                         Rectangle {
@@ -725,8 +725,13 @@ Window {
                                 z: 1
 
                                 // Animate the x position when it changes
+                                Behavior on x {
+                                    NumberAnimation {
+                                        duration: 500 // Adjust the duration for the desired speed
+                                        easing.type: Easing.OutQuad // Smooth easing effect
+                                    }
+                                }
 
-                                // MouseArea for the drawer that does not toggle visibility
                                 MouseArea {
                                     visible: true
                                     anchors.fill: parent
@@ -901,7 +906,25 @@ Window {
                                     ballButton.scale = 0.6
                                 }
                                 onClicked: {
-                                   _item.toggleDrawer();
+                                    if (customDrawer.x < 0) {
+
+                                        customDrawer.x = 0
+                                        _item.isDrawerOpen = true
+
+                                        // Animate ball button rotation on drawer open
+                                        rotateAnimation.from = ballButton.rotation
+                                        rotateAnimation.to = 270 // Rotate by 90 degrees
+                                        rotateAnimation.start()
+                                    } else {
+
+                                        customDrawer.x = -customDrawer.width + 12 // hide drawer
+                                        _item.isDrawerOpen = false
+
+                                        // Animate rotation on drawer close
+                                        rotateAnimation.from = ballButton.rotation
+                                        rotateAnimation.to = 90 // Reset to 0 degrees rotation
+                                        rotateAnimation.start()
+                                    }
                                 }
 
                                 // Background of the button
@@ -912,6 +935,29 @@ Window {
                                     radius: 0 // Rounded corners
                                     border.color: "#620808" // Darker border for a subtle effect
                                     border.width: 2
+                                    MouseArea {
+                                        onClicked: {
+                                            if (customDrawer.x < 0) {
+                                                customDrawer.x = 0
+                                                _item.isDrawerOpen = true
+
+                                                // Animate rotation on drawer open
+                                                rotateAnimation.from = ballButton.rotation
+                                                rotateAnimation.to = 270 // Rotate by 90 degrees
+                                                rotateAnimation.start()
+                                            } else {
+                                                customDrawer.x = -customDrawer.width + 12
+                                                _item.isDrawerOpen = false
+
+                                                // Animate rotation on drawer close
+                                                rotateAnimation.from = ballButton.rotation
+                                                rotateAnimation.to
+                                                        = 90 // Reset to 0 degrees rotation
+                                                rotateAnimation.start()
+                                            }
+                                        }
+                                    }
+
 
                                     Rectangle {
                                         id: rectangle29
@@ -990,7 +1036,6 @@ Window {
                                                         = 90 // Reset to 0 degrees rotation
                                                 rotateAnimation.start()
                                             }
-                                            _item.toggleDrawer();
                                         }
                                     }
                                 }
@@ -1037,74 +1082,42 @@ Window {
                                         }
 
                                         onClicked: {
-                                            // if (customDrawer.x < 0) {
-                                            //     customDrawer.x = 0
-                                            //     _item.isDrawerOpen = true
+                                            if (customDrawer.x < 0) {
+                                                customDrawer.x = 0
+                                                //customDrawer.isHoverEnabled = false
 
-                                            //     // Animate rotation on drawer open
-                                            //     rotateAnimation.from = ballButton.rotation
-                                            //     rotateAnimation.to = 270 // Rotate by 90 degrees
-                                            //     rotateAnimation.start()
-                                            // } else {
-                                            //     customDrawer.x = -customDrawer.width + 12
-                                            //     _item.isDrawerOpen = false
+                                                // Slide in
+                                                _item.isDrawerOpen = true
+                                                // Animate rotation on drawer open
+                                                rotateAnimation.from = ballButton.rotation
+                                                rotateAnimation.to = 270 // Rotate by 90 degrees
+                                                rotateAnimation.start()
+                                            } else {
+                                                customDrawer.x = -customDrawer.width
+                                                        + 12 // Slide out
 
-                                            //     // Animate rotation on drawer close
-                                            //     rotateAnimation.from = ballButton.rotation
-                                            //     rotateAnimation.to
-                                            //             = 90 // Reset to 0 degrees rotation
-                                            //     rotateAnimation.start()
-                                            // }
-                                            _item.toggleDrawer();
+                                                //customDrawer.isHoverEnabled = true
+                                                _item.isDrawerOpen = false
+                                                // Animate rotation on drawer close
+                                                rotateAnimation.from = ballButton.rotation
+                                                rotateAnimation.to
+                                                        = 90 // Reset to 0 degrees rotation
+                                                rotateAnimation.start()
+                                            }
                                         }
                                     }
                                 }
                             }
 
-                            // MouseArea {
-                            //     id: drawerPeekArea
-                            //     width: 20
-                            //     height: 399
-                            //     anchors.verticalCenter: customDrawer.verticalCenter
-                            //     anchors.left: customDrawer.right
-                            //     anchors.right: customDrawer.left
-                            //     anchors.top: customDrawer.bottom
-                            //     anchors.bottom: customDrawer.top
-                            //     anchors.leftMargin: 0
-                            //     anchors.rightMargin: -286
-                            //     anchors.topMargin: -392
-                            //     anchors.bottomMargin: -397
-                            //     cursorShape: Qt.CrossCursor
-                            //     anchors.horizontalCenter: customDrawer.horizontalCenter
-                            //     anchors.verticalCenterOffset: 3
-                            //     enabled: !_item.isDrawerOpen
-                            //     hoverEnabled: true
-                            //     z: 1
+                            // Define the animation
+                            PropertyAnimation {
+                                id: drawerAnimation
+                                target: customDrawer
+                                property: "x"
+                                duration: 200  // Duration of the animation in milliseconds
+                                easing.type: Easing.InOutQuad  // Easing function for smoothness
+                            }
 
-                            //     onEntered: {
-                            //         // Animate to -260 when hovered
-                            //         drawerAnimation.to = -260;
-                            //         drawerAnimation.start();
-                            //     }
-                            //     onExited: {
-                            //         // Animate back to -270 when not hovered
-                            //         drawerAnimation.to = -270;
-                            //         drawerAnimation.start();
-                            //     }
-
-                            //     onClicked: {
-                            //         openButton.clicked(null)
-                            //     }
-                            // }
-
-                            //     // Define the animation
-                            //     PropertyAnimation {
-                            //         id: drawerAnimation
-                            //         target: customDrawer
-                            //         property: "x"
-                            //         duration: 200  // Duration of the animation in milliseconds
-                            //         easing.type: Easing.InOutQuad  // Easing function for smoothness
-                            //     }
                             Rectangle {
                                 id: dataFlow
                                 opacity: 1
