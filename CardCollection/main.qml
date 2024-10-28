@@ -45,6 +45,8 @@ Window {
             const defaultCost2 = "Cost 2";
             const defaultCost3 = "Cost 3";
             const defaultCost4 = "Cost 4";
+            const defaultCost5 = "Cost 5";
+
 
 
             // Create costs objects from the selected card for each attack
@@ -52,28 +54,35 @@ Window {
                 cost1: cards[selectedIndex].attack1Cost1 || defaultCost1,
                 cost2: cards[selectedIndex].attack1Cost2 || defaultCost2,
                 cost3: cards[selectedIndex].attack1Cost3 || defaultCost3,
-                cost4: cards[selectedIndex].attack1Cost4 || defaultCost4
+                cost4: cards[selectedIndex].attack1Cost4 || defaultCost4,
+                cost5: cards[selectedIndex].attack1Cost5 || defaultCost5
             };
 
             const attack2Costs = {
                 cost1: cards[selectedIndex].attack2Cost1 || defaultCost1,
                 cost2: cards[selectedIndex].attack2Cost2 || defaultCost2,
                 cost3: cards[selectedIndex].attack2Cost3 || defaultCost3,
-                cost4: cards[selectedIndex].attack2Cost4 || defaultCost4
+                cost4: cards[selectedIndex].attack2Cost4 || defaultCost4,
+                cost5: cards[selectedIndex].attack2Cost5 || defaultCost5
+
             };
 
             const attack3Costs = {
                 cost1: cards[selectedIndex].attack3Cost1 || defaultCost1,
                 cost2: cards[selectedIndex].attack3Cost2 || defaultCost2,
                 cost3: cards[selectedIndex].attack3Cost3 || defaultCost3,
-                cost4: cards[selectedIndex].attack3Cost4 || defaultCost4
+                cost4: cards[selectedIndex].attack3Cost4 || defaultCost4,
+                cost5: cards[selectedIndex].attack3Cost5 || defaultCost5
+
             };
 
             const attack4Costs = {
                 cost1: cards[selectedIndex].attack4Cost1 || defaultCost1,
                 cost2: cards[selectedIndex].attack4Cost2 || defaultCost2,
                 cost3: cards[selectedIndex].attack4Cost3 || defaultCost3,
-                cost4: cards[selectedIndex].attack4Cost4 || defaultCost4
+                cost4: cards[selectedIndex].attack4Cost4 || defaultCost4,
+                cost5: cards[selectedIndex].attack4Cost5 || defaultCost5
+
             };
 
             // Update attack blocks
@@ -81,6 +90,7 @@ Window {
             attack2Block.updateAttack(cards[selectedIndex].attack2Name, cards[selectedIndex].attack2Text, 1, attack2Costs);
             attack3Block.updateAttack(cards[selectedIndex].attack3Name, cards[selectedIndex].attack3Text, 2, attack3Costs);
             attack4Block.updateAttack(cards[selectedIndex].attack4Name, cards[selectedIndex].attack4Text, 3, attack4Costs);
+
         }
     }
 
@@ -3442,7 +3452,7 @@ Window {
                                                       "attack1Cost2": card.attack1Cost2 || "Cost 2",
                                                       "attack1Cost3": card.attack1Cost3 || "Cost 3",
                                                       "attack1Cost4": card.attack1Cost4 || "Cost 4",
-                                                      // "attack1Cost5": card.attack1Cost5 || "Cost 5",
+                                                      "attack1Cost5": card.attack1Cost5 || "Cost 5",
 
                                                       // Attack 2
                                                       "attack2Name": card.attack2Name || "",
@@ -3453,7 +3463,7 @@ Window {
                                                       "attack2Cost2": card.attack2Cost2 || "Cost 2",
                                                       "attack2Cost3": card.attack2Cost3 || "Cost 3",
                                                       "attack2Cost4": card.attack2Cost4 || "Cost 4",
-                                                      //"attack2Cost5": card.attack2Cost5 || "",
+                                                      "attack2Cost5": card.attack2Cost5 || "",
 
                                                       // Attack 3
                                                       "attack3Name": card.attack3Name || "",
@@ -3464,7 +3474,7 @@ Window {
                                                       "attack3Cost2": card.attack3Cost2 || "Cost 2",
                                                       "attack3Cost3": card.attack3Cost3 || "Cost 3",
                                                       "attack3Cost4": card.attack3Cost4 || "Cost 4",
-                                                      //"attack3Cost5": card.attack3Cost5 || "",
+                                                      "attack3Cost5": card.attack3Cost5 || "",
 
                                                       // Attack 4
                                                       "attack4Name": card.attack4Name || "",
@@ -3475,7 +3485,7 @@ Window {
                                                       "attack4Cost2": card.attack4Cost2 || "Cost 2",
                                                       "attack4Cost3": card.attack4Cost3 || "Cost 3",
                                                       "attack4Cost4": card.attack4Cost4 || "Cost 4",
-                                                      // "attack4Cost5": card.attack4Cost5 || "",
+                                                      "attack4Cost5": card.attack4Cost5 || "",
 
                                                       // Subtypes
                                                       "subtype1" : card.subtype1 || "",

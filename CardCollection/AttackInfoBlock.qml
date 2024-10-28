@@ -13,6 +13,8 @@ Rectangle {
     property alias cost2Visible: cost2Block.visible
     property alias cost3Visible: cost3Block.visible
     property alias cost4Visible: cost4Block.visible
+    property alias cost5Visible: cost5Block.visible
+
 
     property alias cost1Width: cost1Block.width
     property alias cost1Height: cost1Block.height
@@ -26,10 +28,15 @@ Rectangle {
     property alias cost4Width: cost4Block.width
     property alias cost4Height: cost4Block.height
 
+    property alias cost5Width: cost5Block.width
+    property alias cost5Height: cost5Block.height
+
     property alias cost1Text: cost1Text.text
     property alias cost2Text: cost2Text.text
     property alias cost3Text: cost3Text.text
     property alias cost4Text: cost4Text.text
+    property alias cost5Text: cost5Text.text
+
 
     property alias descText: descriptionText.text
 
@@ -50,7 +57,7 @@ Rectangle {
 
     // Width and Height
     width: 250 // Default value, can be overridden
-    height: 200
+    height: 192
     color: blockBG
     radius: 4
     border.color: blockBorderColor
@@ -58,7 +65,7 @@ Rectangle {
 
     function updateVisibilityAndWidth() {
         // Count visible blocks
-        const visibleBlocks = [cost1Block, cost2Block, cost3Block, cost4Block]
+        const visibleBlocks = [cost1Block, cost2Block, cost3Block, cost4Block, cost5Block]
             .filter(block => block.visible);
 
         const visibleCount = visibleBlocks.length;
@@ -92,20 +99,24 @@ Rectangle {
         const defaultCost2 = "Cost 2";
         const defaultCost3 = "Cost 3";
         const defaultCost4 = "Cost 4";
+        const defaultCost5 = "Cost 5";
 
         cost1Text.text = costs.cost1 || defaultCost1;
         cost2Text.text = costs.cost2 || defaultCost2;
         cost3Text.text = costs.cost3 || defaultCost3;
         cost4Text.text = costs.cost4 || defaultCost4;
+        cost5Text.text = costs.cost5 || defaultCost5;
+
 
         cost1Visible = cost1Text.text !== defaultCost1;
         cost2Visible = cost2Text.text !== defaultCost2;
         cost3Visible = cost3Text.text !== defaultCost3;
         cost4Visible = cost4Text.text !== defaultCost4;
+        cost5Visible = cost5Text.text !== defaultCost5;
+
 
         updateVisibilityAndWidth(); // Trigger width recalculation
     }
-
 
     Rectangle {
         id: attackNameBlock
@@ -196,7 +207,7 @@ Rectangle {
 
     Rectangle {
         id: costBlock
-        height: 40
+        height: 46
         color: "#00c80d0d"
         radius: 6
         border.color: "#006c0101"
@@ -208,19 +219,18 @@ Rectangle {
         anchors.rightMargin: 2
         anchors.topMargin: 2
 
-        Flow {
+        Row {
             id: costFlow
-            anchors.fill: parent
             layoutDirection: Qt.LeftToRight
-            spacing: 3
-            flow: Flow.LeftToRight
+            spacing: 4
 
               property int visibleCount: 0
+            anchors.fill: parent
 
             Rectangle {
                 id: cost1Block
-                width: 59
-                height: 40
+                width: 46
+                height: 46
                 visible: true
                 color: mainColor
                 radius: 6
@@ -334,8 +344,8 @@ Rectangle {
 
             Rectangle {
                 id: cost2Block
-                width: 59
-                height: 40
+                width: 46
+                height: 46
                 visible: true
                 color: mainColor
                 radius: 6
@@ -444,8 +454,8 @@ Rectangle {
 
             Rectangle {
                 id: cost3Block
-                width: 59
-                height: 40
+                width: 46
+                height: 46
                 visible: true
                 color: mainColor
                 radius: 6
@@ -555,8 +565,8 @@ Rectangle {
 
             Rectangle {
                 id: cost4Block
-                width: 59
-                height: 40
+                width: 46
+                height: 46
                 visible: true
                 color: mainColor
                 radius: 6
@@ -664,9 +674,121 @@ Rectangle {
                 }
 
             }
+
+            Rectangle {
+                id: cost5Block
+                width: 46
+                height: 46
+                visible: true
+                color: mainColor
+                radius: 6
+                border.color: "#6c0101"
+                border.width: 2
+
+                Rectangle {
+                    id: cost5Bezel
+                    visible: true
+                    color: "#b2b2b2"
+                    radius: 8
+                    border.color: bezelBorderColor
+                    border.width: 2
+                    anchors.fill: parent
+                    anchors.leftMargin: 2
+                    anchors.rightMargin: 2
+                    anchors.topMargin: 2
+                    anchors.bottomMargin: 2
+                    Layout.preferredHeight: 60
+                    Layout.preferredWidth: 60
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
+                    Rectangle {
+                        id: cost5Screen
+                        x: 7
+                        y: 4
+                        color: screenColor
+                        radius: 4
+                        border.color: screenShadeColor
+                        border.width: 2
+                        anchors.fill: parent
+                        anchors.leftMargin: 4
+                        anchors.rightMargin: 4
+                        anchors.topMargin: 4
+                        anchors.bottomMargin: 4
+                        Text {
+                            id: cost5Text
+                            color: textColor
+                            text: "Cost 5"
+                            anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            wrapMode: Text.Wrap
+                            state: "base state4"
+                            z: 0
+                            minimumPointSize: 4
+                            minimumPixelSize: 4
+                            fontSizeMode: Text.Fit
+                            font.styleName: "Bold Italic"
+                            font.pointSize: 30
+                        }
+
+                        DropShadow {
+                            id: cost5DropShadow
+                            opacity: 0.8
+                            visible: false
+                            color: "#095f0c"
+                            radius: 3.8
+                            anchors.fill: cost5Text
+                            source: cost5Text
+                            verticalOffset: 3
+                            samples: 16
+                            horizontalOffset: 3
+                        }
+
+                        Text {
+                            id: cost5DropText
+                            visible: true
+                            color: dropTextColor
+                            text: cost5Text.text
+                            anchors.fill: parent
+                            anchors.leftMargin: 2
+                            anchors.rightMargin: 2
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 2
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            wrapMode: Text.Wrap
+                            font.pointSize: cost5Text.font.pointSize
+                            z: 0
+                            minimumPointSize: 4
+                            minimumPixelSize: 4
+                            fontSizeMode: Text.Fit
+                            font.styleName: "Bold Italic"
+                        }
+
+                        Rectangle {
+                            id: cost5BlockHightlight
+                            x: -8
+                            y: -4
+                            color: "#00ffffff"
+                            radius: 4
+                            border.color: "#25fb2e"
+                            border.width: 1
+                            anchors.fill: parent
+                            anchors.leftMargin: 3
+                            anchors.rightMargin: 3
+                            anchors.topMargin: 3
+                            anchors.bottomMargin: 3
+                        }
+                        clip: true
+                    }
+                }
+            }
         }
-
-
     }
 
     Rectangle {
