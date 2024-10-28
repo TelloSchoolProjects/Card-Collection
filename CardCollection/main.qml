@@ -37,71 +37,50 @@ Window {
     property color borderColor: "#6c0101"
     property color dropBorderColor: "#25fb2e"
 
-    function updateAttackCost() {
-        // Default costs to pass if the selected card does not have values
-        const defaultCost1 = "Cost 1";
-        const defaultCost2 = "Cost 2";
-        const defaultCost3 = "Cost 3";
-        const defaultCost4 = "Cost 4";
-
-        // Create costs objects from the selected card for each attack
-        const attack1Costs = {
-            cost1: cards[selectedIndex].attack1Cost1 || defaultCost1,
-            cost2: cards[selectedIndex].attack1Cost2 || defaultCost2,
-            cost3: cards[selectedIndex].attack1Cost3 || defaultCost3,
-            cost4: cards[selectedIndex].attack1Cost4 || defaultCost4
-        };
-
-        const attack2Costs = {
-            cost1: cards[selectedIndex].attack2Cost1 || defaultCost1,
-            cost2: cards[selectedIndex].attack2Cost2 || defaultCost2,
-            cost3: cards[selectedIndex].attack2Cost3 || defaultCost3,
-            cost4: cards[selectedIndex].attack2Cost4 || defaultCost4
-        };
-
-        const attack3Costs = {
-            cost1: cards[selectedIndex].attack3Cost1 || defaultCost1,
-            cost2: cards[selectedIndex].attack3Cost2 || defaultCost2,
-            cost3: cards[selectedIndex].attack3Cost3 || defaultCost3,
-            cost4: cards[selectedIndex].attack3Cost4 || defaultCost4
-        };
-
-        const attack4Costs = {
-            cost1: cards[selectedIndex].attack4Cost1 || defaultCost1,
-            cost2: cards[selectedIndex].attack4Cost2 || defaultCost2,
-            cost3: cards[selectedIndex].attack4Cost3 || defaultCost3,
-            cost4: cards[selectedIndex].attack4Cost4 || defaultCost4
-        };
-
-        // Call the updateCostTexts function for each attack block
-        attack1Block.updateCostTexts(attack1Costs); // Ensure attack1Block has access to the function
-        attack2Block.updateCostTexts(attack2Costs); // Ensure attack2Block has access to the function
-        attack3Block.updateCostTexts(attack3Costs); // Ensure attack3Block has access to the function
-        attack4Block.updateCostTexts(attack4Costs); // Ensure attack4Block has access to the function
-    }
-
-
-
     // Function to update attack information based on selectedIndex
     function updateAttackInfo() {
-
-        //console.log("updateAttackInfo called...");
         if (cards[selectedIndex]) {
 
-            // Update attack text fields first
-            attack1Block.nameText = cards[selectedIndex].attack1Name || "Attack 1"
-            attack1Block.descText = cards[selectedIndex].attack1Text || "No description available."
+            const defaultCost1 = "Cost 1";
+            const defaultCost2 = "Cost 2";
+            const defaultCost3 = "Cost 3";
+            const defaultCost4 = "Cost 4";
 
-            attack2Block.nameText = cards[selectedIndex].attack2Name || "Attack 2"
-            attack2Block.descText = cards[selectedIndex].attack2Text || "No description available."
 
-            attack3Block.nameText = cards[selectedIndex].attack3Name || "Attack 3"
-            attack3Block.descText = cards[selectedIndex].attack3Text || "No description available."
+            // Create costs objects from the selected card for each attack
+            const attack1Costs = {
+                cost1: cards[selectedIndex].attack1Cost1 || defaultCost1,
+                cost2: cards[selectedIndex].attack1Cost2 || defaultCost2,
+                cost3: cards[selectedIndex].attack1Cost3 || defaultCost3,
+                cost4: cards[selectedIndex].attack1Cost4 || defaultCost4
+            };
 
-            attack4Block.nameText = cards[selectedIndex].attack4Name || "Attack 4"
-            attack4Block.descText = cards[selectedIndex].attack4Text || "No description available."
+            const attack2Costs = {
+                cost1: cards[selectedIndex].attack2Cost1 || defaultCost1,
+                cost2: cards[selectedIndex].attack2Cost2 || defaultCost2,
+                cost3: cards[selectedIndex].attack2Cost3 || defaultCost3,
+                cost4: cards[selectedIndex].attack2Cost4 || defaultCost4
+            };
 
-            updateAttackCost();
+            const attack3Costs = {
+                cost1: cards[selectedIndex].attack3Cost1 || defaultCost1,
+                cost2: cards[selectedIndex].attack3Cost2 || defaultCost2,
+                cost3: cards[selectedIndex].attack3Cost3 || defaultCost3,
+                cost4: cards[selectedIndex].attack3Cost4 || defaultCost4
+            };
+
+            const attack4Costs = {
+                cost1: cards[selectedIndex].attack4Cost1 || defaultCost1,
+                cost2: cards[selectedIndex].attack4Cost2 || defaultCost2,
+                cost3: cards[selectedIndex].attack4Cost3 || defaultCost3,
+                cost4: cards[selectedIndex].attack4Cost4 || defaultCost4
+            };
+
+            // Update attack blocks
+            attack1Block.updateAttack(cards[selectedIndex].attack1Name, cards[selectedIndex].attack1Text, 0, attack1Costs);
+            attack2Block.updateAttack(cards[selectedIndex].attack2Name, cards[selectedIndex].attack2Text, 1, attack2Costs);
+            attack3Block.updateAttack(cards[selectedIndex].attack3Name, cards[selectedIndex].attack3Text, 2, attack3Costs);
+            attack4Block.updateAttack(cards[selectedIndex].attack4Name, cards[selectedIndex].attack4Text, 3, attack4Costs);
         }
     }
 
@@ -158,20 +137,11 @@ Window {
                     || "Sub Type 4"
         }
 
-
-        // console.log("Sub1: " + cards[selectedIndex].subtype1)
-        // console.log("Sub2: " + cards[selectedIndex].subtype2)
-        // console.log("Sub3: " + cards[selectedIndex].subtype3)
-        // console.log("Sub4: " + cards[selectedIndex].subtype4)
-
-        //console.log("Sub1: " + subtype1Text.text)
-        //console.log("Sub2: " + subtype2Text.text)
         // Set visibility for each ability based on the card data
         subtype1Block.visible = cards[selectedIndex].subtype1 !== "Sub Type 1" && cards[selectedIndex].subtype1 !== ""
         subtype2Block.visible = cards[selectedIndex].subtype2 !== "Sub Type 2" && cards[selectedIndex].subtype2 !== ""
         subtype3Block.visible = cards[selectedIndex].subtype3 !== "Sub Type 3" && cards[selectedIndex].subtype3 !== ""
         subtype4Block.visible = cards[selectedIndex].subtype4 !== "Sub Type 4" && cards[selectedIndex].subtype4 !== ""
-
 
         if (subtype1Block.visible && !subtype2Block.visible && !subtype3Block.visible && !subtype4Block.visible ||
                 subtype1Block.visible && subtype2Block.visible && subtype3Block.visible && !subtype4Block.visible) {

@@ -75,6 +75,17 @@ Rectangle {
         });
     }
 
+    function updateAttack(attackName, attackText, attackIndex, costs) {
+        // Set default values
+        const defaultName = "Attack " + (attackIndex + 1);
+        const defaultText = "No description available.";
+
+        // Update name and description texts
+        nameText.text = attackName || defaultName;
+        descriptionText.text = attackText || defaultText;
+
+        updateCostTexts(costs);
+    }
 
     function updateCostTexts(costs) {
         const defaultCost1 = "Cost 1";
