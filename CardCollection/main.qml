@@ -53,7 +53,7 @@ Window {
             currentIndex: selectedTabIndex
             width: parent.width
             Layout.preferredHeight: parent.height * 0.08
-            height: 50
+            height: 35
 
             TabButton {
                 opacity: 1

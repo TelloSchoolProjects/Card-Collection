@@ -22,6 +22,7 @@ Item {
 
     property int selectedIndex: 0
     property var cards: [] // List of card objects
+    property var cachedSets: [] // List to hold set names
     //property int selectedTabIndex: 0
 
     // Define color scheme properties
@@ -510,19 +511,66 @@ Item {
 
                         Keys.onSpacePressed: handleSpacePressed
 
+                        signal clearSignal;
+
+                        Connections {
+                            target: btnClear
+                            function onClearParams() {
+                                //console.log("Signal onClearParams() called");
+
+                                // Clear all items in setsModel
+                                setsModel.clear();
+
+                                // Create a temporary list to hold the items
+                                var tempList = [];
+                                for(var i = 0; i < cachedSets.length; i++) {
+                                    setsModel.append(cachedSets[i]);
+                                    //console.log(cachedSets[i].name);
+                                }
+
+                                // Reset filter states
+                                searchFilterTools.fireChecked = false;
+                                searchFilterTools.waterChecked = false;
+                                searchFilterTools.grassChecked = false;
+                                searchFilterTools.lightningChecked = false;
+                                searchFilterTools.psychicChecked = false;
+                                searchFilterTools.fightingChecked = false;
+                                searchFilterTools.darknessChecked = false;
+                                searchFilterTools.fairyChecked = false;
+                                searchFilterTools.dragonChecked = false;
+                                searchFilterTools.metalChecked = false;
+                                searchFilterTools.colorlessChecked = false;
+
+                                // Clear search box text
+                                txtSearchBox.text = "";
+                            }
+                        }
+
+
                         delegate: Item {
+                            id: itemDelegate
                             width: parent ? parent.width : 0
                             height: checkDelegate ? checkDelegate.height : 30
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    // Toggle the checked state directly in the delegate
-                                    var currentCheckedState = checkDelegate.checked;
-                                    checkDelegate.checked = !currentCheckedState;
-                                    // Update the model selected state based on the new checked state
-                                    model.selected = !currentCheckedState;
+
+                            Connections {
+                                target: setComboBox
+                                function onClearSignal() {
+                                    // console.log("onClearSignal called");
+                                    toggle();
                                 }
+
+                            }
+
+                            function toggle() {
+                                // console.log("itemDelegate.toggle() called...");
+                                checkDelegate.toggle()
+                            }
+
+                            MouseArea {
+                                id: comboBoxDelegateMouseArea
+                                anchors.fill: parent
+                                onClicked: checkDelegate.checked = !checkDelegate.checked
                                 onEntered: setComboBox.highlightedIndex = index  // Manually set the highlighted index
                             }
 
@@ -532,6 +580,9 @@ Item {
                                 text: model.name
                                 highlighted: setComboBox.highlightedIndex == index
                                 checked: model.selected
+                                onCheckedChanged: {
+                                    model.selected = checked;
+                                }
                             }
                         }
 
@@ -564,13 +615,15 @@ Item {
                                     })
 
                                     tempSets.forEach(function (sortedSet) {
-                                        setsModel.append(sortedSet)
+                                        setsModel.append(sortedSet);
                                     })
+
+                                    cachedSets = [];
+                                    cachedSets = tempSets;
                                 }
                             }
                         }
                     }
-
                     TextField {
                         id: txtSearchBox
                         x: 111
@@ -578,11 +631,7 @@ Item {
                         height: 25
                         text: "Deoxys"
                         anchors.verticalCenter: parent.verticalCenter
-                        //anchors.right: btnSearch.left
-                        //anchors.rightMargin: 6
-                        //Layout.fillHeight: false
                         z: 1
-                        //Layout.leftMargin: 6
                         Layout.preferredHeight: 25
                         Layout.preferredWidth: 200
                         placeholderText: qsTr("Enter card name")
@@ -610,13 +659,8 @@ Item {
                         height: 25
                         text: qsTr("Search")
                         anchors.verticalCenter: parent.verticalCenter
-                        //   anchors.right: parent.right
-                        //  anchors.rightMargin: -585
                         z: 1
                         font.styleName: "Bold Italic"
-                        // Layout.fillHeight: false
-                        // Layout.rightMargin: 6
-                        //Layout.fillWidth: false
                         palette {
                             button: "blue"
                         }
@@ -659,6 +703,7 @@ Item {
                                     var setItem = setsModel.get(setIdx)
                                     setsParams.push(
                                                 ['set', 'name', setItem.name])
+                                    //console.log(setsParams[setIdx]);
 
                                 }
                             }
@@ -710,22 +755,19 @@ Item {
                                             ['types', '', 'colorless'])
                             }
 
-                            if(typesParams.length === 0) {
-                                typesParams.push(['types', '', 'fire']);
-                                typesParams.push(['types', '', 'grass']);
-                                typesParams.push(['types', '', 'water']);
-                                typesParams.push(['types', '', 'lightning']);
-                                typesParams.push(['types', '', 'fighting']);
-                                typesParams.push(['types', '', 'psychic']);
-                                typesParams.push(['types', '', 'darkness']);
-                                typesParams.push(['types', '', 'metal']);
-                                typesParams.push(['types', '', 'fairy']);
-                                typesParams.push(['types', '', 'dragon']);
-                                typesParams.push(['types', '', 'colorless']);
-                            }
-
-                            // console.log(setsParams);
-                            // console.log(typesParams)
+                            // if(typesParams.length === 0) {
+                            //     typesParams.push(['types', '', 'fire']);
+                            //     typesParams.push(['types', '', 'grass']);
+                            //     typesParams.push(['types', '', 'water']);
+                            //     typesParams.push(['types', '', 'lightning']);
+                            //     typesParams.push(['types', '', 'fighting']);
+                            //     typesParams.push(['types', '', 'psychic']);
+                            //     typesParams.push(['types', '', 'darkness']);
+                            //     typesParams.push(['types', '', 'metal']);
+                            //     typesParams.push(['types', '', 'fairy']);
+                            //     typesParams.push(['types', '', 'dragon']);
+                            //     typesParams.push(['types', '', 'colorless']);
+                            // }
 
                             searchParams = searchParams.concat(typesParams);
                             searchParams = searchParams.concat(setsParams);
@@ -733,8 +775,6 @@ Item {
                             if(nameParam.length !== 0) {
                                 searchParams = searchParams.concat(nameParam);
                             }
-
-                            //console.log(searchParams)
 
                             // Call the request_search function with the built tuples if there are any
                             if (searchParams.length > 0) {
@@ -1941,7 +1981,7 @@ Item {
         ToolBar {
             id: pagingButtonsToolbar
             width: 600
-            height: 50
+            height: 65
             Layout.preferredHeight: 50
             Layout.fillHeight: false
             Layout.fillWidth: true
@@ -1952,10 +1992,11 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 z: 1
                 uniformCellSizes: false
-                spacing: 120
+                spacing: 90
 
                 Button {
                     id: button
+                    width: 70
                     text: "Previous"
                     Layout.fillHeight: false
                     Layout.fillWidth: false
@@ -1971,16 +2012,16 @@ Item {
                     }
 
                     Rectangle {
-                        id: rectangle9
+                        id: rectangle8
                         color: "#00ffffff"
-                        radius: 3
+                        radius: 8
                         border.color: "#6c0101"
-                        border.width: 2
+                        border.width: 3
                         anchors.fill: parent
-                        anchors.leftMargin: -1
-                        anchors.rightMargin: 0
-                        anchors.topMargin: -1
-                        anchors.bottomMargin: -1
+                        anchors.leftMargin: -2
+                        anchors.rightMargin: -2
+                        anchors.topMargin: -2
+                        anchors.bottomMargin: -2
                     }
                     hoverEnabled: true
 
@@ -1994,6 +2035,8 @@ Item {
                 }
 
                 Button {
+                    id: button1
+                    width: 70
                     text: "Next"
                     font.styleName: "Bold Italic"
                     font.pointSize: 11
@@ -2008,17 +2051,15 @@ Item {
 
                     Rectangle {
                         id: rectangle10
-                        x: -134
-                        y: -6
                         color: "#00ffffff"
-                        radius: 3
+                        radius: 8
                         border.color: "#6c0101"
                         border.width: 2
                         anchors.fill: parent
-                        anchors.leftMargin: -1
-                        anchors.rightMargin: 0
-                        anchors.topMargin: -1
-                        anchors.bottomMargin: -1
+                        anchors.leftMargin: -2
+                        anchors.rightMargin: -2
+                        anchors.topMargin: -2
+                        anchors.bottomMargin: -2
                     }
                     hoverEnabled: true
 
@@ -2034,24 +2075,26 @@ Item {
 
             Rectangle {
                 id: rectangle
+                visible: true
                 color: "#6c0101"
-                radius: 0
+                radius: 10
                 border.color: "#ee0000"
-                border.width: 3
+                border.width: 5
                 anchors.fill: parent
                 anchors.leftMargin: -6
                 anchors.rightMargin: -6
                 anchors.topMargin: 0
-                anchors.bottomMargin: 0
+                anchors.bottomMargin: -1
                 z: 0
 
                 Rectangle {
                     id: rectangle100
                     color: "#00ffffff"
-                    radius: 9
+                    radius: 0
                     border.color: "#ee0000"
                     border.width: 4
                     anchors.fill: parent
+                    anchors.bottomMargin: 0
                 }
             }
 
@@ -2063,22 +2106,80 @@ Item {
                 border.color: "#6c0101"
                 border.width: 1
                 anchors.fill: parent
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
-                anchors.topMargin: 2
-                anchors.bottomMargin: 2
+                anchors.leftMargin: -6
+                anchors.rightMargin: -6
+                anchors.bottomMargin: 0
                 z: 0
             }
 
             Rectangle {
-                id: rectangle3
-                visible: false
-                color: "#00951111"
-                radius: 4
-                border.color: "#6c0101"
-                border.width: 2
-                anchors.fill: parent
+                id: clearButtonHighlight
+                x: 9
+                width: 80
+                height: 50
+                visible: true
+                color: "#c80d0d"
+                radius: 3
+                border.color: primaryColor
+                border.width: 0
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 0
                 z: 0
+
+                Button {
+                    id: btnClear
+                    text: ""
+                    anchors.fill: parent
+                    anchors.leftMargin: 3
+                    anchors.rightMargin: 4
+                    anchors.topMargin: 3
+                    anchors.bottomMargin: 4
+                    padding: 0
+                    horizontalPadding: 0
+                    verticalPadding: 0
+                    clip: true
+                    z: 0
+                    activeFocusOnTab: false
+
+                    signal clearParams;
+                    x: -4
+                    y: 2
+
+                    ToolTip.delay: 800
+                    ToolTip.timeout: 5000
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Clear all search parameters.")
+
+                    onClicked: {
+                        // setComboBox.clearParams();
+                        //console.log("Calling signal clearParams()");
+                        clearParams();
+
+                    }
+                    onPressed: {
+                        clearButtonHighlight.border.color = screenColor;
+                        clearButtonHighlight.color = screenColor;
+                    }
+                    onReleased: {
+                        clearButtonHighlight.border.color = primaryColor;
+                        clearButtonHighlight.color = primaryColor;
+
+                    }
+
+                    Image {
+                        id: image
+                        y: -52
+                        width: 176
+                        height: 210
+                        source: "https://images.pokemontcg.io/swsh35/51_hires.png"
+                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        scale: 0.6
+                        sourceSize.height: 209
+                        sourceSize.width: 150
+                        fillMode: Image.PreserveAspectCrop
+                    }
+                }
             }
 
             Rectangle {
@@ -2090,27 +2191,164 @@ Item {
                 border.color: "#6c0101"
                 border.width: 2
                 anchors.fill: parent
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
+                anchors.leftMargin: -6
+                anchors.rightMargin: -6
+                anchors.topMargin: 0
+                anchors.bottomMargin: -1
                 z: 0
 
                 Text {
                     id: _text
                     width: 109
                     height: 30
-                    color: "#ffffff"
+                    color: dropTextColor
                     text: cards.length ? ((selectedIndex + 1) + "/" + cards.length) : "-/-"
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 12
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
+                    z: 1
                     clip: false
                     anchors.horizontalCenter: parent.horizontalCenter
                     fontSizeMode: Text.HorizontalFit
                     font.styleName: "Bold Italic"
                 }
+
+                Rectangle {
+                    id: rectangle3
+                    x: 149
+                    y: 8
+                    width: 265
+                    height: 34
+                    visible: true
+                    color: "#6c0101"
+                    radius: 8
+                    border.color: "#ff0000"
+                    border.width: 2
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: -1
+                    anchors.horizontalCenterOffset: 0
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    z: 0
+
+                    Rectangle {
+                        id: counterBezel
+                        width: 79
+                        height: 25
+                        color: bezelColor
+                        radius: 4
+                        border.color: bezelBorderColor
+                        border.width: 2
+                        anchors.verticalCenter: parent.verticalCenter
+                        z: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        Rectangle {
+                            id: counterScreen
+                            y: -4
+                            color: screenColor
+                            radius: 4
+                            border.color: screenShadeColor
+                            border.width: 2
+                            anchors.fill: parent
+                            anchors.leftMargin: 4
+                            anchors.rightMargin: 4
+                            anchors.topMargin: 4
+                            anchors.bottomMargin: 4
+                            z: 1
+                        }
+
+                        Rectangle {
+                            id: counterScreen1
+                            y: -4
+                            color: "#0000FFFF"
+                            radius: 4
+                            border.color: borderColor
+                            border.width: 2
+                            anchors.fill: parent
+                            anchors.leftMargin: 0
+                            anchors.rightMargin: 0
+                            anchors.topMargin: 0
+                            anchors.bottomMargin: 0
+                            state: ""
+                            z: 1
+                        }
+                    }
+                }
             }
+
+            Rectangle {
+                id: settingsButtonHighlight
+                x: 498
+                width: 80
+                height: 50
+                visible: true
+                color: "#c80d0d"
+                radius: 3
+                border.color: primaryColor
+                border.width: 0
+                anchors.verticalCenter: parent.verticalCenter
+                z: 0
+                Button {
+                    id: btnSettings
+                    x: -4
+                    y: 2
+                    text: ""
+                    anchors.fill: parent
+                    anchors.leftMargin: 3
+                    anchors.rightMargin: 4
+                    anchors.topMargin: 3
+                    anchors.bottomMargin: 4
+                    z: 0
+                    verticalPadding: 0
+                    padding: 0
+
+                   // hoverEnabled: true;
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Search Settings")
+
+                    onReleased: {
+                                    settingsButtonHighlight.border.color = primaryColor;
+                                    settingsButtonHighlight.color = primaryColor;
+
+                                }
+                    onPressed: {
+                                    settingsButtonHighlight.border.color = screenColor;
+                                    settingsButtonHighlight.color = screenColor;
+                                }
+                    onClicked: {
+                                    // setComboBox.clearParams();
+                                    //console.log("Calling signal clearParams()");
+
+                                }
+                    horizontalPadding: 0
+
+                    Image {
+                        id: settingsButtonImage
+                        y: -59
+                        width: 176
+                        height: 210
+                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+                        sourceSize.width: 150
+                        sourceSize.height: 209
+                        scale: 0.52
+                        fillMode: Image.PreserveAspectCrop
+                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    clip: true
+                   // activeFocusOnTab: false
+
+
+                }
+                anchors.verticalCenterOffset: 0
+            }
+
+
+
         }
 
     }
@@ -2247,6 +2485,10 @@ Item {
                                               "subtype4": card.subtype4 || ""
                                           }))
 
+                for(var i = 0; i < cards.length; i++) {
+                    console.log((i+1) + ": " + cards[i].imageUrl);
+                }
+
                 selectedIndex = 0; // Start with the first card
                 updateAttackInfo();
                 updateAbilityInfo();
@@ -2269,5 +2511,7 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:107}D{i:109}D{i:113}D{i:114}
+D{i:115}D{i:122}
 }
 ##^##*/

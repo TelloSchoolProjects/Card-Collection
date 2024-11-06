@@ -44,17 +44,29 @@ Rectangle {
     property color dropBorderColor: "#25fb2e"
     property color transparentColor: "#00ff0000"
 
-    property bool grassChecked: grassTypeButton.checked
-    property bool fireChecked: fireTypeButton.checked
-    property bool waterChecked: waterTypeButton.checked
-    property bool lightningChecked: lightningTypeButton.checked
-    property bool psychicChecked: psychicTypeButton.checked
-    property bool fightingChecked: fightingTypeButton.checked
-    property bool darknessChecked: darknessTypeButton.checked
-    property bool metalChecked: metalTypeButton.checked
-    property bool colorlessChecked: colorlessTypeButton.checked
-    property bool fairyChecked: fairyTypeButton.checked
-    property bool dragonChecked: dragonTypeButton.checked
+    // property bool grassChecked: grassTypeButton.checked
+    // property bool fireChecked: fireTypeButton.checked
+    // property bool waterChecked: waterTypeButton.checked
+    // property bool lightningChecked: lightningTypeButton.checked
+    // property bool psychicChecked: psychicTypeButton.checked
+    // property bool fightingChecked: fightingTypeButton.checked
+    // property bool darknessChecked: darknessTypeButton.checked
+    // property bool metalChecked: metalTypeButton.checked
+    // property bool colorlessChecked: colorlessTypeButton.checked
+    // property bool fairyChecked: fairyTypeButton.checked
+    // property bool dragonChecked: dragonTypeButton.checked
+
+    property alias grassChecked: grassTypeButton.checked
+    property alias fireChecked: fireTypeButton.checked
+    property alias waterChecked: waterTypeButton.checked
+    property alias lightningChecked: lightningTypeButton.checked
+    property alias psychicChecked: psychicTypeButton.checked
+    property alias fightingChecked: fightingTypeButton.checked
+    property alias darknessChecked: darknessTypeButton.checked
+    property alias metalChecked: metalTypeButton.checked
+    property alias colorlessChecked: colorlessTypeButton.checked
+    property alias fairyChecked: fairyTypeButton.checked
+    property alias dragonChecked: dragonTypeButton.checked
 
 
     // Expose setsModel to the outside world
@@ -185,9 +197,12 @@ Rectangle {
                 palette {
                     button: "green"
                 }
-                onClicked: {
-                    grassDimmer.visible = !grassTypeButton.checked
-                }
+                // onClicked: {
+                //    //grassDimmer.visible = !grassTypeButton.checked
+                // }
+
+                onCheckedChanged: grassDimmer.visible = !grassTypeButton.checked
+
 
                 width: 50
                 padding: 0
@@ -237,6 +252,8 @@ Rectangle {
                             opacity: 1
                             color: "#83474747"
                             anchors.fill: parent
+
+
                         }
                     }
 
@@ -292,9 +309,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    fireDimmer.visible = !fireTypeButton.checked
-                }
+                // onClicked: {
+                //     fireDimmer.visible = !fireTypeButton.checked
+                // }
+
+                onCheckedChanged: fireDimmer.visible = !fireTypeButton.checked
+
                 Rectangle {
                     id: fireImageBlock
                     x: -6
@@ -398,9 +418,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    waterDimmer.visible = !waterTypeButton.checked
-                }
+                // onClicked: {
+                //     waterDimmer.visible = !waterTypeButton.checked
+                // }
+
+                onCheckedChanged: waterDimmer.visible = !waterTypeButton.checked
+
                 Rectangle {
                     id: waterImageBlock
                     x: -6
@@ -503,9 +526,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    lightningDimmer.visible = !lightningTypeButton.checked
-                }
+                // onClicked: {
+                //     lightningDimmer.visible = !lightningTypeButton.checked
+                // }
+
+                onCheckedChanged: lightningDimmer.visible = !lightningTypeButton.checked
+
                 Rectangle {
                     id: lightningImageBlock
                     x: -6
@@ -607,9 +633,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    psychicDimmer.visible = !psychicTypeButton.checked
-                }
+                // onClicked: {
+                //     psychicDimmer.visible = !psychicTypeButton.checked
+                // }
+
+                onCheckedChanged: psychicDimmer.visible = !psychicTypeButton.checked
+
                 Rectangle {
                     id: psychicImageBlock
                     x: -6
@@ -712,9 +741,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    fightingDimmer.visible = !fightingTypeButton.checked
-                }
+                // onClicked: {
+                //     fightingDimmer.visible = !fightingTypeButton.checked
+                // }
+
+                onCheckedChanged: fightingDimmer.visible = !fightingTypeButton.checked
+
 
                 padding: 0
                 Rectangle {
@@ -819,9 +851,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    darknessDimmer.visible = !darknessTypeButton.checked
-                }
+                // onClicked: {
+                //     darknessDimmer.visible = !darknessTypeButton.checked
+                // }
+
+                onCheckedChanged: darknessDimmer.visible = !darknessTypeButton.checked
+
                 Rectangle {
                     id: darknessImageBlock
                     x: -6
@@ -922,9 +957,12 @@ Rectangle {
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
 
-                onClicked: {
-                    metalDimmer.visible = !metalTypeButton.checked
-                }
+                // onClicked: {
+                //     metalDimmer.visible = !metalTypeButton.checked
+                // }
+
+                onCheckedChanged: metalDimmer.visible = !metalTypeButton.checked
+
 
                 padding: 0
                 Rectangle {
@@ -1028,9 +1066,12 @@ Rectangle {
 
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
-                onClicked: {
-                    fairyDimmer.visible = !fairyTypeButton.checked
-                }
+                // onClicked: {
+                //     fairyDimmer.visible = !fairyTypeButton.checked
+                // }
+
+                onCheckedChanged: fairyDimmer.visible = !fairyTypeButton.checked
+
 
                 Rectangle {
                     id: fairyImageBlock
@@ -1123,9 +1164,12 @@ Rectangle {
                 palette {
                     button: "goldenrod"
                 }
-                onClicked: {
-                    dragonDummyImage.visible = !dragonTypeButton.checked
-                }
+                // onClicked: {
+                //     dragonDummyImage.visible = !dragonTypeButton.checked
+                // }
+
+                onCheckedChanged: dragonDimmer.visible = !dragonTypeButton.checked
+
 
                 Image {
                     id: dragonDummyImage
@@ -1235,9 +1279,12 @@ Rectangle {
                 icon.width: 50
                 // Change scale when hovered
                 scale: hovered ? 1.2 : 1.0
-                onClicked: {
-                    colorlessDummyImage.visible = !colorlessTypeButton.checked
-                }
+                // onClicked: {
+                //     colorlessDummyImage.visible = !colorlessTypeButton.checked
+                // }
+
+                onCheckedChanged: colorlessDimmer.visible = !colorlessTypeButton.checked
+
 
                 Image {
                     id: colorlessDummyImage

@@ -850,8 +850,8 @@ Item { // Page 2: Discover Page
 
                     Image {
                         id: ballButton
-                        width: 60
-                        height: 60
+                        width: 80
+                        height: 80
                         anchors.verticalCenter: parent.verticalCenter
                         source: "topBall.png"
                         anchors.horizontalCenterOffset: 13
@@ -1182,8 +1182,8 @@ Item { // Page 2: Discover Page
 
                     Image {
                         id: ballButton2
-                        width: 60
-                        height: 60
+                        width: 80
+                        height: 80
                         anchors.verticalCenter: parent.verticalCenter
                         source: "bottomBall.png"
                         anchors.horizontalCenterOffset: -13
@@ -1852,7 +1852,7 @@ Item { // Page 2: Discover Page
         Rectangle {
             id: bottomToolbar
             width: 600
-            height: 50
+            height: 65
             color: "#ee0000"
             border.color: borderColor
             border.width: 2
@@ -1877,11 +1877,11 @@ Item { // Page 2: Discover Page
                 height: 25
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-                anchors.right: btnSearch.left
+                anchors.right: btnDiscover.left
                 //anchors.left: parent.left
                 //anchors.right: txtSearchBox.left
                 anchors.leftMargin: 25
-                anchors.rightMargin: 65
+                anchors.rightMargin: 45
                 z: 0
                 Layout.leftMargin: 6
                 Layout.preferredHeight: -1
@@ -1994,11 +1994,11 @@ Item { // Page 2: Discover Page
             }
 
             Button {
-                id: btnSearch
+                id: btnDiscover
                 x: 295
                 y: 8
-                width: 181
-                height: 25
+                width: 125
+                height: 35
                 text: qsTr("Discover")
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: toggleBothButton.left
@@ -2034,7 +2034,7 @@ Item { // Page 2: Discover Page
                 ToolTip.delay: 800
                 ToolTip.timeout: 5000
                 ToolTip.visible: hovered
-                ToolTip.text: qsTr("Search the database with the selected filters")
+                ToolTip.text: qsTr("Discover a Pokemon")
 
                 // Change scale when hovered
                 scale: hovered ? 1.05 : 1.0
@@ -2149,14 +2149,14 @@ Item { // Page 2: Discover Page
                 }
 
                 Connections {
-                    target: btnSearch
+                    target: btnDiscover
                     function onPressed() {
                         rectangle7.border.color = pressedToggleColor;
                     }
                 }
 
                 Connections {
-                    target: btnSearch
+                    target: btnDiscover
                     function onReleased(){
                         rectangle7.border.color = releasedToggleColor;
                     }
@@ -2165,14 +2165,14 @@ Item { // Page 2: Discover Page
 
             Image {
                 id: ballToggleImage
-                x: 497
-                y: -25
+                x: 493
+                y: -17
                 width: 100
                 height: 100
                 opacity: 1
                 source: "newBall.png"
                 z: 1
-                scale: 0.35
+                scale: 0.45
                 fillMode: Image.PreserveAspectFit
             }
 
@@ -2191,6 +2191,8 @@ Item { // Page 2: Discover Page
             RoundButton {
                 id: toggleBothButton
                 x: 531
+                width: 40
+                height: 40
                 opacity: 1
                 text: ""
                 anchors.verticalCenter: parent.verticalCenter
@@ -2203,6 +2205,10 @@ Item { // Page 2: Discover Page
                 anchors.verticalCenterOffset: 0
                 hoverEnabled: true
 
+                ToolTip.delay: 800
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr("Toggle both drawers.")
 
                 MouseArea {
                     visible: false
@@ -2237,6 +2243,8 @@ Item { // Page 2: Discover Page
 
                 Connections {
                     target: toggleBothButton
+
+
                     function onReleased(){
                         console.log("released")
 
@@ -2267,10 +2275,10 @@ Item { // Page 2: Discover Page
                     border.color: "#ff0000"
                     border.width: 30
                     anchors.fill: parent
-                    anchors.leftMargin: -3
-                    anchors.rightMargin: -3
-                    anchors.topMargin: -3
-                    anchors.bottomMargin: -3
+                    anchors.leftMargin: -4
+                    anchors.rightMargin: -4
+                    anchors.topMargin: -4
+                    anchors.bottomMargin: -4
                 }
             }
         }
@@ -2484,6 +2492,6 @@ Item { // Page 2: Discover Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:118}D{i:121}
+    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
