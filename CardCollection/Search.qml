@@ -731,7 +731,7 @@ Item {
                             searchParams = searchParams.concat(setsParams);
 
                             if(nameParam.length !== 0) {
-                                searchParams.concat(nameParam);
+                                searchParams = searchParams.concat(nameParam);
                             }
 
                             //console.log(searchParams)
