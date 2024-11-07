@@ -1985,19 +1985,62 @@ Item {
             Layout.preferredHeight: 50
             Layout.fillHeight: false
             Layout.fillWidth: true
-            RowLayout {
+            Rectangle {
+                id: rectangle6
+                width: 387
                 height: 26
                 visible: true
+                color: "#00ffffff"
+                border.width: 0
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 z: 1
-                uniformCellSizes: false
-                spacing: 90
+
+                Button {
+                    id: btnFirst
+                    y: 0
+                    width: 42
+                    text: "First"
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    Layout.minimumHeight: 26
+                    Layout.minimumWidth: 42
+                    Layout.preferredHeight: 26
+                    Layout.preferredWidth: 42
+                    scale: hovered ? 1.05 : 1.0
+                    palette.button: "blue"
+                    hoverEnabled: true
+                    highlighted: false
+                    font.styleName: "Bold Italic"
+                    flat: false
+                    enabled: selectedIndex > 0
+                    Rectangle {
+                        id: rectangle9
+                        color: "#00ffffff"
+                        radius: 8
+                        border.color: "#6c0101"
+                        border.width: 3
+                        anchors.fill: parent
+                        anchors.leftMargin: -2
+                        anchors.rightMargin: -2
+                        anchors.topMargin: -2
+                        anchors.bottomMargin: -2
+                    }
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    Layout.fillWidth: false
+                    Layout.fillHeight: false
+
+                    onClicked: selectedIndex = 0
+                }
 
                 Button {
                     id: button
+                    y: 0
                     width: 70
                     text: "Previous"
+                    anchors.left: btnFirst.right
+                    anchors.leftMargin: 20
                     Layout.fillHeight: false
                     Layout.fillWidth: false
                     highlighted: false
@@ -2034,10 +2077,15 @@ Item {
                     scale: hovered ? 1.05 : 1.0
                 }
 
+
                 Button {
                     id: button1
+                    x: 269
+                    y: 0
                     width: 70
                     text: "Next"
+                    anchors.right: btnLast.left
+                    anchors.rightMargin: 20
                     font.styleName: "Bold Italic"
                     font.pointSize: 11
                     font.bold: true
@@ -2071,6 +2119,46 @@ Item {
                     // Change scale when hovered
                     scale: hovered ? 1.05 : 1.0
                 }
+
+                Button {
+                    id: btnLast
+                    x: 345
+                    y: 0
+                    width: 42
+                    text: "Last"
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    Layout.minimumHeight: 26
+                    Layout.minimumWidth: 42
+                    Layout.preferredHeight: 26
+                    Layout.preferredWidth: 42
+                    scale: hovered ? 1.05 : 1.0
+                    palette.button: "blue"
+                    hoverEnabled: true
+                    highlighted: false
+                    font.styleName: "Bold Italic"
+                    flat: false
+                    enabled: cards.length > 0 && selectedIndex < cards.length - 1
+                    Rectangle {
+                        id: rectangle11
+                        color: "#00ffffff"
+                        radius: 8
+                        border.color: "#6c0101"
+                        border.width: 3
+                        anchors.fill: parent
+                        anchors.leftMargin: -2
+                        anchors.rightMargin: -2
+                        anchors.topMargin: -2
+                        anchors.bottomMargin: -2
+                    }
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    Layout.fillWidth: false
+                    Layout.fillHeight: false
+
+                    onClicked: selectedIndex = cards.length - 1
+                }
+
             }
 
             Rectangle {
@@ -2219,7 +2307,7 @@ Item {
                     id: rectangle3
                     x: 149
                     y: 8
-                    width: 265
+                    width: 390
                     height: 34
                     visible: true
                     color: "#6c0101"
@@ -2525,6 +2613,6 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:106}D{i:108}D{i:112}
 }
 ##^##*/
