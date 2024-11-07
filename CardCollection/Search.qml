@@ -1521,7 +1521,7 @@ Item {
                         clip: false
                         boundsBehavior: Flickable.DragOverBounds
                         boundsMovement: Flickable.FollowBoundsBehavior
-                        contentHeight: 645 // Set a suitable height for your content
+                        contentHeight: 700 // Set a suitable height for your content
 
                         Column {
                             id: rightSideColumn
@@ -1802,12 +1802,12 @@ Item {
                             FlavorTextBlock {
                                 id: flavorTextBlock
 
-                                blockBG: window.blockBG
-                                screenColor: window.screenColor
-                                screenShadeColor: window.screenShadeColor
-                                bezelColor: window.bezelColor
-                                bezelBorderColor: window.bezelBorderColor
-                                screenHighlightColor: window.screenHighlightColor
+                                // blockBG: window.blockBG
+                                // screenColor: window.screenColor
+                                // screenShadeColor: window.screenShadeColor
+                                // bezelColor: window.bezelColor
+                                // bezelBorderColor: window.bezelBorderColor
+                                // screenHighlightColor: window.screenHighlightColor
 
                                 width: 225
                                 height: 150
@@ -1838,8 +1838,8 @@ Item {
 
                             Row {
                                 id: setSymbolRow
-                                width: 200
-                                height: 66
+                                width: 220
+                                height: 100
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 spacing: 3
 
@@ -1848,9 +1848,9 @@ Item {
                                     border.color: "#6c0101"
                                     border.width: 2
                                     color: "#c80d0d"
-                                    height: 65
+                                    height: 100
                                     radius: 8
-                                    width: 75
+                                    width: 100
                                     imageSource: (selectedIndex >= 0
                                                   && selectedIndex < cards.length) ? cards[selectedIndex].setSymbol : ""
                                     blockText: (selectedIndex >= 0
@@ -1861,7 +1861,7 @@ Item {
                                 Rectangle {
                                     id: setBlock
                                     width: 120
-                                    height: 65
+                                    height: 100
                                     color: "#c80d0d"
                                     radius: 8
                                     border.color: "#6c0101"
@@ -2511,7 +2511,6 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:107}D{i:109}D{i:113}D{i:114}
-D{i:115}D{i:122}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
