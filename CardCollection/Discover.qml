@@ -1874,14 +1874,13 @@ Item { // Page 2: Discover Page
             ComboBox {
                 id: setComboBox
                 y: 8
+                width: 300
                 height: 25
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.right: btnDiscover.left
+                anchors.left: toggleBothButton.right
                 //anchors.left: parent.left
                 //anchors.right: txtSearchBox.left
-                anchors.leftMargin: 25
-                anchors.rightMargin: 45
+                anchors.leftMargin: 20
                 z: 0
                 Layout.leftMargin: 6
                 Layout.preferredHeight: -1
@@ -1995,14 +1994,13 @@ Item { // Page 2: Discover Page
 
             Button {
                 id: btnDiscover
-                x: 295
                 y: 8
-                width: 125
+                width: 80
                 height: 35
                 text: qsTr("Discover")
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.right: toggleBothButton.left
-                anchors.rightMargin: 52
+                anchors.left: setComboBox.right
+                anchors.leftMargin: 15
                 anchors.verticalCenterOffset: 0
                 //   anchors.right: parent.right
                 //  anchors.rightMargin: -585
@@ -2165,8 +2163,8 @@ Item { // Page 2: Discover Page
 
             Image {
                 id: ballToggleImage
-                x: 493
-                y: -17
+                x: -5
+                y: -18
                 width: 100
                 height: 100
                 opacity: 1
@@ -2190,19 +2188,16 @@ Item { // Page 2: Discover Page
 
             RoundButton {
                 id: toggleBothButton
-                x: 531
+                x: 25
+                y: 13
                 width: 40
                 height: 40
                 opacity: 1
                 text: ""
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 37
                 enabled: !toggleLockTimer.running
                 //enabled: !toggleLockTimer.running
                 highlighted: false
                 flat: false
-                anchors.verticalCenterOffset: 0
                 hoverEnabled: true
 
                 ToolTip.delay: 800
@@ -2280,6 +2275,77 @@ Item { // Page 2: Discover Page
                     anchors.topMargin: -4
                     anchors.bottomMargin: -4
                 }
+            }
+
+            Rectangle {
+                id: settingsButtonHighlight
+                height: 50
+                visible: true
+                color: "#c80d0d"
+                radius: 3
+                border.color: primaryColor
+                border.width: 0
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: btnDiscover.right
+                anchors.right: parent.right
+                anchors.leftMargin: 18
+                anchors.rightMargin: 22
+                z: 0
+                Button {
+                    id: btnSettings
+                    x: -4
+                    y: 2
+                    text: ""
+                    anchors.fill: parent
+                    anchors.leftMargin: 3
+                    anchors.rightMargin: 4
+                    anchors.topMargin: 3
+                    anchors.bottomMargin: 4
+                    z: 0
+                    verticalPadding: 0
+                    padding: 0
+
+                    // hoverEnabled: true;
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Search Settings")
+
+                    onReleased: {
+                        settingsButtonHighlight.border.color = primaryColor;
+                        settingsButtonHighlight.color = primaryColor;
+
+                    }
+                    onPressed: {
+                        settingsButtonHighlight.border.color = screenColor;
+                        settingsButtonHighlight.color = screenColor;
+                    }
+                    onClicked: {
+                        // setComboBox.clearParams();
+                        //console.log("Calling signal clearParams()");
+                        settingsWindow.visible = true;
+                    }
+                    horizontalPadding: 0
+
+                    Image {
+                        id: settingsButtonImage
+                        y: -59
+                        width: 176
+                        height: 210
+                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+                        sourceSize.width: 150
+                        sourceSize.height: 209
+                        scale: 0.52
+                        fillMode: Image.PreserveAspectCrop
+                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    clip: true
+                    // activeFocusOnTab: false
+
+
+                }
+                anchors.verticalCenterOffset: 0
             }
         }
 
@@ -2485,13 +2551,30 @@ Item { // Page 2: Discover Page
         id: __materialLibrary__
     }
     // Page content for browsePage
+
+    SettingsWindow {
+        id: settingsWindow
+        color: bezelColor
+        flags: Qt.SubWindow
+        height: 200
+        maximumHeight: settingsWindow.height
+        maximumWidth: settingsWindow.width
+        minimumHeight: settingsWindow.height
+        minimumWidth: settingsWindow.width
+        modality: Qt.WindowModal
+        visible: false
+        width: 400
+    }
+
 }
+
+
 
 
 
 
 /*##^##
 Designer {
-    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:120}D{i:126}D{i:132}
 }
 ##^##*/
