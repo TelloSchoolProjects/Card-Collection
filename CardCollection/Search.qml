@@ -2304,26 +2304,26 @@ Item {
                     verticalPadding: 0
                     padding: 0
 
-                   // hoverEnabled: true;
+                    // hoverEnabled: true;
                     ToolTip.timeout: 5000
                     ToolTip.delay: 800
                     ToolTip.visible: hovered
                     ToolTip.text: qsTr("Search Settings")
 
                     onReleased: {
-                                    settingsButtonHighlight.border.color = primaryColor;
-                                    settingsButtonHighlight.color = primaryColor;
+                        settingsButtonHighlight.border.color = primaryColor;
+                        settingsButtonHighlight.color = primaryColor;
 
-                                }
+                    }
                     onPressed: {
-                                    settingsButtonHighlight.border.color = screenColor;
-                                    settingsButtonHighlight.color = screenColor;
-                                }
+                        settingsButtonHighlight.border.color = screenColor;
+                        settingsButtonHighlight.color = screenColor;
+                    }
                     onClicked: {
-                                    // setComboBox.clearParams();
-                                    //console.log("Calling signal clearParams()");
-
-                                }
+                        // setComboBox.clearParams();
+                        //console.log("Calling signal clearParams()");
+                        settingsWindow.visible = true;
+                    }
                     horizontalPadding: 0
 
                     Image {
@@ -2340,7 +2340,7 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                     clip: true
-                   // activeFocusOnTab: false
+                    // activeFocusOnTab: false
 
 
                 }
@@ -2503,6 +2503,20 @@ Item {
                 view.visible = true
             }
         }
+    }
+
+    SettingsWindow {
+        id: settingsWindow
+        color: bezelColor
+        flags: Qt.SubWindow
+        height: 200
+        maximumHeight: settingsWindow.height
+        maximumWidth: settingsWindow.width
+        minimumHeight: settingsWindow.height
+        minimumWidth: settingsWindow.width
+        modality: Qt.WindowModal
+        visible: false
+        width: 400
     }
 }
 
