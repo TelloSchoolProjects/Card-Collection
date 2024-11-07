@@ -12,7 +12,7 @@ Window {
     id: settingsWindow
     width: 400
     height: 200
-    color: "#737373"
+    color: "#00737373"
     maximumHeight: 200
     maximumWidth: 400
     minimumHeight: 200
@@ -73,43 +73,6 @@ Window {
                 }
 
 
-            }
-
-            Button {
-                id: btnHomeBack
-                y: 150
-
-                height: 40
-                text: "Back"
-                anchors.left: settingsHomePage.left
-                anchors.right: settingsHomePage.right
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 10
-                anchors.rightMargin: 10
-                anchors.bottomMargin: 5
-
-                palette {
-                    button: "blue"
-                }
-
-                Rectangle {
-                    id: homeBackButtonBorder
-                    x: -81
-                    y: -156
-                    color: "#003173ff"
-                    radius: 8
-                    border.color: "#142c37"
-                    border.width: 4
-                    anchors.fill: parent
-                    anchors.leftMargin: -2
-                    anchors.rightMargin: -2
-                    anchors.topMargin: -2
-                    anchors.bottomMargin: -2
-                }
-
-                onClicked: {
-                    settingsWindow.visible = false;
-                }
             }
 
             Button {
@@ -187,6 +150,11 @@ Window {
                 height: 40
                 text: "Data"
                 palette.button: "blue"
+
+                onClicked: {
+                    settingsStack.currentIndex = 4;
+                }
+
                 Rectangle {
                     id: homeDataButtonBorder
                     color: "#003173ff"
@@ -214,26 +182,6 @@ Window {
 
             //onVisibleChanged: console.log("aboutPage visible changed");
 
-
-            Button {
-                id: btnAboutBack
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.topMargin: 10
-                anchors.leftMargin: 10
-
-                width: 150
-                height: 75
-                text: "Back"
-
-                palette {
-                    button: "blue"
-                }
-
-                onClicked: {
-                    settingsStack.currentIndex--;
-                }
-            }
         }
         Rectangle {
             id: themePage
@@ -254,5 +202,67 @@ Window {
             visible: settingsStack.currentIndex === 3
             color: "#26bd4b"
         }
+        Rectangle {
+            id: dataPage
+            anchors.fill: parent
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            visible: settingsStack.currentIndex === 3
+            color: "#feff6a"
+        }
+    }
+
+    Button {
+        id: btnBack
+        y: 146
+
+        height: 40
+        text: "Back"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 70
+        anchors.rightMargin: 70
+        anchors.bottomMargin: 10
+
+        palette {
+            button: "blue"
+        }
+
+        Rectangle {
+            id: backButtonBorder
+            x: -81
+            y: -156
+            color: "#003173ff"
+            radius: 8
+            border.color: "#142c37"
+            border.width: 4
+            anchors.fill: parent
+            anchors.leftMargin: -2
+            anchors.rightMargin: -2
+            anchors.topMargin: -2
+            anchors.bottomMargin: -2
+        }
+
+        onClicked: {
+            if(settingsStack.currentIndex > 0) {
+                settingsStack.currentIndex = 0;
+            } else {
+                settingsWindow.visible = false;
+            }
+        }
+    }
+
+    Rectangle {
+        id: rectangle
+        color: "#00ffffff"
+        radius: 32
+        border.color: "#585858"
+        border.width: 16
+        anchors.fill: parent
+        anchors.leftMargin: -12
+        anchors.rightMargin: -12
+        anchors.topMargin: -12
+        anchors.bottomMargin: -12
     }
 }
