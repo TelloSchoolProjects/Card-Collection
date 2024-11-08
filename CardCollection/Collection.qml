@@ -10,7 +10,7 @@ Item { // Page 2: Collection Page
     focus: true
     id: collectionPage
     width: 600
-    height: 600
+    height: 615
     Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
     Layout.preferredWidth: 600
     Layout.preferredHeight: 600
@@ -41,6 +41,7 @@ Item { // Page 2: Collection Page
     // Add a boolean variable to track the drawer's state
     property bool isDrawerOpen: false // Start with the drawer closed
     property bool isDrawer2Open: false // Start with the drawer closed
+    property bool isFilterDrawerOpen: false
 
     property int selectedIndex: 0
     property var cards: [] // List of card objects
@@ -93,6 +94,23 @@ Item { // Page 2: Collection Page
         toggleLockTimer.start(); // Start the timer to re-enable the button
         toggleLeftDrawer();
         toggleRightDrawer();
+    }
+
+    function toggleFilterDrawer() {
+        if (filtersColumn.y >= collectionPage.height) { // Closed position
+            filtersColumn.y = collectionPage.height - filtersColumn.height + 15; // Slide into view
+            isFilterDrawerOpen = true;
+
+            rotateAnimationFilterDrawer.from = ballButtonFilterDrawer.rotation;
+            rotateAnimationFilterDrawer.to = 0;
+            rotateAnimationFilterDrawer.start();
+        } else { // Open position
+            filtersColumn.y = collectionPage.height + 15; // Hide off the right edge
+            isFilterDrawerOpen = false;
+            rotateAnimationFilterDrawer.from = ballButtonFilterDrawer.rotation;
+            rotateAnimationFilterDrawer.to = 180;
+            rotateAnimationFilterDrawer.start();
+        }
     }
 
 
@@ -1312,55 +1330,11 @@ Item { // Page 2: Collection Page
         }
 
 
-        Rectangle {
-            id: rectangle6
-            height: 70
-            opacity: 1
-            color: "#00ffffff"
-            border.color: "#6c0101"
-            border.width: 2
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
-            z: 1
-
-            MySearchFilterTools {
-                id: searchFilterTools
-                Layout.fillHeight: false
-                Layout.fillWidth: true
-                Layout.preferredHeight: 40
-                Layout.topMargin: 0
-                //toolbarContentHeight: 30
-                color: "#00ff0000"
-                border.color: "#006c0101"
-                border.width: 2
-                blockBorderWidth: 3
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
-                anchors.topMargin: 0
-                anchors.bottomMargin: 0
-                toolsBorderColor: "#ff0000"
-                toolsFillColor: deepBG
-                mainColor: "#790000"
-                z: 2
-                Layout.preferredWidth: 500
-
-                // Dynamic ListModel for sets
-                setsModel: ListModel {
-                    id: setsModel
-                }
-            }
-        }
-
 
         Rectangle {
             id: rectangle17
             height: 10
+            visible: true
             color: "#ffffff"
             border.width: 0
             anchors.left: parent.left
@@ -1439,448 +1413,46 @@ Item { // Page 2: Collection Page
             }
         }
 
+
         Rectangle {
-            id: bottomToolbar
-            width: 600
-            height: 65
-            color: "#ee0000"
+            id: rectangle8
+            height: 128
+            color: blockBG
+            radius: 0
             border.color: borderColor
-            border.width: 2
-            z: 1
+            border.width: 3
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
 
             Rectangle {
-                id: rectangle1
-                color: "#541515"
-                radius: 8
-                border.color: "#ee0000"
-                border.width: 1
+                id: rectangle9
+                color: deepBG
                 anchors.fill: parent
-                anchors.leftMargin: 4
-                anchors.rightMargin: 4
-                anchors.topMargin: 4
-                anchors.bottomMargin: 4
-            }
-
-            ComboBox {
-                id: setComboBox
-                y: 8
-                width: 300
-                height: 25
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: toggleBothButton.right
-                //anchors.left: parent.left
-                //anchors.right: txtSearchBox.left
-                anchors.leftMargin: 20
-                z: 0
-                Layout.leftMargin: 6
-                Layout.preferredHeight: -1
-                Layout.preferredWidth: -1
-                //Layout.fillHeight: false
-                //Layout.fillWidth: true
-                displayText: "Sets"
-
-                model: setsModel
-
-                delegate: Item {
-                    width: parent ? parent.width : 0
-                    height: checkDelegate ? checkDelegate.height : 30
-
-                    function toggle() {
-                        checkDelegate.toggle()
-                    }
-
-                    CheckDelegate {
-                        id: checkDelegate
-                        anchors.fill: parent
-                        text: model.name
-                        highlighted: setComboBox.highlightedIndex == index
-                        checked: model.selected
-                        onCheckedChanged: {
-                            if (model.selected !== checked) {
-                                model.selected = checked;
-                            }
-                        }
-                    }
-                }
-
-                // override space key handling to toggle items when the popup is visible
-                Keys.onSpacePressed: {
-                    console.log("Space Pressed")
-                    if (setComboBox.popup.visible) {
-                        var currentItem = setComboBox.popup.contentItem.currentItem
-                        if (currentItem) {
-                            currentItem.toggle()
-                            event.accepted = true
-                        }
-                    }
-                }
-
-                Keys.onReleased: {
-                    if (setComboBox.popup.visible)
-                        event.accepted = (event.key === Qt.Key_Space)
-                }
-
-                Component.onCompleted: {
-                    // Request All Sets to populate combo box
-                    //console.log("Requesting sets from backend...")
-                    backendController.request_sets_retrieve()
-                }
-
-                Rectangle {
-                    id: rectangle
-                    color: "#00ffffff"
-                    radius: 8
-                    border.color: "#ce0000"
-                    border.width: 2
-                    anchors.fill: parent
-                    anchors.leftMargin: -2
-                    anchors.rightMargin: -2
-                    anchors.topMargin: -2
-                    anchors.bottomMargin: -2
-                }
-            }
-
-            Connections {
-                target: backendController
-
-                function onSetsResults(response) {
-                    var data = JSON.parse(response)
-                    setsModel.clear(
-                                ) // Clear existing items in the model
-
-                    if (data.error) {
-                        sets = [] // Clear the array of sets
-                        console.log("Error in the data received from backend.")
-                    } else {
-                        // Collect sets into an array
-                        var tempSets = []
-
-                        data.forEach(function (set) {
-                            // Collect each set object
-                            tempSets.push({
-                                              "name": set.name,
-                                              "selected": false
-                                          })
-                        })
-
-                        // Sort the array alphabetically by name
-                        tempSets.sort(function (a, b) {
-                            return a.name.localeCompare(
-                                        b.name) // Sort using localeCompare for proper alphabetical order
-                        })
-
-                        // Append sorted sets to the model
-                        tempSets.forEach(
-                                    function (sortedSet) {
-                                        setsModel.append(
-                                                    sortedSet)
-                                        //console.log("Appending set: ", sortedSet.name); // Debugging each appended set
-                                    })
-
-                        //console.log("SetsModel updated with new sets: ", setsModel.count); // Check the number of elements
-                    }
-                }
-            }
-
-            Button {
-                id: btnDiscover
-                y: 8
-                width: 80
-                height: 35
-                text: qsTr("Collection")
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: setComboBox.right
-                anchors.leftMargin: 15
-                anchors.verticalCenterOffset: 0
-                //   anchors.right: parent.right
-                //  anchors.rightMargin: -585
-                z: 1
-                font.styleName: "Bold Italic"
-                // Layout.fillHeight: false
-                // Layout.rightMargin: 6
-                //Layout.fillWidth: false
-                palette {
-                    button: "blue"
-                }
-
-                Rectangle {
-                    id: rectangle7
-                    x: -304
-                    y: -18
-                    color: "#00ffffff"
-                    radius: 8
-                    border.color: "#ce0000"
-                    border.width: 2
-                    anchors.fill: parent
-                    anchors.leftMargin: -2
-                    anchors.rightMargin: -2
-                    anchors.topMargin: -2
-                    anchors.bottomMargin: -2
-                }
-                hoverEnabled: true
-
-                ToolTip.delay: 800
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
-                ToolTip.text: qsTr("Collection a Pokemon")
-
-                // Change scale when hovered
-                scale: hovered ? 1.05 : 1.0
-
-                onClicked: {
-                    // Initialize an empty array for the search parameters
-                    var searchParams = []
-
-                    var setsParams = [];
-                    // Collecting selected items from the ComboBox
-                    for (var i = 0; i < setsModel.count; i++) {
-                        var item = setsModel.get(i)
-                        if (item.selected) {
-                            // Build the tuple for each selected set item
-                            setsParams.push(
-                                        ['set', 'name', item.name])
-                        }
-                    }
-
-                    if(setsParams.length === 0) {
-                        for (var setIdx = 0; setIdx < setsModel.count; setIdx++) {
-                            var setItem = setsModel.get(setIdx)
-                            setsParams.push(
-                                        ['set', 'name', setItem.name])
-
-                        }
-                    }
-
-                    var typesParams = [];
-                    // Check the state of each Pokémon TCG type button and add to search parameters if checked
-                    if (searchFilterTools.fireChecked) {
-                        typesParams.push(
-                                    ['types', '', 'fire'])
-                    }
-                    if (searchFilterTools.waterChecked) {
-                        typesParams.push(
-                                    ['types', '', 'water'])
-                    }
-                    if (searchFilterTools.grassChecked) {
-                        typesParams.push(
-                                    ['types', '', 'grass'])
-                    }
-                    if (searchFilterTools.lightningChecked) {
-                        typesParams.push(
-                                    ['types', '', 'lightning'])
-                    }
-                    if (searchFilterTools.psychicChecked) {
-                        typesParams.push(
-                                    ['types', '', 'psychic'])
-                    }
-                    if (searchFilterTools.fightingChecked) {
-                        typesParams.push(
-                                    ['types', '', 'fighting'])
-                    }
-                    if (searchFilterTools.darknessChecked) {
-                        typesParams.push(
-                                    ['types', '', 'darkness'])
-                    }
-                    if (searchFilterTools.fairyChecked) {
-                        typesParams.push(
-                                    ['types', '', 'fairy'])
-                    }
-                    if (searchFilterTools.dragonChecked) {
-                        typesParams.push(
-                                    ['types', '', 'dragon'])
-                    }
-                    if (searchFilterTools.metalChecked) {
-                        typesParams.push(
-                                    ['types', '', 'metal'])
-                    }
-                    if (searchFilterTools.colorlessChecked) {
-                        typesParams.push(
-                                    ['types', '', 'colorless'])
-                    }
-
-                    if(typesParams.length === 0) {
-                        typesParams.push(['types', '', 'fire']);
-                        typesParams.push(['types', '', 'grass']);
-                        typesParams.push(['types', '', 'water']);
-                        typesParams.push(['types', '', 'lightning']);
-                        typesParams.push(['types', '', 'fighting']);
-                        typesParams.push(['types', '', 'psychic']);
-                        typesParams.push(['types', '', 'darkness']);
-                        typesParams.push(['types', '', 'metal']);
-                        typesParams.push(['types', '', 'fairy']);
-                        typesParams.push(['types', '', 'dragon']);
-                        typesParams.push(['types', '', 'colorless']);
-                    }
-
-                    // console.log(setsParams);
-                    // console.log(typesParams)
-
-                    searchParams = searchParams.concat(typesParams);
-                    searchParams = searchParams.concat(setsParams);
-
-                    //console.log(searchParams)
-
-
-                    // Call the request_search function with the built tuples if there are any
-                    if (searchParams.length > 0) {
-                        //Print each tuple as a string to the console
-                        for (var paramIndex = 0; paramIndex < searchParams.length; paramIndex++) {
-                            var tupleString = "[" + searchParams[paramIndex][0] + ", "
-                                    + searchParams[paramIndex][1] + ", "
-                                    + searchParams[paramIndex][2] + "]"
-                        }
-                        backendController.request_collection(
-                                    searchParams)
-                        // resetLeftColumnScroll()
-                        // resetRightColumnScroll()
-                    }
-                }
-
-                Connections {
-                    target: btnDiscover
-                    function onPressed() {
-                        rectangle7.border.color = pressedToggleColor;
-                    }
-                }
-
-                Connections {
-                    target: btnDiscover
-                    function onReleased(){
-                        rectangle7.border.color = releasedToggleColor;
-                    }
-                }
-            }
-
-            Image {
-                id: ballToggleImage
-                x: -5
-                y: -18
-                width: 100
-                height: 100
-                opacity: 1
-                source: "newBall.png"
-                z: 1
-                scale: 0.45
-                fillMode: Image.PreserveAspectFit
-            }
-
-            Timer {
-                id: toggleLockTimer
-                interval: lockTimerDuration
-                repeat: false
-                onTriggered: {
-                    // console.log("Toggle Timer Triggered");
-                    // toggleBothButton.enabled = true;
-                    // toggleBothButton.hoverEnabled = true;
-
-                }
-            }
-
-            RoundButton {
-                id: toggleBothButton
-                x: 25
-                y: 13
-                width: 40
-                height: 40
-                opacity: 1
-                text: ""
-                enabled: !toggleLockTimer.running
-                //enabled: !toggleLockTimer.running
-                highlighted: false
-                flat: false
-                hoverEnabled: true
-
-                ToolTip.delay: 800
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
-                ToolTip.text: qsTr("Toggle both drawers.")
-
-                MouseArea {
-                    visible: false
-                    anchors.fill: parent
-                    enabled: true
-                    preventStealing: false
-                    propagateComposedEvents: false
-                    hoverEnabled: false
-                    cursorShape: Qt.PointingHandCursor
-                    drag.target: toggleBothButton
-                    onEntered: ballToggleImage.scale = 0.40;
-                    onExited: ballToggleImage.scale = 0.35;
-                }
-
-                Connections {
-                    target: toggleBothButton
-                    function onClicked() {
-                        // console.log("clicked")
-
-                    }
-
-                }
-
-                Connections {
-                    target: toggleBothButton
-                    function onPressed() {
-                        // console.log("pressed")
-                        //ballToggleImage.opacity = 0.5;
-                        toggleButtonHighlight.border.color = pressedToggleColor;
-                    }
-                }
-
-                Connections {
-                    target: toggleBothButton
-
-
-                    function onReleased(){
-                        console.log("released")
-
-                        // ballToggleImage.opacity = 1;
-
-                        if(isDrawerOpen &! isDrawer2Open) {
-                            toggleRightDrawer();
-                        }
-                        else if(isDrawer2Open &! isDrawerOpen) {
-                            toggleLeftDrawer();
-                        }
-                        else {
-                            toggleBothDrawers()
-
-                        }
-
-
-                        toggleButtonHighlight.border.color = releasedToggleColor;
-                    }
-                }
-
-                Rectangle {
-                    id: toggleButtonHighlight
-                    x: -539
-                    y: -557
-                    color: "#00ffffff"
-                    radius: 20
-                    border.color: "#ff0000"
-                    border.width: 30
-                    anchors.fill: parent
-                    anchors.leftMargin: -4
-                    anchors.rightMargin: -4
-                    anchors.topMargin: -4
-                    anchors.bottomMargin: -4
-                }
+                anchors.leftMargin: 6
+                anchors.rightMargin: 6
+                anchors.topMargin: 6
+                anchors.bottomMargin: 6
             }
 
             Rectangle {
                 id: settingsButtonHighlight
-                height: 50
+                x: 500
+                width: 80
                 visible: true
                 color: "#c80d0d"
                 radius: 3
                 border.color: primaryColor
                 border.width: 0
-                anchors.verticalCenter: parent.verticalCenter
                 anchors.left: btnDiscover.right
                 anchors.right: parent.right
-                anchors.leftMargin: 18
-                anchors.rightMargin: 22
-                z: 0
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: 20
+                anchors.topMargin: 39
+                anchors.bottomMargin: 39
+                z: 1
                 Button {
                     id: btnSettings
                     x: -4
@@ -1935,13 +1507,28 @@ Item { // Page 2: Collection Page
 
 
                 }
-                anchors.verticalCenterOffset: 0
             }
         }
+
+
+        Rectangle {
+            id: rectangle33
+            width: 600
+            height: 20
+            color: "#00951111"
+            radius: 2
+            border.color: "#6c0101"
+            border.width: 1
+            z: 0
+        }
+
+
+
 
         Rectangle {
             id: rectangle22
             height: 10
+            visible: false
             color: "#ffffff"
             border.width: 0
             anchors.left: parent.left
@@ -2156,6 +1743,478 @@ Item { // Page 2: Collection Page
         width: 400
     }
 
+    // Define the animation
+    PropertyAnimation {
+        id: drawerAnimationFilterDrawer
+        target: filtersColumn
+        property: "y"
+        alwaysRunToEnd: true
+        running: false
+        duration: drawerAnimationDuration  // Duration of the animation in milliseconds
+        easing.type: Easing.InOutQuad  // Easing function for smoothness
+    }
+
+    MouseArea {
+        id: openButtonFilterDrawer
+        y: 381
+        width: 600
+        height: 20
+        opacity: 1
+        anchors.bottom: filtersColumn.top
+        anchors.bottomMargin: 0
+        rotation: 0
+        z: 1
+        onExited: {
+            // Scale down when not hovered
+            ballButtonFilterDrawer.scale = 0.6
+        }
+        onEntered: {
+            // Scale up on hover
+            ballButtonFilterDrawer.scale = 0.7
+        }
+        onClicked: {
+            toggleFilterDrawer();
+        }
+        hoverEnabled: true
+        Rectangle {
+            id: buttonBackgroundFilterDrawer
+            color: "#ee1414"
+            radius: 0
+            border.color: "#620808"
+            border.width: 2
+            anchors.fill: parent
+            MouseArea {
+                width: 600
+                height: 20
+                onClicked: {
+                    toggleFilterDrawer();
+                }
+            }
+
+            Rectangle {
+                id: rectangle32FilterDrawer
+                color: "#00ffffff"
+                radius: 3
+                border.color: "#ee0000"
+                border.width: 2
+                anchors.fill: parent
+                anchors.leftMargin: 5
+                anchors.rightMargin: 5
+                anchors.topMargin: 4
+                anchors.bottomMargin: 4
+            }
+        }
+
+        Rectangle {
+            id: drawerCircleFilterDrawer
+            width: 26
+            height: 26
+            visible: false
+            color: "#6c0101"
+            radius: 9
+            border.color: "#c80d0d"
+            border.width: 2
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            Behavior {
+                NumberAnimation {
+                    duration: 200
+                }
+            }
+
+            MouseArea {
+                id: mouseAreaFilterDrawer
+                anchors.fill: parent
+                onExited: {
+                    // Scale down when not hovered
+                    drawerCircleFilterDrawer.scale = 1
+                }
+                onEntered: {
+                    // Scale up on hover
+                    drawerCircleFilterDrawer.scale = 1.2
+                }
+                onClicked: {
+                    toggleFilterDrawer();
+                }
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+            }
+        }
+
+
+        Image {
+            id: ballButtonFilterDrawer
+            width: 60
+            height: 60
+            anchors.verticalCenter: parent.verticalCenter
+            source: "newBall.png"
+            anchors.horizontalCenter: parent.horizontalCenter
+            sourceSize.height: 50
+            scale: 0.6
+            rotation: 180
+            mirror: false
+            mipmap: false
+            fillMode: Image.Stretch
+            NumberAnimation {
+                id: rotateAnimationFilterDrawer
+                target: ballButtonFilterDrawer
+                property: "rotation"
+                duration: 500
+            }
+
+            MouseArea {
+                id: ballMouseAreaFilterDrawer
+                anchors.fill: parent
+                onExited: {
+                    // Scale down when not hovered
+                    ballButtonFilterDrawer.scale = 0.6
+                }
+                onEntered: {
+                    // Scale up on hover
+                    ballButtonFilterDrawer.scale = 0.7
+                }
+                onClicked: {
+                    toggleFilterDrawer();
+                }
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+            }
+            autoTransform: false
+            anchors.verticalCenterOffset: -9
+        }
+        cursorShape: Qt.PointingHandCursor
+
+
+
+    }
+
+    Column {
+        id: filtersColumn
+        x: 0
+        y: 615
+        height: 135
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
+        z: 1
+
+        Rectangle {
+            id: rectangle6
+            height: 70
+            opacity: 1
+            color: "#00ffffff"
+            border.color: "#6c0101"
+            border.width: 2
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.leftMargin: 0
+            anchors.rightMargin: 0
+            z: 1
+
+            MySearchFilterTools {
+                id: searchFilterTools
+                Layout.fillHeight: false
+                Layout.fillWidth: true
+                Layout.preferredHeight: 40
+                Layout.topMargin: 0
+                //toolbarContentHeight: 30
+                color: "#00ff0000"
+                border.color: "#006c0101"
+                border.width: 2
+                blockBorderWidth: 3
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 0
+                anchors.rightMargin: 0
+                anchors.topMargin: 0
+                anchors.bottomMargin: 0
+                toolsBorderColor: "#ff0000"
+                toolsFillColor: deepBG
+                mainColor: "#790000"
+                z: 2
+                Layout.preferredWidth: 500
+
+                // Dynamic ListModel for sets
+                setsModel: ListModel {
+                    id: setsModel
+                }
+            }
+
+
+        }
+
+        Rectangle {
+            id: bottomToolbar
+            width: 600
+            height: 65
+            color: "#ee0000"
+            border.color: borderColor
+            border.width: 2
+            z: 1
+
+            Rectangle {
+                id: rectangle1
+                color: "#541515"
+                radius: 8
+                border.color: "#ee0000"
+                border.width: 1
+                anchors.fill: parent
+                anchors.leftMargin: 4
+                anchors.rightMargin: 4
+                anchors.topMargin: 4
+                anchors.bottomMargin: 4
+            }
+
+            ComboBox {
+                id: setComboBox
+                y: 8
+                width: 300
+                height: 25
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: toggleBothButton.right
+                //anchors.left: parent.left
+                //anchors.right: txtSearchBox.left
+                anchors.leftMargin: 20
+                z: 0
+                Layout.leftMargin: 6
+                Layout.preferredHeight: -1
+                Layout.preferredWidth: -1
+                //Layout.fillHeight: false
+                //Layout.fillWidth: true
+                displayText: "Sets"
+
+                model: setsModel
+
+                delegate: Item {
+                    width: parent ? parent.width : 0
+                    height: checkDelegate ? checkDelegate.height : 30
+
+                    function toggle() {
+                        checkDelegate.toggle()
+                    }
+
+                    CheckDelegate {
+                        id: checkDelegate
+                        anchors.fill: parent
+                        text: model.name
+                        highlighted: setComboBox.highlightedIndex == index
+                        checked: model.selected
+                        onCheckedChanged: {
+                            if (model.selected !== checked) {
+                                model.selected = checked;
+                            }
+                        }
+                    }
+                }
+
+                // override space key handling to toggle items when the popup is visible
+                Keys.onSpacePressed: {
+                    console.log("Space Pressed")
+                    if (setComboBox.popup.visible) {
+                        var currentItem = setComboBox.popup.contentItem.currentItem
+                        if (currentItem) {
+                            currentItem.toggle()
+                            event.accepted = true
+                        }
+                    }
+                }
+
+                Keys.onReleased: {
+                    if (setComboBox.popup.visible)
+                        event.accepted = (event.key === Qt.Key_Space)
+                }
+
+                Component.onCompleted: {
+                    // Request All Sets to populate combo box
+                    //console.log("Requesting sets from backend...")
+                    backendController.request_sets_retrieve()
+                }
+
+                Rectangle {
+                    id: rectangle
+                    color: "#00ffffff"
+                    radius: 8
+                    border.color: "#ce0000"
+                    border.width: 2
+                    anchors.fill: parent
+                    anchors.leftMargin: -2
+                    anchors.rightMargin: -2
+                    anchors.topMargin: -2
+                    anchors.bottomMargin: -2
+                }
+            }
+
+            Connections {
+                target: backendController
+
+                function onSetsResults(response) {
+                    var data = JSON.parse(response)
+                    setsModel.clear(
+                                ) // Clear existing items in the model
+
+                    if (data.error) {
+                        sets = [] // Clear the array of sets
+                        console.log("Error in the data received from backend.")
+                    } else {
+                        // Collect sets into an array
+                        var tempSets = []
+
+                        data.forEach(function (set) {
+                            // Collect each set object
+                            tempSets.push({
+                                              "name": set.name,
+                                              "selected": false
+                                          })
+                        })
+
+                        // Sort the array alphabetically by name
+                        tempSets.sort(function (a, b) {
+                            return a.name.localeCompare(
+                                        b.name) // Sort using localeCompare for proper alphabetical order
+                        })
+
+                        // Append sorted sets to the model
+                        tempSets.forEach(
+                                    function (sortedSet) {
+                                        setsModel.append(
+                                                    sortedSet)
+                                        //console.log("Appending set: ", sortedSet.name); // Debugging each appended set
+                                    })
+
+                        //console.log("SetsModel updated with new sets: ", setsModel.count); // Check the number of elements
+                    }
+                }
+            }
+
+            Image {
+                id: ballToggleImage
+                x: -5
+                y: -18
+                width: 100
+                height: 100
+                opacity: 1
+                source: "newBall.png"
+                z: 1
+                scale: 0.45
+                fillMode: Image.PreserveAspectFit
+            }
+
+            Timer {
+                id: toggleLockTimer
+                interval: lockTimerDuration
+                repeat: false
+                onTriggered: {
+                    // console.log("Toggle Timer Triggered");
+                    // toggleBothButton.enabled = true;
+                    // toggleBothButton.hoverEnabled = true;
+
+                }
+            }
+
+            RoundButton {
+                id: toggleBothButton
+                x: 25
+                y: 13
+                width: 40
+                height: 40
+                opacity: 1
+                text: ""
+                enabled: !toggleLockTimer.running
+                //enabled: !toggleLockTimer.running
+                highlighted: false
+                flat: false
+                hoverEnabled: true
+
+                ToolTip.delay: 800
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr("Toggle both drawers.")
+
+                MouseArea {
+                    visible: false
+                    anchors.fill: parent
+                    enabled: true
+                    preventStealing: false
+                    propagateComposedEvents: false
+                    hoverEnabled: false
+                    cursorShape: Qt.PointingHandCursor
+                    drag.target: toggleBothButton
+                    onEntered: ballToggleImage.scale = 0.40;
+                    onExited: ballToggleImage.scale = 0.35;
+                }
+
+                Connections {
+                    target: toggleBothButton
+                    function onClicked() {
+                        // console.log("clicked")
+
+                    }
+
+                }
+
+                Connections {
+                    target: toggleBothButton
+                    function onPressed() {
+                        // console.log("pressed")
+                        //ballToggleImage.opacity = 0.5;
+                        toggleButtonHighlight.border.color = pressedToggleColor;
+                    }
+                }
+
+                Connections {
+                    target: toggleBothButton
+
+
+                    function onReleased(){
+                        console.log("released")
+
+                        // ballToggleImage.opacity = 1;
+
+                        if(isDrawerOpen &! isDrawer2Open) {
+                            toggleRightDrawer();
+                        }
+                        else if(isDrawer2Open &! isDrawerOpen) {
+                            toggleLeftDrawer();
+                        }
+                        else {
+                            toggleBothDrawers()
+
+                        }
+
+
+                        toggleButtonHighlight.border.color = releasedToggleColor;
+                    }
+                }
+
+                Rectangle {
+                    id: toggleButtonHighlight
+                    x: -539
+                    y: -557
+                    color: "#00ffffff"
+                    radius: 20
+                    border.color: "#ff0000"
+                    border.width: 30
+                    anchors.fill: parent
+                    anchors.leftMargin: -4
+                    anchors.rightMargin: -4
+                    anchors.topMargin: -4
+                    anchors.bottomMargin: -4
+                }
+            }
+        }
+
+        // Animate the x position when it changes
+        Behavior on y {
+            NumberAnimation {
+                duration: 500 // Adjust the duration for the desired speed
+                easing.type: Easing.OutQuad // Smooth easing effect
+            }
+        }
+    }
+
 }
 
 
@@ -2165,6 +2224,7 @@ Item { // Page 2: Collection Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:62;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:62;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:83}D{i:84}D{i:85}D{i:104}D{i:108}
 }
 ##^##*/
