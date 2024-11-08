@@ -7,11 +7,11 @@ import QtQuick.Controls.Fusion 2.15
 
 Window {
     id: window
-    width: 600
+    width: 700
     height: 650
-    minimumWidth: 600
+    minimumWidth: 700
     minimumHeight: 650
-    maximumWidth: 600
+    maximumWidth: 700
     maximumHeight: 650
 
     visible: true
@@ -150,7 +150,7 @@ Window {
 
         StackLayout {
             id: stackLayout
-            width: 600
+            width: 700
             height: 615
             visible: true
             anchors.top: tabBar.bottom
@@ -162,15 +162,18 @@ Window {
             clip: false
 
             Search {
+                width: 700
                 activeFocusOnTab: true
             }
 
             Discover {
+                width: 700
                 activeFocusOnTab: true
 
             }
 
             Collection {
+                width: 700
                 activeFocusOnTab: true
             }
         }
