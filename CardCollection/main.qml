@@ -22,7 +22,7 @@ Window {
 
     // property int selectedIndex: 0
     // property var cards: [] // List of card objects
-    property int selectedTabIndex: 0
+    property int selectedTabIndex: 2
 
     // Define color scheme properties
     property color primaryColor: "#c80d0d"
@@ -151,7 +151,7 @@ Window {
         StackLayout {
             id: stackLayout
             width: 600
-            height: 600
+            height: 615
             visible: true
             anchors.top: tabBar.bottom
             anchors.topMargin: 0
@@ -165,9 +165,13 @@ Window {
                 activeFocusOnTab: true
             }
 
-          Discover {
-              activeFocusOnTab: true
+            Discover {
+                activeFocusOnTab: true
 
+            }
+
+            Collection {
+                activeFocusOnTab: true
             }
         }
     }
