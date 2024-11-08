@@ -659,8 +659,9 @@ Item { // Page 2: Collection Page
                         anchors.bottomMargin: 20
 
                         PerspectiveCamera {
+                            id: rightCam
                             y: 0
-                            position: Qt.vector3d(0, 200, 300)
+                            position: Qt.vector3d(0, 200, 350)
                             pivot.z: 0
                             pivot.y: 0
                             pivot.x: 0
@@ -1200,7 +1201,7 @@ Item { // Page 2: Collection Page
 
                         PerspectiveCamera {
                             id: leftCam
-                            position: Qt.vector3d(0, 200, 400)
+                            position: Qt.vector3d(0, 200, 350)
                             eulerRotation.y: 0
 
                             lookAtNode: cardNodeLeft
