@@ -29,6 +29,7 @@
         "bottomBall.png",
         "Search.qml",
         "discoverhandler.py",
-        "SettingsWindow.qml"
+        "SettingsWindow.qml",
+        "Collection.qml"
     ]
 }
