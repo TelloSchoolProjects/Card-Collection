@@ -1,8 +1,6 @@
 import QtQuick 2.13
 import QtQuick.Controls 2.2
 import QtQuick.Layouts
-import QtQuick.Controls.Fusion 2.15
-import Qt5Compat.GraphicalEffects
 
 Item {
     id: _root
@@ -10,17 +8,24 @@ Item {
     height: 100
 
     property QtObject controller  // Reference to CompareController
+    property string cardImageUrl  // URL for the card image
+
+    // Define signals for left and right comparisons
+    signal leftCompare(string imageUrl)
+    signal rightCompare(string imageUrl)
 
     function toggleImages(mouse) {
         if (mouse.button === Qt.LeftButton) {
             if (!leftHalfImage.visible) {
                 controller.setLeft(_root);  // Set this button as the active left
+                leftCompare(cardImageUrl);  // Emit left compare signal with image URL
             } else {
                 controller.clearLeft();  // Clear left compare if clicked again
             }
         } else if (mouse.button === Qt.RightButton) {
             if (!rightHalfImage.visible) {
                 controller.setRight(_root);  // Set this button as the active right
+                rightCompare(cardImageUrl);  // Emit right compare signal with image URL
             } else {
                 controller.clearRight();  // Clear right compare if clicked again
             }
@@ -29,19 +34,19 @@ Item {
 
     // Activate and deactivate image visibility from controller
     function activateLeft() {
-        leftHalfImage.visible = true;
+        leftHalfImage.visible = true
     }
 
     function deactivateLeft() {
-        leftHalfImage.visible = false;
+        leftHalfImage.visible = false
     }
 
     function activateRight() {
-        rightHalfImage.visible = true;
+        rightHalfImage.visible = true
     }
 
     function deactivateRight() {
-        rightHalfImage.visible = false;
+        rightHalfImage.visible = false
     }
 
     Button {
@@ -63,29 +68,32 @@ Item {
 
     Image {
         id: leftHalfImage
-        x: -100
         y: -100
-        width: 300
-        height: 300
         visible: false
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 0
+        anchors.rightMargin: 0
+        anchors.topMargin: 0
+        anchors.bottomMargin: 0
+
         source: "topBall.png"
+        mirror: false
+        z: 0
         fillMode: Image.PreserveAspectFit
-        scale: 0.32
+        scale: 1
         rotation: 90
     }
 
     Image {
         id: rightHalfImage
-        x: -100
-        y: -100
-        width: 300
-        height: 300
         visible: false
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.fill: parent
         source: "bottomBall.png"
         fillMode: Image.PreserveAspectFit
-        scale: 0.32
+        scale: 1
         rotation: -90
     }
 }

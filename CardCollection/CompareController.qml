@@ -6,6 +6,12 @@ QtObject {
     property var leftCompareButton: null
     property var rightCompareButton: null
 
+    // Emit a signal with the image URL for left comparison
+    signal leftCompare(string imageUrl)
+
+    // Emit a signal with the image URL for right comparison
+    signal rightCompare(string imageUrl)
+
     function setLeft(button) {
         if (leftCompareButton) {
             leftCompareButton.deactivateLeft();  // Deactivate previous left compare
@@ -34,5 +40,18 @@ QtObject {
             rightCompareButton.deactivateRight();
             rightCompareButton = null;
         }
+    }
+
+    // Emit the left comparison signal
+    function emitLeftCompare(imageUrl) {
+        console.log("CompareController: Emitting left compare...");
+        leftCompare(imageUrl);  // Emit signal with image URL
+    }
+
+    // Emit the right comparison signal
+    function emitRightCompare(imageUrl) {
+        console.log("CompareController: Emitting right compare...");
+
+        rightCompare(imageUrl);  // Emit signal with image URL
     }
 }

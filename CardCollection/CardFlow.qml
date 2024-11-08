@@ -1,8 +1,5 @@
 import QtQuick 2.13
 import QtQuick.Controls 2.13
-import QtQuick.Layouts 1.3
-import QtQuick3D
-import Qt5Compat.GraphicalEffects 1.0
 
 Flow {
     id: collectionFlow
@@ -11,32 +8,66 @@ Flow {
     property int viewportHeight: 0
     property int viewportY: 0
 
+    // Signals to emit for comparison
+    signal cardFlowLeftCompare(string imageUrl)
+    signal rightCompare(string imageUrl)
+
+    property string collectionFlowImageUrl  // URL for the card image
+
+    onCollectionFlowImageUrlChanged: {
+        console.log("collectionFlow reports that cardImageUrl changed to: " + collectionFlowImageUrl);
+    }
+
+
     Repeater {
         id: repeaterModel
         model: []
 
         delegate: Item {
-            width: collectionFlow.width / 1  // Maintain aspect ratio without forcing layout
+            width: collectionFlow.width / 4
             height: width * 3.5 / 2.5
 
             property bool isVisible: (y + height) > collectionFlow.viewportY &&
                                      y < (collectionFlow.viewportY + collectionFlow.viewportHeight)
 
             Image {
+                id: cardImage
                 visible: parent.isVisible
                 source: modelData.imageUrl
                 fillMode: Image.PreserveAspectFit
+                smooth: true
+                sourceSize.width: parent.width
+                sourceSize.height: parent.height * 3.5 / 2.5
                 anchors.margins: 5
                 anchors.fill: parent
+            }
+
+            // Add CompareButton to handle left and right image toggling
+            CompareButton {
+                anchors.top: parent.top
+                anchors.right: parent.right
+                width: 30
+                height: 30
+                opacity: 0.7
+                controller: compareController
+                cardImageUrl: modelData.imageUrl  // Pass the image URL directly
+
+                // Emit signals from CardFlow on button clicks
+                onLeftCompare: {
+                    console.log("CompareButton settings collectionFlowImageUrl to: " + cardImageUrl);
+                    collectionFlowImageUrl = cardImageUrl
+                    console.log("CardFlow.collectionFlowImageUrl set to: " + collectionFlowImageUrl);
+                     console.log("CardFlow.CompareButton caught onLeftCompare with: " + cardImageUrl);
+                    console.log("CardFlow.ComapreButton now broadcasting on signal collectionFLow.cardFlowLeftCompare with: " + cardImageUrl);
+                    collectionFlow.cardFlowLeftCompare(cardImageUrl)
+                    console.log(" Control returned to CompareButton.onLeftCompare");
+                }
+                onRightCompare: collectionFlow.rightCompare(cardImageUrl)
             }
 
             Component.onCompleted: {
                 console.log("Item index:", index, "y position:", y, "isVisible:", isVisible)
             }
         }
-    }
-
-    Item {
-        id: __materialLibrary__
     }
 }

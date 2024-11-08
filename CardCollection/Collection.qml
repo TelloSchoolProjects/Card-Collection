@@ -49,6 +49,17 @@ Item { // Page 2: Collection Page
     property int selectedIndex: 0
     property var cards: [] // List of card objects
 
+    property string leftCardImage;
+
+    // Handle the left compare signal and set the material source for the left view
+    function onLeftCompareSignal(leftCompareImageUrl: string) {
+        console.log("onLeftCompare signal caught..." );
+        console.log("trying to set viewLeft.leftImage.source with: " + leftCompareImageUrl);
+       leftImage.source = leftCompareImageUrl;
+        console.log("leftCardImage set to: " + leftCardImage);
+
+    }
+
     function toggleLeftDrawer() {
         toggleLockTimer.start(); // Start the timer to re-enable the button
 
@@ -623,6 +634,7 @@ Item { // Page 2: Collection Page
                     clip: true
                     anchors.verticalCenterOffset: 0
 
+
                     View3D {
                         id: viewRight
                         scale: 1
@@ -647,10 +659,6 @@ Item { // Page 2: Collection Page
                             eulerRotation.x: 0
                         }
 
-                        DirectionalLight {
-                            eulerRotation.x: -30
-                        }
-
                         Node {
                             id: cardNode
                             x: 0
@@ -660,7 +668,6 @@ Item { // Page 2: Collection Page
                             scale.y: 3
                             scale.x: 2.5
 
-                            // Front side of the card
                             Model {
                                 id: frontCard
                                 source: "#Rectangle"
@@ -676,31 +683,7 @@ Item { // Page 2: Collection Page
                                                 anchors.centerIn: parent
                                                 width: 413
                                                 height: 577
-                                                source: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl : ""
-                                                sourceSize: Qt.size(width, height)
-                                                cache: false
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-
-                            // Back side of the card, rotated 180 degrees
-                            Model {
-                                id: backCard
-                                source: "#Rectangle"
-                                scale: Qt.vector3d(1, 1, 1)
-                                eulerRotation.y: 180 // Rotated to face the opposite direction
-
-                                materials: [
-                                    DefaultMaterial {
-                                        diffuseColor: "#ffffff"
-                                        diffuseMap: Texture {
-                                            sourceItem: Image {
-                                                anchors.centerIn: parent
-                                                width: 413
-                                                height: 577
-                                                source: "cardback.png" // URL for the back image
+                                                source: leftCardImage  // Initially empty, will be set via signal
                                                 sourceSize: Qt.size(width, height)
                                                 cache: false
                                             }
@@ -709,76 +692,13 @@ Item { // Page 2: Collection Page
                                 ]
                             }
                         }
+                    }
+                    // Signals to handle left and right compare actions
+                    signal rightCompareSignal(string imageUrl)
 
-                        MouseArea {
-                            id: dragArea
-                            anchors.fill: parent
-                            property real previousX: 0
-                            property real velocityY: 0
-                            property real dragSensitivity: 0.2
-                            property real momentumDecay: 0.98 // Controls how quickly momentum fades
-
-                            onPressed: {
-                                previousX = mouse.x
-                                velocityY = 0
-                                momentumTimer.stop()
-                                returnToZeroTimer.stop(); // Stop the return to zero timer when dragging
-                            }
-
-                            onPositionChanged: {
-                                var deltaX = mouse.x - previousX
-                                velocityY = deltaX * dragSensitivity
-                                cardNode.eulerRotation.y += velocityY
-                                previousX = mouse.x
-                            }
-
-                            onReleased: {
-                                momentumTimer.start() // Start applying momentum after release
-                            }
-                        }
-
-                        // Timer for applying momentum after drag release
-                        Timer {
-                            id: momentumTimer
-                            interval: 16 // About 60 FPS
-                            repeat: true
-                            onTriggered: {
-                                if (Math.abs(dragArea.velocityY) < 0.1) {
-                                    // If the velocity is low, stop the momentum and start returning to zero
-                                    momentumTimer.stop();
-                                    returnToZeroTimer.start(); // Start the return to zero timer
-                                } else {
-                                    cardNode.eulerRotation.y += dragArea.velocityY; // Apply the current velocity
-                                    dragArea.velocityY *= dragArea.momentumDecay; // Decay the velocity
-                                }
-                            }
-                        }
-
-                        // Timer for gradually returning to zero rotation on the Y-axis
-                        Timer {
-                            id: returnToZeroTimer
-                            interval: 16 // About 60 FPS
-                            repeat: true
-                            onTriggered: {
-                                if (Math.abs(cardNode.eulerRotation.y) < 0.1) {
-                                    cardNode.eulerRotation.y = 0; // Set to zero to avoid oscillation
-                                    returnToZeroTimer.stop(); // Stop the timer when close enough to zero
-                                } else {
-                                    // Gradually reduce the angle towards zero
-                                    var returnSpeed = 0.07; // Adjust the return speed to control how quickly it comes to rest
-                                    if (cardNode.rotation.y > 0) {
-                                        // console.log(cardNode.rotation.y)
-                                        //console.log(cardNode.eulerRotation.y)
-                                        cardNode.rotation.y -= returnSpeed; // Move back towards 0
-                                        if (cardNode.rotation.y < 0) cardNode.rotation.y = 0; // Clamp to zero
-                                    } else {
-                                        cardNode.rotation.y += returnSpeed; // Move back towards 0
-                                        if (cardNode.rotation.y > 0) cardNode.rotation.y = 0; // Clamp to zero
-                                    }
-                                }
-                            }
-                        }
-
+                    // Handle the right compare signal and set the material source for the right view
+                    onRightCompareSignal: {
+                        viewRight.cardNode.frontCard.materials[0].diffuseMap.sourceItem.source = imageUrl
                     }
 
                 }
@@ -994,7 +914,7 @@ Item { // Page 2: Collection Page
 
                         onContentYChanged: {
                             collectionFlow.viewportY = flickable.contentY
-                            console.log("Flickable contentY:", flickable.contentY)
+                            // console.log("Flickable contentY:", flickable.contentY)
                         }
 
                         CardFlow {
@@ -1006,6 +926,12 @@ Item { // Page 2: Collection Page
                             viewportHeight: flickable.height
                             viewportY: flickable.contentY
                             cards: collectionPage.cards
+
+                            onCardFlowLeftCompare: {
+                                console.log("collectionFlow.onLeftCompare caught: " + collectionFlowImageUrl);
+                                console.log("collectionFlow.onLeftCompare calling onLeftCompareSignal(" + collectionFlowImageUrl + ")");
+                                onLeftCompareSignal(collectionFlow.collectionFlowImageUrl)
+                            }
                         }
                     }
 
@@ -1227,6 +1153,7 @@ Item { // Page 2: Collection Page
                     clip: true
                     anchors.verticalCenterOffset: 0
 
+                    // Left and Right Views
                     View3D {
                         id: viewLeft
                         scale: 1
@@ -1238,22 +1165,21 @@ Item { // Page 2: Collection Page
                         anchors.rightMargin: 20
                         anchors.topMargin: 20
                         anchors.bottomMargin: 20
+                        camera: leftCam
 
                         PerspectiveCamera {
-                            y: 0
-                            position: Qt.vector3d(0, 200, 300)
-                            pivot.z: 0
-                            pivot.y: 0
-                            pivot.x: 0
+                            id: leftCam
+                            position: Qt.vector3d(0, 200, 400)
+                            eulerRotation.y: 0
+
                             lookAtNode: cardNodeLeft
                             frustumCullingEnabled: false
-                            z: 0
-                            eulerRotation.x: 0
-                        }
 
+                        }
                         DirectionalLight {
                             eulerRotation.x: -30
                         }
+
 
                         Node {
                             id: cardNodeLeft
@@ -1264,15 +1190,27 @@ Item { // Page 2: Collection Page
                             scale.y: 3
                             scale.x: 2.5
 
-                            // Front side of the card
+
+
                             Model {
                                 id: frontCardLeft
                                 source: "#Rectangle"
+                                castsReflections: false
                                 receivesShadows: false
                                 castsShadows: false
                                 scale: Qt.vector3d(1, 1, 1) // Adjust dimensions for card thickness
                                 eulerRotation.y: 0
 
+                                Image {
+                                    id: leftImage
+                                    width: parent.width / 4
+                                    height: width * 3.5 / 2.5
+                                    source: ""
+                                    opacity: 0
+                                    z: 3
+
+                                }
+
                                 materials: [
                                     DefaultMaterial {
                                         diffuseMap: Texture {
@@ -1280,31 +1218,7 @@ Item { // Page 2: Collection Page
                                                 anchors.centerIn: parent
                                                 width: 413
                                                 height: 577
-                                                source: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl : ""
-                                                sourceSize: Qt.size(width, height)
-                                                cache: false
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-
-                            // Back side of the card, rotated 180 degrees
-                            Model {
-                                id: backCardLeft
-                                source: "#Rectangle"
-                                scale: Qt.vector3d(1, 1, 1)
-                                eulerRotation.y: 180 // Rotated to face the opposite direction
-
-                                materials: [
-                                    DefaultMaterial {
-                                        diffuseColor: "#ffffff"
-                                        diffuseMap: Texture {
-                                            sourceItem: Image {
-                                                anchors.centerIn: parent
-                                                width: 413
-                                                height: 577
-                                                source: "cardback.png" // URL for the back image
+                                                source: leftImage.source  // Initially empty, will be set via signal
                                                 sourceSize: Qt.size(width, height)
                                                 cache: false
                                             }
@@ -1314,77 +1228,23 @@ Item { // Page 2: Collection Page
                             }
                         }
 
-                        MouseArea {
-                            id: dragAreaLeft
-                            anchors.fill: parent
-                            property real previousX: 0
-                            property real velocityY: 0
-                            property real dragSensitivity: 0.2
-                            property real momentumDecay: 0.98 // Controls how quickly momentum fades
+                        // PointLight {
+                        //     id: pointLight
+                        //     position: Qt.vector3d(0, 300, 400)
 
-                            onPressed: {
-                                previousX = mouse.x
-                                velocityY = 0
-                                momentumTimerLeft.stop()
-                                returnToZeroTimerLeft.stop(); // Stop the return to zero timer when dragging
-                            }
-
-                            onPositionChanged: {
-                                var deltaX = mouse.x - previousX
-                                velocityY = deltaX * dragSensitivity
-                                cardNodeLeft.eulerRotation.y += velocityY
-                                previousX = mouse.x
-                            }
-
-                            onReleased: {
-                                momentumTimerLeft.start() // Start applying momentum after release
-                            }
-                        }
-
-                        // Timer for applying momentum after drag release
-                        Timer {
-                            id: momentumTimerLeft
-                            interval: 16 // About 60 FPS
-                            repeat: true
-                            onTriggered: {
-                                if (Math.abs(dragAreaLeft.velocityY) < 0.1) {
-                                    // If the velocity is low, stop the momentum and start returning to zero
-                                    momentumTimerLeft.stop();
-                                    returnToZeroTimerLeft.start(); // Start the return to zero timer
-                                } else {
-                                    cardNodeLeft.eulerRotation.y += dragAreaLeft.velocityY; // Apply the current velocity
-                                    dragAreaLeft.velocityY *= dragAreaLeft.momentumDecay; // Decay the velocity
-                                }
-                            }
-                        }
-
-                        // Timer for gradually returning to zero rotation on the Y-axis
-                        Timer {
-                            id: returnToZeroTimerLeft
-                            interval: 16 // About 60 FPS
-                            repeat: true
-                            onTriggered: {
-                                if (Math.abs(cardNodeLeft.eulerRotation.y) < 0.1) {
-                                    cardNodeLeft.eulerRotation.y = 0; // Set to zero to avoid oscillation
-                                    returnToZeroTimer.stop(); // Stop the timer when close enough to zero
-                                } else {
-                                    // Gradually reduce the angle towards zero
-                                    var returnSpeedLeft = 0.07; // Adjust the return speed to control how quickly it comes to rest
-                                    if (cardNodeLeft.rotation.y > 0) {
-                                        // console.log(cardNodeLeft.rotation.y)
-                                        //console.log(cardNodeLeft.eulerRotation.y)
-                                        cardNodeLeft.rotation.y -= returnSpeedLeft; // Move back towards 0
-                                        if (cardNodeLeft.rotation.y < 0) cardNodeLeft.rotation.y = 0; // Clamp to zero
-                                    } else {
-                                        cardNodeLeft.rotation.y += returnSpeedLeft; // Move back towards 0
-                                        if (cardNodeLeft.rotation.y > 0) cardNodeLeft.rotation.y = 0; // Clamp to zero
-                                    }
-                                }
-                            }
-                        }
-
+                        // }
                     }
 
+                    // Signals to handle left and right compare actions
+                    //signal leftCompareSignal(leftCompareImageUrl: string);
+
+                    // // Handle the left compare signal and set the material source for the left view
+                    // function onLeftCompareSignal(leftCompareImageUrl: string) {
+                    //     console.log("onLeftCompare signal caught and trying to set viewLeft.leftCardImage.source with:");
+                    //     console.log(leftCompareImageUrl);
+                    //    viewLeft.leftCardImage.source = leftCompareImageUrl;
+                    //     console.log(".source now contains: " + viewLeft.leftCardImage.source);
+                    // }
                 }
             }
         }
@@ -1509,6 +1369,21 @@ Item { // Page 2: Collection Page
                         y: 43
                         text: qsTr("Store additional Buttons/Controls here")
                         font.pixelSize: 12
+                    }
+                }
+
+                CompareController {
+                    id: compareController
+                }
+
+                Column {
+                    CompareButton {
+                        controller: compareController
+                        cardImageUrl: "https://images.pokemontcg.io/sm1/163_hires.png"  // Example image for comparison
+                    }
+                    CompareButton {
+                        controller: compareController
+                        cardImageUrl: "https://images.pokemontcg.io/sm1/163_hires.png"  // Another card for comparison
                     }
                 }
             }
@@ -2915,8 +2790,7 @@ Item { // Page 2: Collection Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:43}D{i:44}D{i:45}D{i:63;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:84}D{i:85}D{i:96}D{i:102}D{i:111}D{i:115}D{i:124}D{i:130}D{i:132}D{i:138}D{i:141}
-D{i:146}D{i:152}D{i:153}D{i:159}D{i:165}D{i:171}
+    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:55;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
+D{i:63;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
