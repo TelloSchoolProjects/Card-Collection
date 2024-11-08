@@ -11,7 +11,7 @@ import QtQuick3D
 Item {
     id: searchPage
     width: 600
-    height: 600
+    height: 615
     visible: true
     Layout.preferredHeight: 560
     Layout.preferredWidth: 600
