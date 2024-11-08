@@ -53,10 +53,21 @@ Item { // Page 2: Collection Page
 
     // Handle the left compare signal and set the material source for the left view
     function onLeftCompareSignal(leftCompareImageUrl: string) {
-        console.log("onLeftCompare signal caught..." );
-        console.log("trying to set viewLeft.leftImage.source with: " + leftCompareImageUrl);
+       // console.log("onLeftCompare signal caught..." );
+       // console.log("trying to set viewLeft.leftImage.source with: " + leftCompareImageUrl);
        leftImage.source = leftCompareImageUrl;
-        console.log("leftCardImage set to: " + leftCardImage);
+        //console.log("leftCardImage set to: " + leftCardImage);
+
+    }
+
+    property string rightCardImage;
+
+    // Handle the right compare signal and set the material source for the right view
+    function onRightCompareSignal(rightCompareImageUrl: string) {
+        //console.log("onrightCompare signal caught..." );
+       // console.log("trying to set viewright.rightImage.source with: " + rightCompareImageUrl);
+       rightImage.source = rightCompareImageUrl;
+       // console.log("rightCardImage set to: " + rightCardImage);
 
     }
 
@@ -418,7 +429,7 @@ Item { // Page 2: Collection Page
 
     function resetCardRotation() {
         momentumTimer.stop()
-        cardNode.eulerRotation.y = 0;
+        cardNodeRight.eulerRotation.y = 0;
     }
     function resetLeftColumnScroll() {
         //leftScrollView.contentX = 0;
@@ -653,14 +664,18 @@ Item { // Page 2: Collection Page
                             pivot.z: 0
                             pivot.y: 0
                             pivot.x: 0
-                            lookAtNode: cardNode
+                            lookAtNode: cardNodeRight
                             frustumCullingEnabled: false
                             z: 0
                             eulerRotation.x: 0
                         }
 
+                        DirectionalLight {
+                            eulerRotation.x: -30
+                        }
+
                         Node {
-                            id: cardNode
+                            id: cardNodeRight
                             x: 0
                             y: 200
                             visible: true
@@ -669,12 +684,22 @@ Item { // Page 2: Collection Page
                             scale.x: 2.5
 
                             Model {
-                                id: frontCard
+                                id: frontCardRight
                                 source: "#Rectangle"
                                 receivesShadows: false
                                 castsShadows: false
                                 scale: Qt.vector3d(1, 1, 1) // Adjust dimensions for card thickness
                                 eulerRotation.y: 0
+
+                                Image {
+                                    id: rightImage
+                                    width: parent.width / 4
+                                    height: width * 3.5 / 2.5
+                                    source: ""
+                                    opacity: 0
+                                    z: 3
+
+                                }
 
                                 materials: [
                                     DefaultMaterial {
@@ -683,7 +708,7 @@ Item { // Page 2: Collection Page
                                                 anchors.centerIn: parent
                                                 width: 413
                                                 height: 577
-                                                source: leftCardImage  // Initially empty, will be set via signal
+                                                source: rightImage.source  // Initially empty, will be set via signal
                                                 sourceSize: Qt.size(width, height)
                                                 cache: false
                                             }
@@ -931,6 +956,12 @@ Item { // Page 2: Collection Page
                                 console.log("collectionFlow.onLeftCompare caught: " + collectionFlowImageUrl);
                                 console.log("collectionFlow.onLeftCompare calling onLeftCompareSignal(" + collectionFlowImageUrl + ")");
                                 onLeftCompareSignal(collectionFlow.collectionFlowImageUrl)
+                            }
+
+                            onCardFlowRightCompare: {
+                                console.log("collectionFlow.onrightCompare caught: " + collectionFlowImageUrl);
+                                console.log("collectionFlow.onrightCompare calling onrightCompareSignal(" + collectionFlowImageUrl + ")");
+                                onRightCompareSignal(collectionFlow.collectionFlowImageUrl)
                             }
                         }
                     }
