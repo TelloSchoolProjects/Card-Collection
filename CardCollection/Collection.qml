@@ -926,11 +926,10 @@ Item { // Page 2: Collection Page
                     // Collection.qml
                     Flickable {
                         id: flickable
-                        anchors.fill: parent
-                        anchors.leftMargin: 50
-                        anchors.rightMargin: 50
-                        anchors.topMargin: 10
-                        anchors.bottomMargin: 10
+                        width: 590
+                        height: 415
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
                         z: 1
                         clip: true
                         flickableDirection: Flickable.VerticalFlick
@@ -947,10 +946,10 @@ Item { // Page 2: Collection Page
 
                         CardFlow {
                             id: collectionFlow
-                            x: 0
                             y: 0
-                            width: 500
+                            width: 590
                             height: 420
+                            anchors.horizontalCenter: parent.horizontalCenter
                             viewportHeight: flickable.height
                             viewportY: flickable.contentY
                             cards: collectionPage.cards
@@ -970,7 +969,7 @@ Item { // Page 2: Collection Page
                     }
 
                     Rectangle {
-                        width: 500
+                        width: 590
                         height: 420
                         color: "#d5290202"
                         anchors.verticalCenter: parent.verticalCenter
@@ -1292,14 +1291,11 @@ Item { // Page 2: Collection Page
 
         Rectangle {
             id: rectangle17
+            width: 675
             height: 10
             visible: true
             color: "#ffffff"
             border.width: 0
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 25
-            anchors.rightMargin: 25
             z: 1
             Rectangle {
                 id: rectangle18
@@ -1375,15 +1371,13 @@ Item { // Page 2: Collection Page
 
         Rectangle {
             id: rectangle8
+            x: 24
+            width: 651
             height: 128
             color: blockBG
             radius: 0
             border.color: borderColor
             border.width: 3
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 24
-            anchors.rightMargin: 24
 
             Rectangle {
                 id: rectangle9
@@ -1849,13 +1843,13 @@ Item { // Page 2: Collection Page
 
     MouseArea {
         id: openButtonFilterDrawer
+        x: 25
         y: 381
-        width: 550
+        width: 650
         height: 20
         opacity: 1
         anchors.bottom: filtersColumn.top
         anchors.bottomMargin: 0
-        anchors.horizontalCenter: parent.horizontalCenter
         rotation: 0
         z: 1
         onExited: {
@@ -1872,15 +1866,17 @@ Item { // Page 2: Collection Page
         hoverEnabled: true
         Rectangle {
             id: buttonBackgroundFilterDrawer
+            x: 0
+            width: 650
+            height: 20
             color: "#ff0000"
             radius: 0
             border.color: "#620808"
             border.width: 2
-            anchors.fill: parent
             MouseArea {
                 x: 0
                 y: 0
-                width: 550
+                width: 650
                 height: 20
                 onClicked: {
                     toggleFilterDrawer();
@@ -1889,15 +1885,16 @@ Item { // Page 2: Collection Page
 
             Rectangle {
                 id: rectangle32FilterDrawer
+                width: 640
                 color: "#00ffffff"
                 radius: 3
                 border.color: "#ff2a2a"
                 border.width: 2
-                anchors.fill: parent
-                anchors.leftMargin: 5
-                anchors.rightMargin: 5
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 anchors.topMargin: 4
                 anchors.bottomMargin: 4
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
 
@@ -1989,23 +1986,16 @@ Item { // Page 2: Collection Page
         x: 0
         y: 615
         height: 135
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
         z: 1
 
         Rectangle {
             id: rectangle6
+            width: 700
             height: 70
             opacity: 1
             color: "#00ffffff"
             border.color: "#6c0101"
             border.width: 2
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
             z: 1
 
             MySearchFilterTools {
@@ -2018,15 +2008,9 @@ Item { // Page 2: Collection Page
                 color: "#00ff0000"
                 border.color: "#006c0101"
                 border.width: 2
+                anchors.fill: parent
+                typesRowSpacing: 14
                 blockBorderWidth: 3
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
-                anchors.topMargin: 0
-                anchors.bottomMargin: 0
                 toolsFillColor: "#c90909"
                 toolsBorderColor: "#ff0000"
                 mainColor: "#790000"
@@ -2044,7 +2028,7 @@ Item { // Page 2: Collection Page
 
         Rectangle {
             id: bottomToolbar
-            width: 600
+            width: 700
             height: 65
             color: "#ee0000"
             border.color: borderColor
@@ -2067,7 +2051,7 @@ Item { // Page 2: Collection Page
             ComboBox {
                 id: setComboBox
                 y: 8
-                width: 300
+                width: 400
                 height: 25
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
@@ -2405,7 +2389,7 @@ Item { // Page 2: Collection Page
                 border.width: 0
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
-                anchors.leftMargin: 507
+                anchors.leftMargin: 600
                 z: 1
                 Button {
                     id: btnSettings
@@ -2471,6 +2455,7 @@ Item { // Page 2: Collection Page
                 easing.type: Easing.OutQuad // Smooth easing effect
             }
         }
+        width: 700
     }
 
     Rectangle {
@@ -2904,7 +2889,7 @@ Item { // Page 2: Collection Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:1}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:36}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
+    D{i:0}D{i:1}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:36}D{i:38}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
 D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:76}
 }
 ##^##*/
