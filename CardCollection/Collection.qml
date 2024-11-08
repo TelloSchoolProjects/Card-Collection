@@ -9,7 +9,7 @@ Item { // Page 2: Collection Page
 
     focus: true
     id: collectionPage
-    width: 600
+    width: 700
     height: 615
     Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
     Layout.preferredWidth: 600
@@ -51,6 +51,14 @@ Item { // Page 2: Collection Page
 
     property string leftCardImage;
 
+    property int cardWidth: 300
+
+
+    function updateColumns(num: int) {
+        // TODO update columns
+        collectionFlow.numCardColumns = num;
+
+    }
     // Handle the left compare signal and set the material source for the left view
     function onLeftCompareSignal(leftCompareImageUrl: string) {
        // console.log("onLeftCompare signal caught..." );
@@ -98,15 +106,15 @@ Item { // Page 2: Collection Page
     function toggleRightDrawer() {
         toggleLockTimer.start(); // Start the timer to re-enable the button
 
-        if (customDrawer2.x >= 600) { // Closed position
-            customDrawer2.x = 600 - customDrawer2.width; // Slide into view
+        if (customDrawer2.x >= 700) { // Closed position
+            customDrawer2.x = 700 - customDrawer2.width; // Slide into view
             isDrawer2Open = true;
 
             rotateAnimation2.from = ballButton2.rotation;
             rotateAnimation2.to = 270;
             rotateAnimation2.start();
         } else { // Open position
-            customDrawer2.x = 600; // Hide off the right edge
+            customDrawer2.x = 700; // Hide off the right edge
             isDrawer2Open = false;
             rotateAnimation2.from = ballButton2.rotation;
             rotateAnimation2.to = 90;
@@ -480,23 +488,17 @@ Item { // Page 2: Collection Page
 
     Column {
         id: column
-        x: 0
-        y: 0
-        width: 600
-        height: 600
+        anchors.fill: parent
         z: 1
 
 
 
         Rectangle {
             id: rectangle27
+            width: 700
             height: 20
             color: blockBG
             border.width: 0
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
             z: 1
             Rectangle {
                 id: rectangle28
@@ -597,8 +599,8 @@ Item { // Page 2: Collection Page
 
                 Rectangle {
                     id: customDrawer
-                    x: -274
-                    width: 274
+                    x: -324
+                    width: 324
                     height: 438
                     opacity: 1
                     visible: true
@@ -648,26 +650,23 @@ Item { // Page 2: Collection Page
 
                     View3D {
                         id: viewRight
-                        scale: 1
                         clip: false
                         z: 0
                         visible: true
                         anchors.fill: parent
-                        anchors.leftMargin: 20
-                        anchors.rightMargin: 20
-                        anchors.topMargin: 20
-                        anchors.bottomMargin: 20
+                        camera: rightCam
 
                         PerspectiveCamera {
                             id: rightCam
                             y: 0
-                            position: Qt.vector3d(0, 200, 350)
+                            //position: Qt.vector3d(xSlider.value, ySlider.value, zSlider.value)
+                            position: Qt.vector3d(0,0,130)
                             pivot.z: 0
                             pivot.y: 0
                             pivot.x: 0
                             lookAtNode: cardNodeRight
                             frustumCullingEnabled: false
-                            z: 0
+                            z: 130
                             eulerRotation.x: 0
                         }
 
@@ -678,27 +677,30 @@ Item { // Page 2: Collection Page
                         Node {
                             id: cardNodeRight
                             x: 0
-                            y: 200
+                            y: 0
                             visible: true
-                            z: -25
-                            scale.y: 3
-                            scale.x: 2.5
+                            z: 0
+                           // scale: Qt.vector3d(1, 1, 1.4)
 
                             Model {
                                 id: frontCardRight
                                 source: "#Rectangle"
                                 receivesShadows: false
                                 castsShadows: false
-                                scale: Qt.vector3d(1, 1, 1) // Adjust dimensions for card thickness
+                                //scale: Qt.vector3d(xSlider.value, ySlider.value, zSlider.value) // Adjust dimensions for card thickness
+                                scale: Qt.vector3d(1, 1.4, 1)
                                 eulerRotation.y: 0
 
                                 Image {
                                     id: rightImage
-                                    width: parent.width / 4
-                                    height: width * 3.5 / 2.5
+                                    //width: cardWidth
+                                    //height: width * 3.5 / 2.5
                                     source: ""
+                                    fillMode: Image.PreserveAspectCrop
+                                    // sourceSize.height: 300
+                                    // sourceSize.width: 200
                                     opacity: 0
-                                    z: 3
+                                   // z: 3
 
                                 }
 
@@ -707,10 +709,12 @@ Item { // Page 2: Collection Page
                                         diffuseMap: Texture {
                                             sourceItem: Image {
                                                 anchors.centerIn: parent
-                                                width: 413
-                                                height: 577
+                                                // width: 413
+                                                // height: 577
+                                                // width: cardWidth
+                                                // height: width * 3.5 / 2.5
                                                 source: rightImage.source  // Initially empty, will be set via signal
-                                                sourceSize: Qt.size(width, height)
+                                                //sourceSize: Qt.size(width, height)
                                                 cache: false
                                             }
                                         }
@@ -724,7 +728,7 @@ Item { // Page 2: Collection Page
 
                     // Handle the right compare signal and set the material source for the right view
                     onRightCompareSignal: {
-                        viewRight.cardNode.frontCard.materials[0].diffuseMap.sourceItem.source = imageUrl
+                        //viewRight.cardNode.frontCard.materials[0].diffuseMap.sourceItem.source = imageUrl
                     }
 
                 }
@@ -879,14 +883,12 @@ Item { // Page 2: Collection Page
 
                 Rectangle {
                     id: dataFlow
+                    width: 700
                     height: 440
                     opacity: 1
                     visible: true
                     color: "#541515"
                     border.width: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.horizontalCenter: parent.horizontalCenter
                     // Frame {
                     //     id: frame
                     //     visible: true
@@ -1137,8 +1139,8 @@ Item { // Page 2: Collection Page
                 Layout.fillHeight: true
                 Rectangle {
                     id: customDrawer2
-                    x: 600
-                    width: 274
+                    x: 700
+                    width: 324
                     height: 438
                     opacity: 1
                     visible: true
@@ -1193,20 +1195,20 @@ Item { // Page 2: Collection Page
                         z: 0
                         visible: true
                         anchors.fill: parent
-                        anchors.leftMargin: 20
-                        anchors.rightMargin: 20
-                        anchors.topMargin: 20
-                        anchors.bottomMargin: 20
                         camera: leftCam
 
                         PerspectiveCamera {
                             id: leftCam
-                            position: Qt.vector3d(0, 200, 350)
-                            eulerRotation.y: 0
-
+                            y: 0
+                            //position: Qt.vector3d(xSlider.value, ySlider.value, zSlider.value)
+                            position: Qt.vector3d(0,0,130)
+                            pivot.z: 0
+                            pivot.y: 0
+                            pivot.x: 0
                             lookAtNode: cardNodeLeft
                             frustumCullingEnabled: false
-
+                            z: 130
+                            eulerRotation.x: 0
                         }
                         DirectionalLight {
                             eulerRotation.x: -30
@@ -1216,30 +1218,33 @@ Item { // Page 2: Collection Page
                         Node {
                             id: cardNodeLeft
                             x: 0
-                            y: 200
+                            y: 0
                             visible: true
-                            z: -25
-                            scale.y: 3
-                            scale.x: 2.5
+                            z: 0
+                            // scale.y: 1
+                            // scale.x: 1
 
 
 
                             Model {
                                 id: frontCardLeft
                                 source: "#Rectangle"
-                                castsReflections: false
                                 receivesShadows: false
                                 castsShadows: false
-                                scale: Qt.vector3d(1, 1, 1) // Adjust dimensions for card thickness
+                                //scale: Qt.vector3d(xSlider.value, ySlider.value, zSlider.value) // Adjust dimensions for card thickness
+                                scale: Qt.vector3d(1, 1.4, 1)
                                 eulerRotation.y: 0
 
                                 Image {
                                     id: leftImage
-                                    width: parent.width / 4
-                                    height: width * 3.5 / 2.5
+                                    //width: cardWidth
+                                    //height: width * 3.5 / 2.5
                                     source: ""
+                                    fillMode: Image.PreserveAspectCrop
+                                    // sourceSize.height: 300
+                                    // sourceSize.width: 200
                                     opacity: 0
-                                    z: 3
+                                   // z: 3
 
                                 }
 
@@ -1248,10 +1253,12 @@ Item { // Page 2: Collection Page
                                         diffuseMap: Texture {
                                             sourceItem: Image {
                                                 anchors.centerIn: parent
-                                                width: 413
-                                                height: 577
+                                                // width: 413
+                                                // height: 577
+                                                // width: cardWidth
+                                                // height: width * 3.5 / 2.5
                                                 source: leftImage.source  // Initially empty, will be set via signal
-                                                sourceSize: Qt.size(width, height)
+                                                //sourceSize: Qt.size(width, height)
                                                 cache: false
                                             }
                                         }
@@ -1387,36 +1394,111 @@ Item { // Page 2: Collection Page
                 anchors.topMargin: 6
                 anchors.bottomMargin: 6
 
-                Rectangle {
-                    id: rectangle7
-                    x: 174
-                    y: 8
-                    width: 241
-                    height: 100
-                    color: "#89ff0000"
-
-                    Text {
-                        id: _text
-                        x: 16
-                        y: 43
-                        text: qsTr("Store additional Buttons/Controls here")
-                        font.pixelSize: 12
-                    }
-                }
-
                 CompareController {
                     id: compareController
                 }
 
                 Column {
-                    CompareButton {
-                        controller: compareController
-                        cardImageUrl: "https://images.pokemontcg.io/sm1/163_hires.png"  // Example image for comparison
+                }
+
+                Slider {
+                    id: columnCountSlider
+                    y: 10
+                    width: 300
+                    value: 5
+                    snapMode: RangeSlider.SnapAlways
+                    to: 5
+                    from: 1
+                    stepSize: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Component.onCompleted: {
+                        updateColumns(columnCountSlider.value);
                     }
-                    CompareButton {
-                        controller: compareController
-                        cardImageUrl: "https://images.pokemontcg.io/sm1/163_hires.png"  // Another card for comparison
+
+                    onValueChanged: {
+                        updateColumns(columnCountSlider.value);
+
                     }
+                }
+
+                // Slider {
+                //     id: xSlider
+                //     y: 29
+                //     width: 400
+                //     value: 200
+                //     stepSize: 10
+                //     to: 400
+                //     anchors.horizontalCenter: parent.horizontalCenter
+
+                //     onValueChanged: console.log(value)
+                // }
+
+                // Slider {
+                //     id: ySlider
+                //     y: 48
+                //     width: 400
+                //     value: 200
+                //     stepSize: 10
+                //     anchors.horizontalCenter: parent.horizontalCenter
+                //     to: 400
+
+                //     onValueChanged: console.log(value)
+
+                // }
+
+                // Slider {
+                //     id: zSlider
+                //     y: 68
+                //     width: 400
+                //     value: 200
+                //     stepSize: 10
+                //     anchors.horizontalCenter: parent.horizontalCenter
+                //     to: 400
+
+                //     onValueChanged: console.log(value)
+
+                // }
+
+                Slider {
+                    id: xSlider
+                    y: 29
+                    width: 400
+                    visible: false
+                    value: 1
+                    stepSize: 0.1
+                    to: 3
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    onValueChanged: console.log(value)
+                }
+
+                Slider {
+                    id: ySlider
+                    y: 48
+                    width: 400
+                    visible: false
+                    value: 1
+                    stepSize: 0.1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    to: 3
+
+                    onValueChanged: console.log(value)
+
+                }
+
+                Slider {
+                    id: zSlider
+                    y: 68
+                    width: 400
+                    visible: false
+                    value: 1
+                    stepSize: 0.1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    to: 3
+
+                    onValueChanged: console.log(value)
+
                 }
             }
         }
@@ -2393,7 +2475,7 @@ Item { // Page 2: Collection Page
 
     Rectangle {
         id: rectangle39
-        x: 575
+        x: 675
         y: 480
         width: 25
         height: 145
@@ -2570,7 +2652,7 @@ Item { // Page 2: Collection Page
 
     Rectangle {
         id: rectangle50
-        x: 575
+        x: 675
         y: 460
         width: 25
         height: 10
@@ -2732,7 +2814,7 @@ Item { // Page 2: Collection Page
 
     Rectangle {
         id: rectangle60
-        x: 575
+        x: 675
         y: 470
         width: 25
         height: 10
@@ -2822,7 +2904,7 @@ Item { // Page 2: Collection Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:55;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
-D{i:63;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0}D{i:1}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:36}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
+D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:76}
 }
 ##^##*/

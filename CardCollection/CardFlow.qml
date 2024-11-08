@@ -10,13 +10,10 @@ Flow {
 
     // Signals to emit for comparison
     signal cardFlowLeftCompare(string imageUrl)
-    signal rightCompare(string imageUrl)
+    signal cardFlowRightCompare(string imageUrl)
 
     property string collectionFlowImageUrl  // URL for the card image
-
-    onCollectionFlowImageUrlChanged: {
-        console.log("collectionFlow reports that cardImageUrl changed to: " + collectionFlowImageUrl);
-    }
+    property int numCardColumns: 4
 
 
     Repeater {
@@ -24,7 +21,7 @@ Flow {
         model: []
 
         delegate: Item {
-            width: collectionFlow.width / 4
+            width: collectionFlow.width / numCardColumns
             height: width * 3.5 / 2.5
 
             property bool isVisible: (y + height) > collectionFlow.viewportY &&
@@ -54,19 +51,27 @@ Flow {
 
                 // Emit signals from CardFlow on button clicks
                 onLeftCompare: {
-                    console.log("CompareButton settings collectionFlowImageUrl to: " + cardImageUrl);
+                   // console.log("CompareButton settings collectionFlowImageUrl to: " + cardImageUrl);
                     collectionFlowImageUrl = cardImageUrl
-                    console.log("CardFlow.collectionFlowImageUrl set to: " + collectionFlowImageUrl);
-                     console.log("CardFlow.CompareButton caught onLeftCompare with: " + cardImageUrl);
-                    console.log("CardFlow.ComapreButton now broadcasting on signal collectionFLow.cardFlowLeftCompare with: " + cardImageUrl);
+                   // console.log("CardFlow.collectionFlowImageUrl set to: " + collectionFlowImageUrl);
+                   //  console.log("CardFlow.CompareButton caught onLeftCompare with: " + cardImageUrl);
+                   // console.log("CardFlow.ComapreButton now broadcasting on signal collectionFLow.cardFlowLeftCompare with: " + cardImageUrl);
                     collectionFlow.cardFlowLeftCompare(cardImageUrl)
-                    console.log(" Control returned to CompareButton.onLeftCompare");
+                   // console.log(" Control returned to CompareButton.onLeftCompare");
                 }
-                onRightCompare: collectionFlow.rightCompare(cardImageUrl)
-            }
+                // Emit signals from CardFlow on button clicks
+                onRightCompare: {
+                    //console.log("CompareButton settings collectionFlowImageUrl to: " + cardImageUrl);
+                    collectionFlowImageUrl = cardImageUrl
+                   // console.log("CardFlow.collectionFlowImageUrl set to: " + collectionFlowImageUrl);
+                   //  console.log("CardFlow.CompareButton caught onrightCompare with: " + cardImageUrl);
+                   // console.log("CardFlow.ComapreButton now broadcasting on signal collectionFLow.cardFlowrightCompare with: " + cardImageUrl);
+                    collectionFlow.cardFlowRightCompare(cardImageUrl)
+                   // console.log(" Control returned to CompareButton.onrightCompare");
+                }            }
 
             Component.onCompleted: {
-                console.log("Item index:", index, "y position:", y, "isVisible:", isVisible)
+               // console.log("Item index:", index, "y position:", y, "isVisible:", isVisible)
             }
         }
     }
