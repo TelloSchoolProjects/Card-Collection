@@ -1008,8 +1008,15 @@ Item { // Page 2: Discover Page
                                                     cache: false
 
                                                     onSourceChanged: {
-                                                        var index = markedCards.indexOf(collectionButton.card)
-                                                        if (index !== -1) {
+                                                        // Add the card to markedCards if checked
+                                                        var cardExists = false;
+                                                        for(var i = 0; i < markedCards.length; i++) {
+                                                            if(markedCards[i].id === collectionButton.card.id) {
+                                                                cardExists = true;
+                                                            }
+                                                        //var index = markedCards.indexOf(collectionButton.card)
+                                                        //if (index !== -1) {
+                                                            if(cardExists){
                                                             console.log("Card: " + collectionButton.card.id + " is in markedCards already")
 
                                                             collectionButton.checked = true;
@@ -1018,7 +1025,7 @@ Item { // Page 2: Discover Page
                                                             collectionButton.checked = false;
                                                             console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
 
-
+}
                                                         }
                                                     }
                                                 }
@@ -1166,26 +1173,43 @@ Item { // Page 2: Discover Page
 
                             // Handle the checked signal to mark/unmark the card
                             onCheckedChanged: {
-                                if (collectionButton.checked) {
-                                    // Add the card to markedCards if checked
-
-                                    if(markedCards.indexOf(collectionButton.card !== -1)) {
-                                    console.log("Discover: Pushing : " + collectionButton.card.id + " to markedCards");
-                                    markedCards.push(collectionButton.card)
-                                    console.log("markedCards now contains: ")
-                                    for(var i = 0; i < markedCards.length; i++) {
-                                        console.log(markedCards[i].id);
-
+                                var cardExists = false;
+                                var indexOfCard = -1
+                                for(var i = 0; i < markedCards.length; i++) {
+                                    if(markedCards[i].id === collectionButton.card.id) {
+                                        cardExists = true;
+                                        indexOfCard = i
                                     }
                                 }
 
-                                } else {
+                                // if (collectionButton.checked) {
+                                //     // Add the card to markedCards if checked
+                                //     for(var i = 0; i < markedCards.length; i++) {
+                                //         if(markedCards[i].id === collectionButton.card.id) {
+                                //             cardExists = true;
+                                //             indexOfCard = i
+                                //         }
+                                //     }
+
+                                    if(collectionButton.checked && !cardExists){
+                                    //if(markedCards.indexOf(collectionButton.card !== -1)) {
+                                        console.log("Discover: card doesn't exist in collection yet");
+                                        console.log("Discover: Pushing : " + collectionButton.card.id + " to markedCards");
+                                        markedCards.push(collectionButton.card)
+                                        console.log("markedCards now contains: ")
+                                        for(var i = 0; i < markedCards.length; i++) {
+                                            console.log(markedCards[i].id);
+
+                                        }
+                                   // }
+
+                                } else if (!collectionButton.checked && cardExists) {
                                     // Remove the card from markedCards if unchecked
-                                    var index = markedCards.indexOf(collectionButton.card)
-                                    if (index !== -1) {
+                                    var index = indexOfCard
+                                   // if (index !== -1) {
                                         console.log("Card: " + collectionButton.card + " being removed from markedCards");
                                         markedCards.splice(index, 1)
-                                    }
+                                  //  }
                                 }
 
                                 updateMarkedCards();
@@ -2342,7 +2366,7 @@ Item { // Page 2: Discover Page
 
 
                     function onReleased(){
-                       // console.log("released")
+                        // console.log("released")
 
                         // ballToggleImage.opacity = 1;
 
