@@ -46,6 +46,7 @@ Item { // Page 2: Discover Page
     property var cards: [] // List of card objects
     // List to store marked cards
     property var markedCards: []
+    property var loadedCards: []
     signal updateMarkedCards;
     // Current card being displayed
     property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
@@ -53,6 +54,14 @@ Item { // Page 2: Discover Page
     // Update the current card when selectedIndex changes
     onSelectedIndexChanged: {
         currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
+    }
+
+    onLoadedCardsChanged: {
+        markedCards = loadedCards;
+    }
+
+    onMarkedCardsChanged: {
+        updateMarkedCards();
     }
 
     function toggleLeftDrawer() {

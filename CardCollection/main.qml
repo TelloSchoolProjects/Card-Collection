@@ -44,39 +44,45 @@ Window {
     // Save list property to store tuples
     property var saveList: []
     property var saveCards: []
+    property var processedCards: []
+    property var markedCards: []
 
-    // Compile the save list based on card data
-    function compileSaveList() {
-        window.saveList = [] // Initialize the save list
-        console.log("Debug: Starting to compile saveList...");
+    // // Compile the save list based on card data
+    // function compileSaveList() {
+    //     window.saveList = [] // Initialize the save list
+    //     console.log("Debug: Starting to compile saveList...");
 
-        console.log("window.saveCards.length = " + window.saveCards.length);
-        for (var i = 0; i < window.saveCards.length; i++) {
-            var card = window.saveCards[i];  // Access card at index i
-            var cardIdTuple = ["", "id", card.id];  // Create tuple for card
-            window.saveList.push(cardIdTuple);  // Push the tuple into the save list
-            console.log("Debug: cardIdTuple created:", cardIdTuple);
-        }
+    //     console.log("window.saveCards.length = " + window.saveCards.length);
+    //     for (var i = 0; i < window.saveCards.length; i++) {
+    //         var card = window.saveCards[i];  // Access card at index i
+    //         var cardIdTuple = ["", "id", card.id];  // Create tuple for card
+    //         window.saveList.push(cardIdTuple);  // Push the tuple into the save list
+    //         console.log("Debug: cardIdTuple created:", cardIdTuple);
+    //     }
 
-        console.log("Debug: Final saveList:", saveList);
+    //     console.log("Debug: Final saveList:", saveList);
 
-        //backendController.request_save_collection(window.saveList);
+    //     //backendController.request_save_collection(window.saveList);
+    // }
+
+    // Connections {
+    //     target: backendController
+    //     function onSaveResults(response) {
+
+    //         console.log("backendController called back after saving with response: " + response);
+
+    //         // for(var i = 0; i < cards.length; i++) {
+    //         //     //console.log((i+1) + ": " + cards[i].imageUrl);
+    //         // }
+
+
+    //     }
+    // }
+
+    onProcessedCardsChanged: {
+        discoverPage.loadedCards = window.processedCards
+        console.log("Window.onProcessedCardsChanged: discoverPage.loadedCards now length: " + discoverPage.loadedCards.length);
     }
-
-    Connections {
-        target: backendController
-        function onSaveResults(response) {
-
-            console.log("backendController called back after saving with response: " + response);
-
-            // for(var i = 0; i < cards.length; i++) {
-            //     //console.log((i+1) + ": " + cards[i].imageUrl);
-            // }
-
-
-        }
-    }
-
 
 
 
@@ -241,22 +247,15 @@ Window {
                 activeFocusOnTab: true
 
                 onUpdateMarkedCards: {
-                    console.log("Debug: markedCards before update:", discoverPage.markedCards);
-
-                    console.log("Debug: saveCards before compile:", window.saveCards);
-
 
                     // Log specific properties of each card object
-                    for (var i = 0; i < discoverPage.markedCards.count; i++) {
-                        var card = discoverPage.markedCards.get(i);
-                        console.log("Debug: card marked - id:", card.id, "name:", card.name); // Example
+                    for (var i = 0; i < discoverPage.markedCards.length; i++) {
+                        var card = discoverPage.markedCards[i];
+                        console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
                     }
 
-                    collectionPage.saveCards = discoverPage.markedCards;
-                    window.saveCards = discoverPage.markedCards;
-                    window.compileSaveList();
-
-                    console.log("Debug: saveList after compile:", window.saveList);
+                    window.markedCards = discoverPage.markedCards;
+                    collectionPage.markedCards = window.markedCards;
 
 
                 }
@@ -274,6 +273,10 @@ Window {
                 Layout.preferredHeight: 615
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
+
+                onProcessedCardsChanged: {
+                    window.processedCards = collectionPage.processedCards
+                }
 
 
             }

@@ -59,12 +59,19 @@ Item { // Page 2: Collection Page
     // Alias to access cards in CardFlow
     property alias saveCards: collectionFlow.cards
 
+    property var processedCards: []
+
+
+    property var markedCards: []
+
     // Compile the save list based on card data
     function compileSaveList() {
         saveList = [] // Initialize the save list
         console.log("Collection: Starting to compile saveList...");
 
         console.log("Collection.saveCards.length = " + saveCards.length);
+
+        console.log("Collection.markedCards.length = " + markedCards.length);
         for (var i = 0; i < saveCards.length; i++) {
             var card = saveCards[i];  // Access card at index i
             var cardIdTuple = ["", "id", card.id];  // Create tuple for card
@@ -74,26 +81,32 @@ Item { // Page 2: Collection Page
 
         console.log("Collection: Final saveList:", saveList);
 
-        //backendController.request_save_collection(window.saveList);
+        backendController.request_save_collection(saveList);
     }
 
+    Connections {
+            target: Qt.application
+            onAboutToQuit: {
+                console.log("Collection: About to Quit")
+            }
+        }
 
     Component.onCompleted: {
         console.log("Collection.qml onComplete Called");
         backendController.request_load_collection();
     }
 
-    Component.onDestruction: {
-        console.log("Collection.qml destruction Beginning!")
-        console.log("Collection: saveCards before Collection.qml destruction:");
-        for(var i = 0; i < window.saveCards.length; i++) {
-            console.log(window.saveCards[i].name)
-        }
+    // Component.onDestruction: {
+    //     console.log("Collection.qml destruction Beginning!")
+    //     console.log("Collection: saveCards before Collection.qml destruction:");
+    //     for(var i = 0; i < saveCards.length; i++) {
+    //         console.log(saveCards[i].name)
+    //     }
 
-        console.log("Collection: saveList before destruction:", window.saveList);
-        backendController.request_save_collection(window.saveList);
-        console.log("Collection: request backendController.request_save.");
-    }
+    //     console.log("Collection: saveList before destruction:", saveList);
+    //     backendController.request_save_collection(saveList);
+    //     console.log("Collection: request backendController.request_save.");
+    // }
 
     // // Compile the save list based on card data
     // function compileSaveList() {
@@ -106,8 +119,21 @@ Item { // Page 2: Collection Page
     // }
 
 
+    onMarkedCardsChanged: {
+        console.log("Collection: markedCards changed...");
+        saveCards = markedCards
+    }
+
     function processLoadedCards() {
-     // TODO
+        if(cards.length > 0){
+            //print("Collection: assigning: " + cards + " to saveCards")
+            //saveCards = cards
+            // print("saveCards now length: " + saveCards.length)
+            print("Collection: assigning: " + cards + " to markedCards")
+            processedCards = cards
+            print("processedCards now length: " + processedCards.length)
+
+        }
     }
 
     function updateColumns(num: int) {
@@ -1012,9 +1038,9 @@ Item { // Page 2: Collection Page
                             viewportY: flickable.contentY
                             cards: collectionPage.cards
 
-                            onCardsChanged: {
-                                compileSaveList()
-                            }
+                            // onCardsChanged: {
+                            //     compileSaveList()
+                            // }
 
                             onCardEntered: {
                                 //clipRectangle.clip = false;
@@ -3051,6 +3077,7 @@ Item { // Page 2: Collection Page
                                           }))
 
                 selectedIndex = 0; // Start with the first card
+                processLoadedCards();
                 //viewRight.visible = true
             }
         }
