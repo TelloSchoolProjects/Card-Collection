@@ -10,7 +10,7 @@ import QtQuick3D
 // Page 1: Search Page
 Item {
     id: searchPage
-    width: 600
+    width: 700
     height: 615
     visible: true
     Layout.preferredHeight: 560
@@ -221,14 +221,14 @@ Item {
 
         if(typeBlock.visible && subtypeBlock.visible) {
 
-            typesRow.width = typeBlock.width + subtypeBlock.width
+            // typesRow.width = typeBlock.width + subtypeBlock.width
 
         } else if (typeBlock.visible && !subtypeBlock.visible) {
 
-            typesRow.width = typeBlock.width
+            // typesRow.width = typeBlock.width
 
         } else if (!typeBlock.visible && subtypeBlock.visible) {
-            typesRow.width = subtypeBlock.width
+            // typesRow.width = subtypeBlock.width
         }
 
 
@@ -344,7 +344,7 @@ Item {
             rightContentHeight += (visibleItemsCount - 1) * rightSideColumn.spacing; // Spacing between elements
         }
 
-        rightScrollView.contentHeight = rightContentHeight; // Set the final content height
+        rightScrollView.contentHeight = rightContentHeight + 25; // Set the final content height
     }
 
 
@@ -406,7 +406,7 @@ Item {
 
         Column {
             id: searchToolsColumn
-            width: 600
+            width: 700
             height: 100
             Layout.preferredWidth: 600
             Layout.preferredHeight: 80
@@ -432,6 +432,7 @@ Item {
                 anchors.right: parent.right
                 anchors.leftMargin: 0
                 anchors.rightMargin: 0
+                typesRowSpacing: 14
                 borderColor: "#ff0000"
                 blockBorderWidth: 2
                 z: 2
@@ -467,7 +468,7 @@ Item {
 
             ToolBar {
                 id: searchTools
-                width: 600
+                width: 700
                 height: 40
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 600
@@ -477,6 +478,7 @@ Item {
                 Row {
                     id: searchRow
                     x: 0
+                    width: 700
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
                     spacing: 5
@@ -484,7 +486,7 @@ Item {
 
                     ComboBox {
                         id: setComboBox
-                        width: 264
+                        width: 300
                         height: 25
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: 2
@@ -622,12 +624,14 @@ Item {
                                     cachedSets = tempSets;
                                 }
                             }
+
+
                         }
                     }
                     TextField {
                         id: txtSearchBox
                         x: 111
-                        width: 240
+                        width: 300
                         height: 25
                         text: "Deoxys"
                         anchors.verticalCenter: parent.verticalCenter
@@ -805,7 +809,7 @@ Item {
 
                     Rectangle {
                         id: highlightBorder
-                        width: 600
+                        width: 700
                         height: 40
                         color: "#00ffffff"
                         radius: 4
@@ -828,7 +832,7 @@ Item {
 
         Item {
             id: _item
-            width: 600
+            width: 700
             height: 450
             Layout.preferredWidth: 200
             Layout.preferredHeight: 470
@@ -916,8 +920,8 @@ Item {
                 // Drawer
                 Rectangle {
                     id: customDrawer
-                    x: -298
-                    width: 300
+                    x: -330
+                    width: 330
                     height: 438
                     opacity: 1
                     visible: true
@@ -1304,7 +1308,7 @@ Item {
 
                     Flickable {
                         id: leftScrollView
-                        width: 260
+                        width: 290
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
@@ -1339,7 +1343,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 //  anchors.top: parent.top
 
@@ -1356,7 +1360,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
                                 //  anchors.top: parent.top
@@ -1374,7 +1378,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
                                 //  anchors.top: parent.top
@@ -1392,7 +1396,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
                                 //  anchors.top: parent.top
@@ -1402,7 +1406,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack1Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: true
                                 nameText: "Attack 1"
@@ -1422,7 +1426,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack2Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
                                 nameText: "Attack 2"
@@ -1442,7 +1446,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack3Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
                                 nameText: "Attack 3"
@@ -1462,7 +1466,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack4Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
                                 nameText: "Attack 4"
@@ -1482,7 +1486,7 @@ Item {
 
                             AbilityInfoBlock {
                                 id: ability1
-                                width: 250
+                                width: 290
                                 nameText: "Ability 1"
                                 typeText: "Ability 1 Type"
                                 descText: "Ability 1 Description"
@@ -1494,7 +1498,7 @@ Item {
 
                             AbilityInfoBlock {
                                 id: ability2
-                                width: 250
+                                width: 290
                                 visible: false
                                 nameText: "Ability 2"
                                 typeText: "Ability 2 Type"
@@ -1512,7 +1516,7 @@ Item {
                         anchors.left: leftScrollView.right
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.leftMargin: 18
+                        anchors.leftMargin: 23
                         anchors.rightMargin: 4
                         anchors.topMargin: 4
                         contentX: 0
@@ -1521,22 +1525,23 @@ Item {
                         clip: false
                         boundsBehavior: Flickable.DragOverBounds
                         boundsMovement: Flickable.FollowBoundsBehavior
-                        contentHeight: 700 // Set a suitable height for your content
+                        contentHeight: 800 // Set a suitable height for your content
 
                         Column {
                             id: rightSideColumn
                             x: 0
                             y: 0
-                            width: 276
-                            height: 430
+                            width: 335
+                            height: 435
 
-                            spacing: 3
+                            spacing: 4
 
 
                             Rectangle {
                                 id: supertypeBlock
-                                width: 190
+                                width: 210
                                 height: 40
+                                visible: true
                                 color: "#c80d0d"
                                 radius: 8
                                 border.color: "#580a0a"
@@ -1644,8 +1649,8 @@ Item {
 
                             Rectangle {
                                 id: nameBlock
-                                width: 240
-                                height: 70
+                                width: 245
+                                height: 80
                                 color: "#c80d0d"
                                 radius: 8
                                 border.color: "#580a0a"
@@ -1757,10 +1762,9 @@ Item {
                                 }
                             }
 
-
                             Row {
                                 id: typesRow
-                                width: 221
+                                width: 294
                                 height: 106
                                 spacing: 4
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -1771,6 +1775,7 @@ Item {
                                     anchors.verticalCenter: parent.verticalCenter
                                     color: "#ff0000"
                                     height: 106
+                                    visible: true
                                     radius: 8
                                     border.color: "#580a0a"
                                     width: 55
@@ -1788,7 +1793,7 @@ Item {
                                     color: window.blockBG
                                     height: 106
                                     radius: 6
-                                    width: 164
+                                    width: 234
 
                                     sub1Text: "Subtype 1"
                                     sub2Text: "Subtype 2"
@@ -1809,8 +1814,8 @@ Item {
                                 // bezelBorderColor: window.bezelBorderColor
                                 // screenHighlightColor: window.screenHighlightColor
 
-                                width: 225
-                                height: 150
+                                width: 260
+                                height: 100
                                 visible: true
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 //  anchors.top: parent.top
@@ -1825,10 +1830,10 @@ Item {
                                 border.color: "#6c0101"
                                 border.width: 2
                                 color: "#c80d0d"
-                                height: 200
+                                height: 180
                                 visible: true
                                 radius: 8
-                                width: 225
+                                width: 260
                                 logoSource: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].setLogo : ""
                                 logoScreenText: (selectedIndex >= 0
                                                  && selectedIndex < cards.length) ? "" // Fallback if name is undefined
@@ -1838,7 +1843,7 @@ Item {
 
                             Row {
                                 id: setSymbolRow
-                                width: 220
+                                width: 250
                                 height: 100
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 spacing: 3
@@ -1848,9 +1853,9 @@ Item {
                                     border.color: "#6c0101"
                                     border.width: 2
                                     color: "#c80d0d"
-                                    height: 100
+                                    height: 125
                                     radius: 8
-                                    width: 100
+                                    width: 125
                                     imageSource: (selectedIndex >= 0
                                                   && selectedIndex < cards.length) ? cards[selectedIndex].setSymbol : ""
                                     blockText: (selectedIndex >= 0
@@ -1860,8 +1865,8 @@ Item {
 
                                 Rectangle {
                                     id: setBlock
-                                    width: 120
-                                    height: 100
+                                    width: 125
+                                    height: 125
                                     color: "#c80d0d"
                                     radius: 8
                                     border.color: "#6c0101"
@@ -1972,6 +1977,7 @@ Item {
 
 
 
+
                         }
                     }
                 }
@@ -1980,7 +1986,7 @@ Item {
 
         ToolBar {
             id: pagingButtonsToolbar
-            width: 600
+            width: 700
             height: 65
             Layout.preferredHeight: 50
             Layout.fillHeight: false
@@ -2368,7 +2374,7 @@ Item {
 
             Rectangle {
                 id: settingsButtonHighlight
-                x: 498
+                x: 595
                 width: 80
                 height: 50
                 visible: true
@@ -2573,9 +2579,9 @@ Item {
                                               "subtype4": card.subtype4 || ""
                                           }))
 
-                for(var i = 0; i < cards.length; i++) {
-                    console.log((i+1) + ": " + cards[i].imageUrl);
-                }
+                // for(var i = 0; i < cards.length; i++) {
+                //     //console.log((i+1) + ": " + cards[i].imageUrl);
+                // }
 
                 selectedIndex = 0; // Start with the first card
                 updateAttackInfo();
@@ -2613,6 +2619,6 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:106}D{i:108}D{i:112}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:75}
 }
 ##^##*/

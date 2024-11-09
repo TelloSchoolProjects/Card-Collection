@@ -371,7 +371,7 @@ Rectangle {
             anchors.fill: parent
             anchors.leftMargin: 2
             anchors.rightMargin: 2
-            spacing: -2
+            spacing: 8
 
 
             Rectangle {

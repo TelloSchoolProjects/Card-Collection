@@ -22,7 +22,7 @@ Window {
 
     // property int selectedIndex: 0
     // property var cards: [] // List of card objects
-    property int selectedTabIndex: 2
+    property int selectedTabIndex: 0
 
     // Define color scheme properties
     property color primaryColor: "#c80d0d"
@@ -163,17 +163,37 @@ Window {
 
             Search {
                 width: 700
+                height: 615
+                Layout.maximumHeight: 615
+                Layout.maximumWidth: 700
+                Layout.minimumHeight: 615
+                Layout.minimumWidth: 700
+                Layout.preferredHeight: 615
+                Layout.preferredWidth: 700
                 activeFocusOnTab: true
             }
 
             Discover {
                 width: 700
+                height: 615
+                Layout.maximumHeight: 615
+                Layout.maximumWidth: 700
+                Layout.minimumHeight: 615
+                Layout.minimumWidth: 700
+                Layout.preferredHeight: 615
+                Layout.preferredWidth: 700
                 activeFocusOnTab: true
 
             }
 
             Collection {
                 width: 700
+                Layout.maximumHeight: 615
+                Layout.maximumWidth: 700
+                Layout.minimumHeight: 615
+                Layout.minimumWidth: 700
+                Layout.preferredHeight: 615
+                Layout.preferredWidth: 700
                 activeFocusOnTab: true
             }
         }
