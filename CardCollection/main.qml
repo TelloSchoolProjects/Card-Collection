@@ -41,6 +41,10 @@ Window {
 
     //onActiveFocusItemChanged: console.log(activeFocusItem)
 
+    Component.onDestruction: {
+        backendController.request_save_collection(collectionPage.saveList);
+    }
+
     Rectangle {
         id: columnLayout1
         color: "#ffffff"
@@ -110,6 +114,8 @@ Window {
                     color: selectedTabIndex
                            === 1 ? "#ffffff" : "#000000" // White for selected, black for unselected
                     anchors.centerIn: parent
+
+
                 }
 
                 onClicked: {
@@ -184,9 +190,14 @@ Window {
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
 
+                onUpdateMarkedCards: {
+                    collectionPage.saveCards = markedCards;
+                }
+
             }
 
             Collection {
+                id: collectionPage
                 width: 700
                 Layout.maximumHeight: 615
                 Layout.maximumWidth: 700

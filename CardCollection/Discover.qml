@@ -44,6 +44,16 @@ Item { // Page 2: Discover Page
 
     property int selectedIndex: 0
     property var cards: [] // List of card objects
+    // List to store marked cards
+    property var markedCards: []
+    signal updateMarkedCards;
+    // Current card being displayed
+    property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
+
+    // Update the current card when selectedIndex changes
+    onSelectedIndexChanged: {
+        currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
+    }
 
     function toggleLeftDrawer() {
         toggleLockTimer.start(); // Start the timer to re-enable the button
@@ -398,41 +408,41 @@ Item { // Page 2: Discover Page
         //rightScrollView.contentY = 0;
     }
 
-    // Function to handle next button click
-    function onNextCard() {
-        if (selectedIndex < cards.length - 1) {
-            selectedIndex++
-            updateAttackInfo(); // Update UI for the new selectedIndex
-            updateAbilityInfo();
-            updateSubTypeInfo();
-            updateSuperTypeInfo();
-            updateTypeInfo();
-            updateFlavorText();
-            resetLeftColumnScroll();
-            resetRightColumnScroll();
-            resetCardRotation();
-            updateLeftScrollView();
-            //updateRightScrollView();
-        }
-    }
+    // // Function to handle next button click
+    // function onNextCard() {
+    //     if (selectedIndex < cards.length - 1) {
+    //         selectedIndex++
+    //         updateAttackInfo(); // Update UI for the new selectedIndex
+    //         updateAbilityInfo();
+    //         updateSubTypeInfo();
+    //         updateSuperTypeInfo();
+    //         updateTypeInfo();
+    //         updateFlavorText();
+    //         resetLeftColumnScroll();
+    //         resetRightColumnScroll();
+    //         resetCardRotation();
+    //         updateLeftScrollView();
+    //         //updateRightScrollView();
+    //     }
+    // }
 
-    // Function to handle next button click
-    function onPrevCard() {
-        if (selectedIndex >= 0) {
-            selectedIndex--
-            updateAttackInfo(); // Update UI for the new selectedIndex
-            updateAbilityInfo();
-            updateSubTypeInfo();
-            updateSuperTypeInfo();
-            updateTypeInfo();
-            updateFlavorText();
-            resetLeftColumnScroll();
-            resetRightColumnScroll();
-            resetCardRotation();
-            //updateLeftScrollView();
-            //updateRightScrollView();
-        }
-    }
+    // // Function to handle next button click
+    // function onPrevCard() {
+    //     if (selectedIndex >= 0) {
+    //         selectedIndex--
+    //         updateAttackInfo(); // Update UI for the new selectedIndex
+    //         updateAbilityInfo();
+    //         updateSubTypeInfo();
+    //         updateSuperTypeInfo();
+    //         updateTypeInfo();
+    //         updateFlavorText();
+    //         resetLeftColumnScroll();
+    //         resetRightColumnScroll();
+    //         resetCardRotation();
+    //         //updateLeftScrollView();
+    //         //updateRightScrollView();
+    //     }
+    // }
 
 
     Column {
@@ -987,11 +997,29 @@ Item { // Page 2: Discover Page
                                                     source: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl : ""
                                                     sourceSize: Qt.size(width, height)
                                                     cache: false
+
+                                                    onSourceChanged: {
+                                                        var index = markedCards.indexOf(collectionButton.card)
+                                                        if (index !== -1) {
+                                                            console.log("Card: " + collectionButton.card.id + " is in markedCards already")
+
+                                                            collectionButton.checked = true;
+                                                        }
+                                                        else {
+                                                            collectionButton.checked = false;
+                                                            console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
+
+
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     ]
                                 }
+
+                                // CollectionButton overlay on the card
+
 
                                 // Back side of the card, rotated 180 degrees
                                 Model {
@@ -1113,6 +1141,46 @@ Item { // Page 2: Discover Page
                             anchors.verticalCenter: parent.verticalCenter
                             z: 0
                             anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        CollectionButton {
+                            id: collectionButton
+                            x: 221
+                            y: 31
+                            icon.source: "colorlessEnergyCropped.png"
+                            icon.color: "#00ffffff"
+                            checkable: true
+                            z: 3
+                            //anchors.centerIn: parent  // Center the button on the card
+                            card: currentCard  // Bind the current card to the button
+                            alreadyMarkedCards: markedCards
+
+                            // Handle the checked signal to mark/unmark the card
+                            onCheckedChanged: {
+                                if (collectionButton.checked) {
+                                    // Add the card to markedCards if checked
+
+                                    if(markedCards.indexOf(collectionButton.card !== -1)) {
+                                    console.log("Discover: Pushing : " + collectionButton.card.id + " to markedCards");
+                                    markedCards.push(collectionButton.card)
+                                    console.log("markedCards now contains: ")
+                                    for(var i = 0; i < markedCards.length; i++) {
+                                        console.log(markedCards[i].id);
+
+                                    }
+                                }
+
+                                } else {
+                                    // Remove the card from markedCards if unchecked
+                                    var index = markedCards.indexOf(collectionButton.card)
+                                    if (index !== -1) {
+                                        console.log("Card: " + collectionButton.card + " being removed from markedCards");
+                                        markedCards.splice(index, 1)
+                                    }
+                                }
+
+                                updateMarkedCards();
+                            }
                         }
                     }
 
@@ -2148,6 +2216,10 @@ Item { // Page 2: Discover Page
                     searchParams = searchParams.concat(typesParams);
                     searchParams = searchParams.concat(setsParams);
 
+                    // for(var i = 0; i < setsParams.length; i++) {
+                    //     console.log(setsParams[i]);
+                    // }
+
                     //console.log(searchParams)
 
 
@@ -2261,7 +2333,7 @@ Item { // Page 2: Discover Page
 
 
                     function onReleased(){
-                        console.log("released")
+                       // console.log("released")
 
                         // ballToggleImage.opacity = 1;
 
@@ -2655,7 +2727,6 @@ Item { // Page 2: Discover Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57}D{i:76}D{i:125}D{i:127}
-D{i:136}
+    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
