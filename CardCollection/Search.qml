@@ -344,7 +344,7 @@ Item {
             rightContentHeight += (visibleItemsCount - 1) * rightSideColumn.spacing; // Spacing between elements
         }
 
-        rightScrollView.contentHeight = rightContentHeight + 25; // Set the final content height
+        rightScrollView.contentHeight = rightContentHeight + 55; // Set the final content height
     }
 
 
@@ -486,7 +486,7 @@ Item {
 
                     ComboBox {
                         id: setComboBox
-                        width: 300
+                        width: 260
                         height: 25
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: 2
@@ -833,7 +833,7 @@ Item {
         Item {
             id: _item
             width: 700
-            height: 450
+            height: 425
             Layout.preferredWidth: 200
             Layout.preferredHeight: 470
             Layout.margins: 0
@@ -922,7 +922,7 @@ Item {
                     id: customDrawer
                     x: -330
                     width: 330
-                    height: 438
+                    height: 415
                     opacity: 1
                     visible: true
                     // Start hidden
@@ -987,7 +987,7 @@ Item {
                                 x: 0
                                 y: 200
                                 z: -25
-                                scale.y: 3
+                                scale.y: 3.5
                                 scale.x: 2.5
 
                                 // Front side of the card
@@ -1987,14 +1987,14 @@ Item {
         ToolBar {
             id: pagingButtonsToolbar
             width: 700
-            height: 65
+            height: 90
             Layout.preferredHeight: 50
             Layout.fillHeight: false
             Layout.fillWidth: true
             Rectangle {
                 id: rectangle6
                 width: 387
-                height: 26
+                height: 36
                 visible: true
                 color: "#00ffffff"
                 border.width: 0
@@ -2004,9 +2004,10 @@ Item {
 
                 Button {
                     id: btnFirst
-                    y: 0
                     width: 42
+                    height: 35
                     text: "First"
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 10
                     Layout.minimumHeight: 26
@@ -2042,9 +2043,10 @@ Item {
 
                 Button {
                     id: button
-                    y: 0
                     width: 70
+                    height: 35
                     text: "Previous"
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: btnFirst.right
                     anchors.leftMargin: 20
                     Layout.fillHeight: false
@@ -2089,6 +2091,7 @@ Item {
                     x: 269
                     y: 0
                     width: 70
+                    height: 35
                     text: "Next"
                     anchors.right: btnLast.left
                     anchors.rightMargin: 20
@@ -2131,6 +2134,7 @@ Item {
                     x: 345
                     y: 0
                     width: 42
+                    height: 35
                     text: "Last"
                     anchors.right: parent.right
                     anchors.rightMargin: 10
@@ -2208,15 +2212,16 @@ Item {
 
             Rectangle {
                 id: clearButtonHighlight
-                x: 9
-                width: 80
-                height: 50
+                x: 10
+                width: 100
+                height: 70
                 visible: true
                 color: "#c80d0d"
                 radius: 3
                 border.color: primaryColor
                 border.width: 0
                 anchors.verticalCenter: parent.verticalCenter
+                scale: 1
                 anchors.verticalCenterOffset: 0
                 z: 0
 
@@ -2262,13 +2267,13 @@ Item {
 
                     Image {
                         id: image
-                        y: -52
+                        y: -38
                         width: 176
                         height: 210
                         source: "https://images.pokemontcg.io/swsh35/51_hires.png"
-                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenterOffset: -1
                         anchors.horizontalCenter: parent.horizontalCenter
-                        scale: 0.6
+                        scale: 0.8
                         sourceSize.height: 209
                         sourceSize.width: 150
                         fillMode: Image.PreserveAspectCrop
@@ -2312,16 +2317,15 @@ Item {
                 Rectangle {
                     id: rectangle3
                     x: 149
-                    y: 8
                     width: 390
-                    height: 34
+                    height: 45
                     visible: true
                     color: "#6c0101"
                     radius: 8
                     border.color: "#ff0000"
                     border.width: 2
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: -1
+                    anchors.verticalCenterOffset: 1
                     anchors.horizontalCenterOffset: 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     z: 0
@@ -2374,9 +2378,9 @@ Item {
 
             Rectangle {
                 id: settingsButtonHighlight
-                x: 595
-                width: 80
-                height: 50
+                x: 580
+                width: 100
+                height: 70
                 visible: true
                 color: "#c80d0d"
                 radius: 3
@@ -2422,13 +2426,13 @@ Item {
 
                     Image {
                         id: settingsButtonImage
-                        y: -59
+                        y: -43
                         width: 176
                         height: 210
                         source: "https://images.pokemontcg.io/swsh2/168_hires.png"
                         sourceSize.width: 150
                         sourceSize.height: 209
-                        scale: 0.52
+                        scale: 0.7
                         fillMode: Image.PreserveAspectCrop
                         anchors.horizontalCenterOffset: 0
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -2619,6 +2623,7 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:75}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:105}D{i:106}D{i:108}D{i:110}
+D{i:112}D{i:122}
 }
 ##^##*/
