@@ -131,14 +131,14 @@ Item { // Page 2: Collection Page
 
     function toggleFilterDrawer() {
         if (filtersColumn.y >= collectionPage.height) { // Closed position
-            filtersColumn.y = collectionPage.height - filtersColumn.height + 15; // Slide into view
+            filtersColumn.y = collectionPage.height - filtersColumn.height; // Slide into view
             isFilterDrawerOpen = true;
 
             rotateAnimationFilterDrawer.from = ballButtonFilterDrawer.rotation;
             rotateAnimationFilterDrawer.to = 0;
             rotateAnimationFilterDrawer.start();
         } else { // Open position
-            filtersColumn.y = collectionPage.height + 15; // Hide off the right edge
+            filtersColumn.y = collectionPage.height; // Hide off the right edge
             isFilterDrawerOpen = false;
             rotateAnimationFilterDrawer.from = ballButtonFilterDrawer.rotation;
             rotateAnimationFilterDrawer.to = 180;
@@ -2889,7 +2889,7 @@ Item { // Page 2: Collection Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:1}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:36}D{i:38}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
-D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:76}
+    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
+D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
