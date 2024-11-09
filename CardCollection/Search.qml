@@ -631,7 +631,7 @@ Item {
                     TextField {
                         id: txtSearchBox
                         x: 111
-                        width: 300
+                        width: 282
                         height: 25
                         text: "Deoxys"
                         anchors.verticalCenter: parent.verticalCenter
@@ -659,7 +659,7 @@ Item {
                     Button {
                         id: btnSearch
                         x: 485
-                        width: 75
+                        width: 135
                         height: 25
                         text: qsTr("Search")
                         anchors.verticalCenter: parent.verticalCenter
