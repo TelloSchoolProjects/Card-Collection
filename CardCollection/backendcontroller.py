@@ -8,6 +8,7 @@ import json
 import inithandler
 import searchhandler
 import discoverhandler
+import collectionhandler
 
 
 class BackendController(QObject):
@@ -92,9 +93,6 @@ class BackendController(QObject):
         self.searchResults.emit(json_result)
         print("DEBUG: searchResults signal emitted to QML")
 
-
-
-
     @Slot(list)
     def request_discover(self, params: list[tuple[str, str, str]]):
         """
@@ -142,29 +140,66 @@ class BackendController(QObject):
 
     @Slot(str)  # Mark as Slot so it’s recognized by invokeMethod
     def _emit_discover_results(self, json_result):
-        print("DEBUG: _emit_search_results called on main thread:", threading.current_thread().name)
+        print("DEBUG: _emit_discover_results called on main thread:", threading.current_thread().name)
         self.discoverResults.emit(json_result)
         print("DEBUG: discoverResults signal emitted to QML")
 
     @Slot()
     def request_load_collection(self):
         """
-        ## Description
-            Provide an interface for the front end
-            to request teh back end to load and return the user's collection.
-
-        Args:
-            none: This function does not take any arguments.
+        Provide an interface for the front end to request the backend to load and return the user's collection.
         """
+        # Start the loading process in a new thread to keep frontend responsive
+        load_thread = threading.Thread(target=self._perform_load_collection)
+        load_thread.start()
+        print("DEBUG: Started load_thread:", load_thread.name)
+
+    def _perform_load_collection(self):
+        print("DEBUG: _perform_load_collection called on thread:", threading.current_thread().name)
+
+        try:
+            # Load collection using CollectionHandler
+            collection_handler = collectionhandler.CollectionHandler()
+            collection_results = collection_handler.handle_load_collection()
+
+            if collection_results is not None:
+                json_result = json.dumps(collection_results)
+                print("DEBUG: Collection loaded and serialized")
+            else:
+                json_result = json.dumps({"error": "No collection data found"})
+                print("DEBUG: No collection data found")
+
+        except Exception as e:
+            json_result = json.dumps({"error": str(e)})
+            print("DEBUG: Exception occurred during collection load:", e)
+
+        # Emit the loadResults signal from the main thread
+        print("DEBUG: Invoking _emit_load_results on main thread via QueuedConnection")
+        QMetaObject.invokeMethod(self, "_emit_load_results",
+                                 Qt.QueuedConnection,
+                                 Q_ARG(str, json_result))
+
+    @Slot(str)
+    def _emit_load_results(self, json_result):
+        print("DEBUG: _emit_load_results called on main thread:", threading.current_thread().name)
+        self.loadResults.emit(json_result)
+        print("DEBUG: loadResults signal emitted to QML")
 
     @Slot(list)
     def request_save_collection(self, params: list[tuple[str, str, str]]):
         """
-        ## Description
-            Provide an interface for the front end
-            to save users collection to system using the given parameters.
-
-        Args:
-            params (list[tuple[str, str, str]]):
-                List of tuples of the form (category, subcategory, target)
+        Provide an interface for the front end to save the user's collection with the provided parameters.
         """
+        try:
+            # Save collection using CollectionHandler
+            collection_handler = collectionhandler.CollectionHandler()
+            collection_handler.handle_save_collection(params)
+            json_result = json.dumps({"status": "success", "message": "Collection saved successfully."})
+            print("DEBUG: Collection saved successfully")
+
+        except Exception as e:
+            json_result = json.dumps({"error": str(e)})
+            print("DEBUG: Exception occurred during collection save:", e)
+
+        # Emit the saveResults signal with confirmation or error
+        self.saveResults.emit(json_result)
