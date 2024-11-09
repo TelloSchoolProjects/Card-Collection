@@ -2956,7 +2956,7 @@ Item { // Page 2: Collection Page
     Connections {
         target: backendController
 
-        function onLoadResults(results) {
+        function onLoadResults(response) {
 
             console.log("onLoadResults heard backendController loadResults signal")
 
