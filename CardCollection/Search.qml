@@ -1993,8 +1993,8 @@ Item {
             Layout.fillWidth: true
             Rectangle {
                 id: rectangle6
-                width: 387
-                height: 36
+                width: 420
+                height: 50
                 visible: true
                 color: "#00ffffff"
                 border.width: 0
@@ -2089,10 +2089,10 @@ Item {
                 Button {
                     id: button1
                     x: 269
-                    y: 0
                     width: 70
                     height: 35
                     text: "Next"
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: btnLast.left
                     anchors.rightMargin: 20
                     font.styleName: "Bold Italic"
@@ -2132,10 +2132,10 @@ Item {
                 Button {
                     id: btnLast
                     x: 345
-                    y: 0
                     width: 42
                     height: 35
                     text: "Last"
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: 10
                     Layout.minimumHeight: 26
@@ -2303,7 +2303,7 @@ Item {
                     color: dropTextColor
                     text: cards.length ? ((selectedIndex + 1) + "/" + cards.length) : "-/-"
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 12
+                    font.pixelSize: 16
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
@@ -2317,7 +2317,7 @@ Item {
                 Rectangle {
                     id: rectangle3
                     x: 149
-                    width: 390
+                    width: 410
                     height: 45
                     visible: true
                     color: "#6c0101"
@@ -2332,8 +2332,8 @@ Item {
 
                     Rectangle {
                         id: counterBezel
-                        width: 79
-                        height: 25
+                        width: 90
+                        height: 35
                         color: bezelColor
                         radius: 4
                         border.color: bezelBorderColor
