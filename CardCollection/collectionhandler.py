@@ -40,5 +40,11 @@ class CollectionHandler:
         """Helper function to save the collection data to a JSON file."""
         data_to_save = [{"field1": t[0], "field2": t[1], "field3": t[2]} for t in save_params]
 
+        plain_string = json.dumps(data_to_save, separators=(',', ':'))
+
+        print(plain_string)
+        # Debug print to inspect the data being saved
+        print("Saving data to file:", data_to_save)
+
         with open(self.filename, 'w', encoding='utf-8') as file:
             json.dump(data_to_save, file, ensure_ascii=False, indent=4)

@@ -26,10 +26,19 @@ class BackendController(QObject):
     between signals and slots in the codebase and ensures that the connections are set up correctly.
     """
 
+    def __init__(self):
+            super().__init__()
+            print("backendController __init__ called.")
+
+
+    def __del__(self):
+      print("BackendController being destructed")
+
     setsResults = Signal(str)  # Signal that emits JSON string
     searchResults = Signal(str)  # Signal that emits JSON string
     discoverResults = Signal(str)  # Signal that emits JSON string
     loadResults = Signal(str)  # Signal that emits JSON string
+    saveResults = Signal(str)
 
     @Slot()
     def request_sets_retrieve(self):
@@ -191,6 +200,7 @@ class BackendController(QObject):
         Provide an interface for the front end to save the user's collection with the provided parameters.
         """
         try:
+            print("request_save_collection recieved: ")
             # Save collection using CollectionHandler
             collection_handler = collectionhandler.CollectionHandler()
             collection_handler.handle_save_collection(params)

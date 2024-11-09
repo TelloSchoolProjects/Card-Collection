@@ -41,9 +41,58 @@ Window {
 
     //onActiveFocusItemChanged: console.log(activeFocusItem)
 
-    Component.onDestruction: {
-        backendController.request_save_collection(collectionPage.saveList);
+    // Save list property to store tuples
+    property var saveList: []
+    property var saveCards: []
+
+    // Compile the save list based on card data
+    function compileSaveList() {
+        window.saveList = [] // Initialize the save list
+        console.log("Debug: Starting to compile saveList...");
+
+        console.log("window.saveCards.length = " + window.saveCards.length);
+        for (var i = 0; i < window.saveCards.length; i++) {
+            var card = window.saveCards[i];  // Access card at index i
+            var cardIdTuple = ["", "id", card.id];  // Create tuple for card
+            window.saveList.push(cardIdTuple);  // Push the tuple into the save list
+            console.log("Debug: cardIdTuple created:", cardIdTuple);
+        }
+
+        console.log("Debug: Final saveList:", saveList);
+
+        //backendController.request_save_collection(window.saveList);
     }
+
+    Connections {
+        target: backendController
+        function onSaveResults(response) {
+
+            console.log("backendController called back after saving with response: " + response);
+
+            // for(var i = 0; i < cards.length; i++) {
+            //     //console.log((i+1) + ": " + cards[i].imageUrl);
+            // }
+
+
+        }
+    }
+
+
+
+
+
+    // Component.onDestruction: {
+    //     console.log("Window destruction Beginning!")
+    //     console.log("Debug: saveCards before destruction:");
+    //     for(var i = 0; i < window.saveCards.length; i++) {
+    //         console.log(window.saveCards[i].name)
+    //     }
+
+    //     console.log("Debug: saveList before Window destruction:", window.saveList);
+    //     backendController.request_save_collection(window.saveList);
+    //     console.log("Window request backendController.request_save.");
+    // }
+
 
     Rectangle {
         id: columnLayout1
@@ -180,6 +229,7 @@ Window {
             }
 
             Discover {
+                id: discoverPage
                 width: 700
                 height: 615
                 Layout.maximumHeight: 615
@@ -191,10 +241,28 @@ Window {
                 activeFocusOnTab: true
 
                 onUpdateMarkedCards: {
-                    collectionPage.saveCards = markedCards;
+                    console.log("Debug: markedCards before update:", discoverPage.markedCards);
+
+                    console.log("Debug: saveCards before compile:", window.saveCards);
+
+
+                    // Log specific properties of each card object
+                    for (var i = 0; i < discoverPage.markedCards.count; i++) {
+                        var card = discoverPage.markedCards.get(i);
+                        console.log("Debug: card marked - id:", card.id, "name:", card.name); // Example
+                    }
+
+                    collectionPage.saveCards = discoverPage.markedCards;
+                    window.saveCards = discoverPage.markedCards;
+                    window.compileSaveList();
+
+                    console.log("Debug: saveList after compile:", window.saveList);
+
+
                 }
 
             }
+
 
             Collection {
                 id: collectionPage
@@ -206,6 +274,8 @@ Window {
                 Layout.preferredHeight: 615
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
+
+
             }
         }
     }
