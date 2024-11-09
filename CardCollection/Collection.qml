@@ -84,10 +84,15 @@ Item { // Page 2: Collection Page
         backendController.request_save_collection(saveList);
     }
 
+    // onSaveCardsChanged: {
+    //     compileSaveList();
+    // }
+
     Connections {
             target: Qt.application
             onAboutToQuit: {
                 console.log("Collection: About to Quit")
+                compileSaveList();
             }
         }
 
@@ -96,27 +101,6 @@ Item { // Page 2: Collection Page
         backendController.request_load_collection();
     }
 
-    // Component.onDestruction: {
-    //     console.log("Collection.qml destruction Beginning!")
-    //     console.log("Collection: saveCards before Collection.qml destruction:");
-    //     for(var i = 0; i < saveCards.length; i++) {
-    //         console.log(saveCards[i].name)
-    //     }
-
-    //     console.log("Collection: saveList before destruction:", saveList);
-    //     backendController.request_save_collection(saveList);
-    //     console.log("Collection: request backendController.request_save.");
-    // }
-
-    // // Compile the save list based on card data
-    // function compileSaveList() {
-    //     saveList = [] // Initialize the save list
-    //     for (var i = 0; i < saveCards.count; i++) {
-    //         var card = saveCards.get(i);  // Access card at index i
-    //         var cardIdTuple = ["", "id", card.id];  // Create tuple for card
-    //         saveList.push(cardIdTuple);  // Push the tuple into the save list
-    //     }
-    // }
 
 
     onMarkedCardsChanged: {
