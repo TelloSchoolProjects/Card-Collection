@@ -53,14 +53,17 @@ Item { // Page 2: Discover Page
 
     // Update the current card when selectedIndex changes
     onSelectedIndexChanged: {
+
         currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
     }
 
     onLoadedCardsChanged: {
+
         markedCards = loadedCards;
     }
 
     onMarkedCardsChanged: {
+
         updateMarkedCards();
     }
 
@@ -1008,6 +1011,7 @@ Item { // Page 2: Discover Page
                                                     cache: false
 
                                                     onSourceChanged: {
+
                                                         // Add the card to markedCards if checked
                                                         var cardExists = false;
                                                         for(var i = 0; i < markedCards.length; i++) {
@@ -1158,69 +1162,57 @@ Item { // Page 2: Discover Page
                             z: 0
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
-
-                        CollectionButton {
-                            id: collectionButton
-                            x: 221
-                            y: 31
-                            icon.source: "colorlessEnergyCropped.png"
-                            icon.color: "#00ffffff"
-                            checkable: true
-                            z: 3
-                            //anchors.centerIn: parent  // Center the button on the card
-                            card: currentCard  // Bind the current card to the button
-                            alreadyMarkedCards: markedCards
-
-                            // Handle the checked signal to mark/unmark the card
-                            onCheckedChanged: {
-
-                                var cardExists = false;
-                                var indexOfCard = -1
-                                var isCheckedNow = collectionButton.checked
-                                var wasCheckedBefore = !collectionButton.checked
-
-                                for(var i = 0; i < markedCards.length; i++) {
-                                    if(markedCards[i].id === collectionButton.card.id) {
-                                        cardExists = true;
-                                        indexOfCard = i
-                                    }
-                                }
-
-                                if(isCheckedNow && !cardExists){
-                                    markedCards.push(collectionButton.card)
-
-                                    //if(markedCards.indexOf(collectionButton.card !== -1)) {
-                                    //console.log("Discover: card doesn't exist in collection yet");
-                                    //console.log("Discover: Pushing : " + collectionButton.card.id + " to markedCards");
-
-                                    // console.log("markedCards now contains: ")
-                                    // for(var i = 0; i < markedCards.length; i++) {
-                                    //     console.log(markedCards[i].id);
-
-                                    //}
-
-                                }
-
-                                else if (wasCheckedBefore && cardExists) {
-                                    markedCards.splice(indexOfCard, 1)
-
-                                }
-                                    /*else if (!collectionButton.checked && cardExists) {
-                                    // Remove the card from markedCards if unchecked
-                                    var index = indexOfCard
-                                   // if (index !== -1) {
-                                        console.log("Card: " + collectionButton.card + " being removed from markedCards");
-                                        markedCards.splice(index, 1)
-                                  //  }
-                                }*/
-
-                                updateMarkedCards();
-                            }
-                        }
                     }
 
+                    CollectionButton {
+                        id: collectionButton
+                        x: 71
+                        y: 24
+                        width: 100
+                        height: 100
+                        opacity: 1
+                        padding: 0
+                        rightPadding: 0
+                        bottomPadding: 0
+                        leftPadding: 0
+                        topPadding: 0
+                        // icon.source: "colorlessEnergyCropped.png"
+                        // icon.color: "#00ffffff"
+                        checkable: true
+                        z: 3
+                        //anchors.centerIn: parent  // Center the button on the card
+                        card: currentCard  // Bind the current card to the button
+                        alreadyMarkedCards: markedCards
 
+                        // Handle the checked signal to mark/unmark the card
+                        onCheckedChanged: {
 
+                            var cardExists = false;
+                            var indexOfCard = -1
+                            var isCheckedNow = collectionButton.checked
+                            var wasCheckedBefore = !collectionButton.checked
+
+                            for(var i = 0; i < markedCards.length; i++) {
+                                if(markedCards[i].id === collectionButton.card.id) {
+                                    cardExists = true;
+                                    indexOfCard = i
+                                }
+                            }
+
+                            if(isCheckedNow && !cardExists){
+
+                                markedCards.push(collectionButton.card)
+                            }
+
+                            else if (wasCheckedBefore && cardExists) {
+
+                                markedCards.splice(indexOfCard, 1)
+
+                            }
+
+                            updateMarkedCards();
+                        }
+                    }
                     clip: true
                 }
 
@@ -2404,74 +2396,74 @@ Item { // Page 2: Discover Page
                 }
             }
 
-            Rectangle {
-                id: settingsButtonHighlight
-                x: 605
-                width: 80
-                height: 50
-                visible: true
-                color: "#c80d0d"
-                radius: 3
-                border.color: primaryColor
-                border.width: 0
-                anchors.verticalCenter: parent.verticalCenter
-                z: 0
-                Button {
-                    id: btnSettings
-                    x: -4
-                    y: 2
-                    text: ""
-                    anchors.fill: parent
-                    anchors.leftMargin: 3
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 3
-                    anchors.bottomMargin: 4
-                    z: 0
-                    verticalPadding: 0
-                    padding: 0
+            // Rectangle {
+            //     id: settingsButtonHighlight
+            //     x: 605
+            //     width: 80
+            //     height: 50
+            //     visible: true
+            //     color: "#c80d0d"
+            //     radius: 3
+            //     border.color: primaryColor
+            //     border.width: 0
+            //     anchors.verticalCenter: parent.verticalCenter
+            //     z: 0
+            //     Button {
+            //         id: btnSettings
+            //         x: -4
+            //         y: 2
+            //         text: ""
+            //         anchors.fill: parent
+            //         anchors.leftMargin: 3
+            //         anchors.rightMargin: 4
+            //         anchors.topMargin: 3
+            //         anchors.bottomMargin: 4
+            //         z: 0
+            //         verticalPadding: 0
+            //         padding: 0
 
-                    // hoverEnabled: true;
-                    ToolTip.timeout: 5000
-                    ToolTip.delay: 800
-                    ToolTip.visible: hovered
-                    ToolTip.text: qsTr("Search Settings")
+            //         // hoverEnabled: true;
+            //         ToolTip.timeout: 5000
+            //         ToolTip.delay: 800
+            //         ToolTip.visible: hovered
+            //         ToolTip.text: qsTr("Search Settings")
 
-                    onReleased: {
-                        settingsButtonHighlight.border.color = primaryColor;
-                        settingsButtonHighlight.color = primaryColor;
+            //         onReleased: {
+            //             settingsButtonHighlight.border.color = primaryColor;
+            //             settingsButtonHighlight.color = primaryColor;
 
-                    }
-                    onPressed: {
-                        settingsButtonHighlight.border.color = screenColor;
-                        settingsButtonHighlight.color = screenColor;
-                    }
-                    onClicked: {
-                        // setComboBox.clearParams();
-                        //console.log("Calling signal clearParams()");
-                        settingsWindow.visible = true;
-                    }
-                    horizontalPadding: 0
+            //         }
+            //         onPressed: {
+            //             settingsButtonHighlight.border.color = screenColor;
+            //             settingsButtonHighlight.color = screenColor;
+            //         }
+            //         onClicked: {
+            //             // setComboBox.clearParams();
+            //             //console.log("Calling signal clearParams()");
+            //             settingsWindow.visible = true;
+            //         }
+            //         horizontalPadding: 0
 
-                    Image {
-                        id: settingsButtonImage
-                        y: -59
-                        width: 176
-                        height: 210
-                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-                        sourceSize.width: 150
-                        sourceSize.height: 209
-                        scale: 0.52
-                        fillMode: Image.PreserveAspectCrop
-                        anchors.horizontalCenterOffset: 0
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    clip: true
-                    // activeFocusOnTab: false
+            //         Image {
+            //             id: settingsButtonImage
+            //             y: -59
+            //             width: 176
+            //             height: 210
+            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+            //             sourceSize.width: 150
+            //             sourceSize.height: 209
+            //             scale: 0.52
+            //             fillMode: Image.PreserveAspectCrop
+            //             anchors.horizontalCenterOffset: 0
+            //             anchors.horizontalCenter: parent.horizontalCenter
+            //         }
+            //         clip: true
+            //         // activeFocusOnTab: false
 
 
-                }
-                anchors.verticalCenterOffset: 0
-            }
+            //     }
+            //     anchors.verticalCenterOffset: 0
+            // }
 
             Rectangle {
                 id: clearButtonHighlight

@@ -67,19 +67,19 @@ Item { // Page 2: Collection Page
     // Compile the save list based on card data
     function compileSaveList() {
         saveList = [] // Initialize the save list
-        console.log("Collection: Starting to compile saveList...");
+        //console.log("Collection: Starting to compile saveList...");
 
-        console.log("Collection.saveCards.length = " + saveCards.length);
+        //console.log("Collection.saveCards.length = " + saveCards.length);
 
-        console.log("Collection.markedCards.length = " + markedCards.length);
+        //console.log("Collection.markedCards.length = " + markedCards.length);
         for (var i = 0; i < saveCards.length; i++) {
             var card = saveCards[i];  // Access card at index i
             var cardIdTuple = ["", "id", card.id];  // Create tuple for card
             saveList.push(cardIdTuple);  // Push the tuple into the save list
-            console.log("Collection: cardIdTuple created:", cardIdTuple);
+            //  console.log("Collection: cardIdTuple created:", cardIdTuple);
         }
 
-        console.log("Collection: Final saveList:", saveList);
+        //console.log("Collection: Final saveList:", saveList);
 
         backendController.request_save_collection(saveList);
     }
@@ -89,33 +89,37 @@ Item { // Page 2: Collection Page
     // }
 
     Connections {
-            target: Qt.application
-            onAboutToQuit: {
-                console.log("Collection: About to Quit")
-                compileSaveList();
-            }
+        target: Qt.application
+        function onAboutToQuit() {
+
+            //console.log("Collection: About to Quit")
+            compileSaveList();
         }
+    }
 
     Component.onCompleted: {
-        console.log("Collection.qml onComplete Called");
+
+        //console.log("Collection.qml onComplete Called");
         backendController.request_load_collection();
     }
 
 
 
     onMarkedCardsChanged: {
-        console.log("Collection: markedCards changed...");
+
+        //console.log("Collection: markedCards changed...");
         saveCards = markedCards
     }
 
     function processLoadedCards() {
+
         if(cards.length > 0){
             //print("Collection: assigning: " + cards + " to saveCards")
             //saveCards = cards
             // print("saveCards now length: " + saveCards.length)
-            print("Collection: assigning: " + cards + " to markedCards")
+            //print("Collection: assigning: " + cards + " to markedCards")
             processedCards = cards
-            print("processedCards now length: " + processedCards.length)
+            //print("processedCards now length: " + processedCards.length)
 
         }
     }
@@ -1036,6 +1040,8 @@ Item { // Page 2: Collection Page
 
                             }
 
+
+
                             onCardFlowLeftCompare: {
                                 console.log("collectionFlow.onLeftCompare caught: " + collectionFlowImageUrl);
                                 console.log("collectionFlow.onLeftCompare calling onLeftCompareSignal(" + collectionFlowImageUrl + ")");
@@ -1576,6 +1582,28 @@ Item { // Page 2: Collection Page
                     to: 3
 
                     onValueChanged: console.log(value)
+
+                }
+
+                Button {
+                    id: button
+                    x: 249
+                    y: 32
+                    width: 142
+                    height: 52
+                    text: qsTr("Edit Collection")
+                    font.styleName: "ExtraBold Italic"
+                    checkable: true
+                    palette {
+                        button: "blue"
+                    }
+
+                    onCheckedChanged: {
+                        if(checked) {
+                            collectionFlow.collectionButtonVisible = true;
+                        }
+                        else collectionFlow.collectionButtonVisible = false;
+                    }
 
                 }
             }
@@ -2463,74 +2491,74 @@ Item { // Page 2: Collection Page
                 anchors.verticalCenterOffset: 0
             }
 
-            Rectangle {
-                id: settingsButtonHighlight
-                width: 80
-                height: 50
-                visible: true
-                color: "#c80d0d"
-                radius: 3
-                border.color: primaryColor
-                border.width: 0
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 600
-                z: 1
-                Button {
-                    id: btnSettings
-                    x: -4
-                    y: 2
-                    text: ""
-                    anchors.fill: parent
-                    anchors.leftMargin: 3
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 3
-                    anchors.bottomMargin: 4
-                    z: 0
-                    verticalPadding: 0
-                    padding: 0
+            // Rectangle {
+            //     id: settingsButtonHighlight
+            //     width: 80
+            //     height: 50
+            //     visible: true
+            //     color: "#c80d0d"
+            //     radius: 3
+            //     border.color: primaryColor
+            //     border.width: 0
+            //     anchors.verticalCenter: parent.verticalCenter
+            //     anchors.left: parent.left
+            //     anchors.leftMargin: 600
+            //     z: 1
+            //     Button {
+            //         id: btnSettings
+            //         x: -4
+            //         y: 2
+            //         text: ""
+            //         anchors.fill: parent
+            //         anchors.leftMargin: 3
+            //         anchors.rightMargin: 4
+            //         anchors.topMargin: 3
+            //         anchors.bottomMargin: 4
+            //         z: 0
+            //         verticalPadding: 0
+            //         padding: 0
 
-                    // hoverEnabled: true;
-                    ToolTip.timeout: 5000
-                    ToolTip.delay: 800
-                    ToolTip.visible: hovered
-                    ToolTip.text: qsTr("Search Settings")
+            //         // hoverEnabled: true;
+            //         ToolTip.timeout: 5000
+            //         ToolTip.delay: 800
+            //         ToolTip.visible: hovered
+            //         ToolTip.text: qsTr("Search Settings")
 
-                    onReleased: {
-                        settingsButtonHighlight.border.color = primaryColor;
-                        settingsButtonHighlight.color = primaryColor;
+            //         onReleased: {
+            //             settingsButtonHighlight.border.color = primaryColor;
+            //             settingsButtonHighlight.color = primaryColor;
 
-                    }
-                    onPressed: {
-                        settingsButtonHighlight.border.color = screenColor;
-                        settingsButtonHighlight.color = screenColor;
-                    }
-                    onClicked: {
-                        // setComboBox.clearParams();
-                        //console.log("Calling signal clearParams()");
-                        settingsWindow.visible = true;
-                    }
-                    horizontalPadding: 0
+            //         }
+            //         onPressed: {
+            //             settingsButtonHighlight.border.color = screenColor;
+            //             settingsButtonHighlight.color = screenColor;
+            //         }
+            //         onClicked: {
+            //             // setComboBox.clearParams();
+            //             //console.log("Calling signal clearParams()");
+            //             settingsWindow.visible = true;
+            //         }
+            //         horizontalPadding: 0
 
-                    Image {
-                        id: settingsButtonImage
-                        y: -59
-                        width: 176
-                        height: 210
-                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-                        sourceSize.width: 150
-                        sourceSize.height: 209
-                        scale: 0.52
-                        fillMode: Image.PreserveAspectCrop
-                        anchors.horizontalCenterOffset: 0
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    clip: true
-                    // activeFocusOnTab: false
+            //         Image {
+            //             id: settingsButtonImage
+            //             y: -59
+            //             width: 176
+            //             height: 210
+            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+            //             sourceSize.width: 150
+            //             sourceSize.height: 209
+            //             scale: 0.52
+            //             fillMode: Image.PreserveAspectCrop
+            //             anchors.horizontalCenterOffset: 0
+            //             anchors.horizontalCenter: parent.horizontalCenter
+            //         }
+            //         clip: true
+            //         // activeFocusOnTab: false
 
 
-                }
-            }
+            //     }
+            // }
         }
 
         // Animate the x position when it changes
@@ -2968,7 +2996,7 @@ Item { // Page 2: Collection Page
 
         function onLoadResults(response) {
 
-            console.log("onLoadResults heard backendController loadResults signal")
+            // console.log("onLoadResults heard backendController loadResults signal")
 
             var data = JSON.parse(response)
 
@@ -3082,6 +3110,6 @@ Item { // Page 2: Collection Page
 /*##^##
 Designer {
     D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
-D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:58;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/

@@ -42,6 +42,8 @@ Item {
     // Add a boolean variable to track the drawer's state
     property bool isDrawerOpen: false // Start with the drawer closed
 
+    property var markedCards: []
+
     function toggleDrawer() {
         if (customDrawer.x < 0) {
 
@@ -1129,6 +1131,57 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    CollectionButton {
+                        id: collectionButton
+                        width: 77
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.leftMargin: 10
+                        anchors.topMargin: 10
+                        height: width
+                        card: modelData  // Pass only the individual card data
+                        visible: collectionButtonVisible
+                        // Handle marking/unmarking of the card for collection
+                        checked: true // collectionFlow.cards.includes(card)  // Check if the card is already marked
+
+                        onCheckedChanged: {
+                           // console.log("CollectionFlow.CollectionButton.onCheckedChanged");
+                            if(!checked){ // used to be checked
+
+                                var removeIndex = -1
+                                for(var i = 0; i < cards.length; i++) {
+                                    if(card.id === cards[i].id) {
+                                        removeIndex = i;
+                                    }
+                                }
+
+                                if (removeIndex !== -1) {
+                                    console.log("splicing collectionFlow.cards[index]: " + cards[removeIndex].name + ": " + cards[removeIndex].id);
+                                    cards.splice(removeIndex, 1)
+                                    // Iterate over the model and assign to markedCards
+                                        for (var i = 0; i < cards.length; i++) {
+                                            markedCards.push(cards[i]);  // Get data from model and push to markedCards
+                                        }
+
+                                }
+
+                            }
+                            // if (checked) {
+                            //     // Mark card for collection (add to internal cards list)
+                            //     if (!collectionFlow.cards.includes(card)) {
+                            //         collectionFlow.cards.push(card)
+                            //     }
+                            // } else {
+                            //     // Unmark card from collection (remove from internal cards list)
+                            //     var index = collectionFlow.cards.indexOf(card)
+                            //     if (index !== -1) {
+                            //         collectionFlow.cards.splice(index, 1)
+                            //     }
+                            // }
+                        }
+
                     }
                 }
 
@@ -2376,74 +2429,74 @@ Item {
                 }
             }
 
-            Rectangle {
-                id: settingsButtonHighlight
-                x: 580
-                width: 100
-                height: 70
-                visible: true
-                color: "#c80d0d"
-                radius: 3
-                border.color: primaryColor
-                border.width: 0
-                anchors.verticalCenter: parent.verticalCenter
-                z: 0
-                Button {
-                    id: btnSettings
-                    x: -4
-                    y: 2
-                    text: ""
-                    anchors.fill: parent
-                    anchors.leftMargin: 3
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 3
-                    anchors.bottomMargin: 4
-                    z: 0
-                    verticalPadding: 0
-                    padding: 0
+            // Rectangle {
+            //     id: settingsButtonHighlight
+            //     x: 580
+            //     width: 100
+            //     height: 70
+            //     visible: true
+            //     color: "#c80d0d"
+            //     radius: 3
+            //     border.color: primaryColor
+            //     border.width: 0
+            //     anchors.verticalCenter: parent.verticalCenter
+            //     z: 0
+            //     Button {
+            //         id: btnSettings
+            //         x: -4
+            //         y: 2
+            //         text: ""
+            //         anchors.fill: parent
+            //         anchors.leftMargin: 3
+            //         anchors.rightMargin: 4
+            //         anchors.topMargin: 3
+            //         anchors.bottomMargin: 4
+            //         z: 0
+            //         verticalPadding: 0
+            //         padding: 0
 
-                    // hoverEnabled: true;
-                    ToolTip.timeout: 5000
-                    ToolTip.delay: 800
-                    ToolTip.visible: hovered
-                    ToolTip.text: qsTr("Search Settings")
+            //         // hoverEnabled: true;
+            //         ToolTip.timeout: 5000
+            //         ToolTip.delay: 800
+            //         ToolTip.visible: hovered
+            //         ToolTip.text: qsTr("Search Settings")
 
-                    onReleased: {
-                        settingsButtonHighlight.border.color = primaryColor;
-                        settingsButtonHighlight.color = primaryColor;
+            //         onReleased: {
+            //             settingsButtonHighlight.border.color = primaryColor;
+            //             settingsButtonHighlight.color = primaryColor;
 
-                    }
-                    onPressed: {
-                        settingsButtonHighlight.border.color = screenColor;
-                        settingsButtonHighlight.color = screenColor;
-                    }
-                    onClicked: {
-                        // setComboBox.clearParams();
-                        //console.log("Calling signal clearParams()");
-                        settingsWindow.visible = true;
-                    }
-                    horizontalPadding: 0
+            //         }
+            //         onPressed: {
+            //             settingsButtonHighlight.border.color = screenColor;
+            //             settingsButtonHighlight.color = screenColor;
+            //         }
+            //         onClicked: {
+            //             // setComboBox.clearParams();
+            //             //console.log("Calling signal clearParams()");
+            //             settingsWindow.visible = true;
+            //         }
+            //         horizontalPadding: 0
 
-                    Image {
-                        id: settingsButtonImage
-                        y: -43
-                        width: 176
-                        height: 210
-                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-                        sourceSize.width: 150
-                        sourceSize.height: 209
-                        scale: 0.7
-                        fillMode: Image.PreserveAspectCrop
-                        anchors.horizontalCenterOffset: 0
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    clip: true
-                    // activeFocusOnTab: false
+            //         Image {
+            //             id: settingsButtonImage
+            //             y: -43
+            //             width: 176
+            //             height: 210
+            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+            //             sourceSize.width: 150
+            //             sourceSize.height: 209
+            //             scale: 0.7
+            //             fillMode: Image.PreserveAspectCrop
+            //             anchors.horizontalCenterOffset: 0
+            //             anchors.horizontalCenter: parent.horizontalCenter
+            //         }
+            //         clip: true
+            //         // activeFocusOnTab: false
 
 
-                }
-                anchors.verticalCenterOffset: 0
-            }
+            //     }
+            //     anchors.verticalCenterOffset: 0
+            // }
 
 
 
@@ -2583,9 +2636,9 @@ Item {
                                               "subtype4": card.subtype4 || ""
                                           }))
 
-                // for(var i = 0; i < cards.length; i++) {
-                //     //console.log((i+1) + ": " + cards[i].imageUrl);
-                // }
+                for(var i = 0; i < cards.length; i++) {
+                    console.log((i+1) + ": " + cards[i].imageUrl);
+                }
 
                 selectedIndex = 0; // Start with the first card
                 updateAttackInfo();
@@ -2623,7 +2676,6 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:105}D{i:106}D{i:108}D{i:110}
-D{i:112}D{i:122}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:49}
 }
 ##^##*/

@@ -80,8 +80,9 @@ Window {
     // }
 
     onProcessedCardsChanged: {
+
         discoverPage.loadedCards = window.processedCards
-        console.log("Window.onProcessedCardsChanged: discoverPage.loadedCards now length: " + discoverPage.loadedCards.length);
+        // console.log("Window.onProcessedCardsChanged: discoverPage.loadedCards now length: " + discoverPage.loadedCards.length);
     }
 
 
@@ -232,6 +233,10 @@ Window {
                 Layout.preferredHeight: 615
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
+
+                onCardsChanged: {
+
+                }
             }
 
             Discover {
@@ -246,13 +251,14 @@ Window {
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
 
+
                 onUpdateMarkedCards: {
 
                     // Log specific properties of each card object
-                    for (var i = 0; i < discoverPage.markedCards.length; i++) {
-                        var card = discoverPage.markedCards[i];
-                        console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
-                    }
+                    // for (var i = 0; i < discoverPage.markedCards.length; i++) {
+                    //     var card = discoverPage.markedCards[i];
+                    //     console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
+                    // }
 
                     window.markedCards = discoverPage.markedCards;
                     collectionPage.markedCards = window.markedCards;
@@ -274,7 +280,9 @@ Window {
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
 
+
                 onProcessedCardsChanged: {
+
                     window.processedCards = collectionPage.processedCards
                 }
 
