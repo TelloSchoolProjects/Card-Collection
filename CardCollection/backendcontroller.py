@@ -85,11 +85,13 @@ class BackendController(QObject):
                                  Qt.QueuedConnection,
                                  Q_ARG(str, json_result))
 
+
     @Slot(str)  # Mark as Slot so it’s recognized by invokeMethod
     def _emit_search_results(self, json_result):
         print("DEBUG: _emit_search_results called on main thread:", threading.current_thread().name)
         self.searchResults.emit(json_result)
         print("DEBUG: searchResults signal emitted to QML")
+
 
 
 
@@ -105,18 +107,44 @@ class BackendController(QObject):
                 List of search parameter tuples of the form (category, subcategory, target)
         """
 
-        try:
+        print("DEBUG: request_discover called on main thread:", threading.current_thread().name)
 
-            cards = discoverhandler.DiscoverHandler.handle_discover(self, params)
+        # Start the discover in a new thread
+        query_thread = threading.Thread(target=self._perform_discover, args=(params,))
+        query_thread.start()
+        print("DEBUG: Started query_thread:", query_thread.name)
+
+    def _perform_discover(self, params):
+        print("DEBUG: _perform_discover called on thread:", threading.current_thread().name)
+
+        try:
+            # Instantiate discover handler and process the discover
+            discover_handler = discoverhandler.DiscoverHandler()
+            cards = discover_handler.handle_discover(params)
 
             if cards is not None:
-                print(cards[0]["name"])
-                # Emit the result as JSON
-                self.discoverResults.emit(json.dumps(cards))
+                json_result = json.dumps(cards)
+                print("DEBUG: Cards found and serialized")
+            else:
+                json_result = json.dumps({"error": "No cards found"})
+                print("DEBUG: No cards found")
 
         except Exception as e:
-            self.searchResults.emit(json.dumps({"error": str(e)}))
+            json_result = json.dumps({"error": str(e)})
+            print("DEBUG: Exception occurred:", e)
 
+        # Emit the discoverResults signal from the main thread
+        print("DEBUG: Invoking _emit_discover_results on main thread via QueuedConnection")
+        QMetaObject.invokeMethod(self, "_emit_discover_results",
+                                 Qt.QueuedConnection,
+                                 Q_ARG(str, json_result))
+
+
+    @Slot(str)  # Mark as Slot so it’s recognized by invokeMethod
+    def _emit_discover_results(self, json_result):
+        print("DEBUG: _emit_search_results called on main thread:", threading.current_thread().name)
+        self.discoverResults.emit(json_result)
+        print("DEBUG: discoverResults signal emitted to QML")
 
     @Slot()
     def request_load_collection(self):

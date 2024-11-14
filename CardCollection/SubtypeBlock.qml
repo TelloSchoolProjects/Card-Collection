@@ -9,7 +9,7 @@ import QtQuick3D
 
 Rectangle {
     id: root
-    width: 164
+    width: 224
     height: 106
     color: blockBG
     radius: 8
@@ -128,7 +128,7 @@ Rectangle {
             height: 51
             radius: 6
             visible: true
-            width: 80
+            width: 110
         }
 
         Subtype {
@@ -139,7 +139,7 @@ Rectangle {
             height: 51
             radius: 6
             visible: true
-            width: 80
+            width: 110
         }
 
         Subtype {
@@ -150,7 +150,7 @@ Rectangle {
             height: 51
             radius: 6
             visible: true
-            width: 80
+            width: 110
         }
 
         Subtype {
@@ -161,7 +161,7 @@ Rectangle {
             height: 51
             radius: 6
             visible: true
-            width: 80
+            width: 110
         }
     }
 

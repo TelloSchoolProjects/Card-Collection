@@ -10,8 +10,8 @@ import QtQuick3D
 // Page 1: Search Page
 Item {
     id: searchPage
-    width: 600
-    height: 600
+    width: 700
+    height: 615
     visible: true
     Layout.preferredHeight: 560
     Layout.preferredWidth: 600
@@ -221,14 +221,14 @@ Item {
 
         if(typeBlock.visible && subtypeBlock.visible) {
 
-            typesRow.width = typeBlock.width + subtypeBlock.width
+            // typesRow.width = typeBlock.width + subtypeBlock.width
 
         } else if (typeBlock.visible && !subtypeBlock.visible) {
 
-            typesRow.width = typeBlock.width
+            // typesRow.width = typeBlock.width
 
         } else if (!typeBlock.visible && subtypeBlock.visible) {
-            typesRow.width = subtypeBlock.width
+            // typesRow.width = subtypeBlock.width
         }
 
 
@@ -344,7 +344,7 @@ Item {
             rightContentHeight += (visibleItemsCount - 1) * rightSideColumn.spacing; // Spacing between elements
         }
 
-        rightScrollView.contentHeight = rightContentHeight; // Set the final content height
+        rightScrollView.contentHeight = rightContentHeight + 55; // Set the final content height
     }
 
 
@@ -406,7 +406,7 @@ Item {
 
         Column {
             id: searchToolsColumn
-            width: 600
+            width: 700
             height: 100
             Layout.preferredWidth: 600
             Layout.preferredHeight: 80
@@ -432,6 +432,7 @@ Item {
                 anchors.right: parent.right
                 anchors.leftMargin: 0
                 anchors.rightMargin: 0
+                typesRowSpacing: 14
                 borderColor: "#ff0000"
                 blockBorderWidth: 2
                 z: 2
@@ -467,7 +468,7 @@ Item {
 
             ToolBar {
                 id: searchTools
-                width: 600
+                width: 700
                 height: 40
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 600
@@ -477,6 +478,7 @@ Item {
                 Row {
                     id: searchRow
                     x: 0
+                    width: 700
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
                     spacing: 5
@@ -484,7 +486,7 @@ Item {
 
                     ComboBox {
                         id: setComboBox
-                        width: 264
+                        width: 260
                         height: 25
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: 2
@@ -622,12 +624,14 @@ Item {
                                     cachedSets = tempSets;
                                 }
                             }
+
+
                         }
                     }
                     TextField {
                         id: txtSearchBox
                         x: 111
-                        width: 240
+                        width: 282
                         height: 25
                         text: "Deoxys"
                         anchors.verticalCenter: parent.verticalCenter
@@ -655,7 +659,7 @@ Item {
                     Button {
                         id: btnSearch
                         x: 485
-                        width: 75
+                        width: 135
                         height: 25
                         text: qsTr("Search")
                         anchors.verticalCenter: parent.verticalCenter
@@ -805,7 +809,7 @@ Item {
 
                     Rectangle {
                         id: highlightBorder
-                        width: 600
+                        width: 700
                         height: 40
                         color: "#00ffffff"
                         radius: 4
@@ -828,8 +832,8 @@ Item {
 
         Item {
             id: _item
-            width: 600
-            height: 450
+            width: 700
+            height: 425
             Layout.preferredWidth: 200
             Layout.preferredHeight: 470
             Layout.margins: 0
@@ -916,9 +920,9 @@ Item {
                 // Drawer
                 Rectangle {
                     id: customDrawer
-                    x: -298
-                    width: 300
-                    height: 438
+                    x: -330
+                    width: 330
+                    height: 415
                     opacity: 1
                     visible: true
                     // Start hidden
@@ -983,7 +987,7 @@ Item {
                                 x: 0
                                 y: 200
                                 z: -25
-                                scale.y: 3
+                                scale.y: 3.5
                                 scale.x: 2.5
 
                                 // Front side of the card
@@ -1304,7 +1308,7 @@ Item {
 
                     Flickable {
                         id: leftScrollView
-                        width: 260
+                        width: 290
                         anchors.left: parent.left
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
@@ -1339,7 +1343,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 //  anchors.top: parent.top
 
@@ -1356,7 +1360,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
                                 //  anchors.top: parent.top
@@ -1374,7 +1378,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
                                 //  anchors.top: parent.top
@@ -1392,7 +1396,7 @@ Item {
                                 bezelBorderColor: window.bezelBorderColor
                                 screenHighlightColor: window.screenHighlightColor
 
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
                                 //  anchors.top: parent.top
@@ -1402,7 +1406,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack1Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: true
                                 nameText: "Attack 1"
@@ -1422,7 +1426,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack2Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
                                 nameText: "Attack 2"
@@ -1442,7 +1446,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack3Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
                                 nameText: "Attack 3"
@@ -1462,7 +1466,7 @@ Item {
 
                             AttackInfoBlock {
                                 id: attack4Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
                                 nameText: "Attack 4"
@@ -1482,7 +1486,7 @@ Item {
 
                             AbilityInfoBlock {
                                 id: ability1
-                                width: 250
+                                width: 290
                                 nameText: "Ability 1"
                                 typeText: "Ability 1 Type"
                                 descText: "Ability 1 Description"
@@ -1494,7 +1498,7 @@ Item {
 
                             AbilityInfoBlock {
                                 id: ability2
-                                width: 250
+                                width: 290
                                 visible: false
                                 nameText: "Ability 2"
                                 typeText: "Ability 2 Type"
@@ -1512,7 +1516,7 @@ Item {
                         anchors.left: leftScrollView.right
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.leftMargin: 18
+                        anchors.leftMargin: 23
                         anchors.rightMargin: 4
                         anchors.topMargin: 4
                         contentX: 0
@@ -1521,22 +1525,23 @@ Item {
                         clip: false
                         boundsBehavior: Flickable.DragOverBounds
                         boundsMovement: Flickable.FollowBoundsBehavior
-                        contentHeight: 645 // Set a suitable height for your content
+                        contentHeight: 800 // Set a suitable height for your content
 
                         Column {
                             id: rightSideColumn
                             x: 0
                             y: 0
-                            width: 276
-                            height: 430
+                            width: 335
+                            height: 435
 
-                            spacing: 3
+                            spacing: 4
 
 
                             Rectangle {
                                 id: supertypeBlock
-                                width: 190
+                                width: 210
                                 height: 40
+                                visible: true
                                 color: "#c80d0d"
                                 radius: 8
                                 border.color: "#580a0a"
@@ -1644,8 +1649,8 @@ Item {
 
                             Rectangle {
                                 id: nameBlock
-                                width: 240
-                                height: 70
+                                width: 245
+                                height: 80
                                 color: "#c80d0d"
                                 radius: 8
                                 border.color: "#580a0a"
@@ -1757,10 +1762,9 @@ Item {
                                 }
                             }
 
-
                             Row {
                                 id: typesRow
-                                width: 221
+                                width: 294
                                 height: 106
                                 spacing: 4
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -1771,6 +1775,7 @@ Item {
                                     anchors.verticalCenter: parent.verticalCenter
                                     color: "#ff0000"
                                     height: 106
+                                    visible: true
                                     radius: 8
                                     border.color: "#580a0a"
                                     width: 55
@@ -1788,7 +1793,7 @@ Item {
                                     color: window.blockBG
                                     height: 106
                                     radius: 6
-                                    width: 164
+                                    width: 234
 
                                     sub1Text: "Subtype 1"
                                     sub2Text: "Subtype 2"
@@ -1802,15 +1807,15 @@ Item {
                             FlavorTextBlock {
                                 id: flavorTextBlock
 
-                                blockBG: window.blockBG
-                                screenColor: window.screenColor
-                                screenShadeColor: window.screenShadeColor
-                                bezelColor: window.bezelColor
-                                bezelBorderColor: window.bezelBorderColor
-                                screenHighlightColor: window.screenHighlightColor
+                                // blockBG: window.blockBG
+                                // screenColor: window.screenColor
+                                // screenShadeColor: window.screenShadeColor
+                                // bezelColor: window.bezelColor
+                                // bezelBorderColor: window.bezelBorderColor
+                                // screenHighlightColor: window.screenHighlightColor
 
-                                width: 225
-                                height: 150
+                                width: 260
+                                height: 100
                                 visible: true
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 //  anchors.top: parent.top
@@ -1825,10 +1830,10 @@ Item {
                                 border.color: "#6c0101"
                                 border.width: 2
                                 color: "#c80d0d"
-                                height: 200
+                                height: 180
                                 visible: true
                                 radius: 8
-                                width: 225
+                                width: 260
                                 logoSource: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].setLogo : ""
                                 logoScreenText: (selectedIndex >= 0
                                                  && selectedIndex < cards.length) ? "" // Fallback if name is undefined
@@ -1838,8 +1843,8 @@ Item {
 
                             Row {
                                 id: setSymbolRow
-                                width: 200
-                                height: 66
+                                width: 250
+                                height: 100
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 spacing: 3
 
@@ -1848,9 +1853,9 @@ Item {
                                     border.color: "#6c0101"
                                     border.width: 2
                                     color: "#c80d0d"
-                                    height: 65
+                                    height: 125
                                     radius: 8
-                                    width: 75
+                                    width: 125
                                     imageSource: (selectedIndex >= 0
                                                   && selectedIndex < cards.length) ? cards[selectedIndex].setSymbol : ""
                                     blockText: (selectedIndex >= 0
@@ -1860,8 +1865,8 @@ Item {
 
                                 Rectangle {
                                     id: setBlock
-                                    width: 120
-                                    height: 65
+                                    width: 125
+                                    height: 125
                                     color: "#c80d0d"
                                     radius: 8
                                     border.color: "#6c0101"
@@ -1972,6 +1977,7 @@ Item {
 
 
 
+
                         }
                     }
                 }
@@ -1980,24 +1986,69 @@ Item {
 
         ToolBar {
             id: pagingButtonsToolbar
-            width: 600
-            height: 65
+            width: 700
+            height: 90
             Layout.preferredHeight: 50
             Layout.fillHeight: false
             Layout.fillWidth: true
-            RowLayout {
-                height: 26
+            Rectangle {
+                id: rectangle6
+                width: 420
+                height: 50
                 visible: true
+                color: "#00ffffff"
+                border.width: 0
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 z: 1
-                uniformCellSizes: false
-                spacing: 90
+
+                Button {
+                    id: btnFirst
+                    width: 42
+                    height: 35
+                    text: "First"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    Layout.minimumHeight: 26
+                    Layout.minimumWidth: 42
+                    Layout.preferredHeight: 26
+                    Layout.preferredWidth: 42
+                    scale: hovered ? 1.05 : 1.0
+                    palette.button: "blue"
+                    hoverEnabled: true
+                    highlighted: false
+                    font.styleName: "Bold Italic"
+                    flat: false
+                    enabled: selectedIndex > 0
+                    Rectangle {
+                        id: rectangle9
+                        color: "#00ffffff"
+                        radius: 8
+                        border.color: "#6c0101"
+                        border.width: 3
+                        anchors.fill: parent
+                        anchors.leftMargin: -2
+                        anchors.rightMargin: -2
+                        anchors.topMargin: -2
+                        anchors.bottomMargin: -2
+                    }
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    Layout.fillWidth: false
+                    Layout.fillHeight: false
+
+                    onClicked: selectedIndex = 0
+                }
 
                 Button {
                     id: button
                     width: 70
+                    height: 35
                     text: "Previous"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: btnFirst.right
+                    anchors.leftMargin: 20
                     Layout.fillHeight: false
                     Layout.fillWidth: false
                     highlighted: false
@@ -2034,10 +2085,16 @@ Item {
                     scale: hovered ? 1.05 : 1.0
                 }
 
+
                 Button {
                     id: button1
+                    x: 269
                     width: 70
+                    height: 35
                     text: "Next"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: btnLast.left
+                    anchors.rightMargin: 20
                     font.styleName: "Bold Italic"
                     font.pointSize: 11
                     font.bold: true
@@ -2071,6 +2128,47 @@ Item {
                     // Change scale when hovered
                     scale: hovered ? 1.05 : 1.0
                 }
+
+                Button {
+                    id: btnLast
+                    x: 345
+                    width: 42
+                    height: 35
+                    text: "Last"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    Layout.minimumHeight: 26
+                    Layout.minimumWidth: 42
+                    Layout.preferredHeight: 26
+                    Layout.preferredWidth: 42
+                    scale: hovered ? 1.05 : 1.0
+                    palette.button: "blue"
+                    hoverEnabled: true
+                    highlighted: false
+                    font.styleName: "Bold Italic"
+                    flat: false
+                    enabled: cards.length > 0 && selectedIndex < cards.length - 1
+                    Rectangle {
+                        id: rectangle11
+                        color: "#00ffffff"
+                        radius: 8
+                        border.color: "#6c0101"
+                        border.width: 3
+                        anchors.fill: parent
+                        anchors.leftMargin: -2
+                        anchors.rightMargin: -2
+                        anchors.topMargin: -2
+                        anchors.bottomMargin: -2
+                    }
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    Layout.fillWidth: false
+                    Layout.fillHeight: false
+
+                    onClicked: selectedIndex = cards.length - 1
+                }
+
             }
 
             Rectangle {
@@ -2114,15 +2212,16 @@ Item {
 
             Rectangle {
                 id: clearButtonHighlight
-                x: 9
-                width: 80
-                height: 50
+                x: 10
+                width: 100
+                height: 70
                 visible: true
                 color: "#c80d0d"
                 radius: 3
                 border.color: primaryColor
                 border.width: 0
                 anchors.verticalCenter: parent.verticalCenter
+                scale: 1
                 anchors.verticalCenterOffset: 0
                 z: 0
 
@@ -2168,13 +2267,13 @@ Item {
 
                     Image {
                         id: image
-                        y: -52
+                        y: -38
                         width: 176
                         height: 210
                         source: "https://images.pokemontcg.io/swsh35/51_hires.png"
-                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenterOffset: -1
                         anchors.horizontalCenter: parent.horizontalCenter
-                        scale: 0.6
+                        scale: 0.8
                         sourceSize.height: 209
                         sourceSize.width: 150
                         fillMode: Image.PreserveAspectCrop
@@ -2204,7 +2303,7 @@ Item {
                     color: dropTextColor
                     text: cards.length ? ((selectedIndex + 1) + "/" + cards.length) : "-/-"
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pixelSize: 12
+                    font.pixelSize: 16
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     wrapMode: Text.Wrap
@@ -2218,24 +2317,23 @@ Item {
                 Rectangle {
                     id: rectangle3
                     x: 149
-                    y: 8
-                    width: 265
-                    height: 34
+                    width: 410
+                    height: 45
                     visible: true
                     color: "#6c0101"
                     radius: 8
                     border.color: "#ff0000"
                     border.width: 2
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: -1
+                    anchors.verticalCenterOffset: 1
                     anchors.horizontalCenterOffset: 0
                     anchors.horizontalCenter: parent.horizontalCenter
                     z: 0
 
                     Rectangle {
                         id: counterBezel
-                        width: 79
-                        height: 25
+                        width: 90
+                        height: 35
                         color: bezelColor
                         radius: 4
                         border.color: bezelBorderColor
@@ -2280,9 +2378,9 @@ Item {
 
             Rectangle {
                 id: settingsButtonHighlight
-                x: 498
-                width: 80
-                height: 50
+                x: 580
+                width: 100
+                height: 70
                 visible: true
                 color: "#c80d0d"
                 radius: 3
@@ -2304,43 +2402,43 @@ Item {
                     verticalPadding: 0
                     padding: 0
 
-                   // hoverEnabled: true;
+                    // hoverEnabled: true;
                     ToolTip.timeout: 5000
                     ToolTip.delay: 800
                     ToolTip.visible: hovered
                     ToolTip.text: qsTr("Search Settings")
 
                     onReleased: {
-                                    settingsButtonHighlight.border.color = primaryColor;
-                                    settingsButtonHighlight.color = primaryColor;
+                        settingsButtonHighlight.border.color = primaryColor;
+                        settingsButtonHighlight.color = primaryColor;
 
-                                }
+                    }
                     onPressed: {
-                                    settingsButtonHighlight.border.color = screenColor;
-                                    settingsButtonHighlight.color = screenColor;
-                                }
+                        settingsButtonHighlight.border.color = screenColor;
+                        settingsButtonHighlight.color = screenColor;
+                    }
                     onClicked: {
-                                    // setComboBox.clearParams();
-                                    //console.log("Calling signal clearParams()");
-
-                                }
+                        // setComboBox.clearParams();
+                        //console.log("Calling signal clearParams()");
+                        settingsWindow.visible = true;
+                    }
                     horizontalPadding: 0
 
                     Image {
                         id: settingsButtonImage
-                        y: -59
+                        y: -43
                         width: 176
                         height: 210
                         source: "https://images.pokemontcg.io/swsh2/168_hires.png"
                         sourceSize.width: 150
                         sourceSize.height: 209
-                        scale: 0.52
+                        scale: 0.7
                         fillMode: Image.PreserveAspectCrop
                         anchors.horizontalCenterOffset: 0
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                     clip: true
-                   // activeFocusOnTab: false
+                    // activeFocusOnTab: false
 
 
                 }
@@ -2485,9 +2583,9 @@ Item {
                                               "subtype4": card.subtype4 || ""
                                           }))
 
-                for(var i = 0; i < cards.length; i++) {
-                    console.log((i+1) + ": " + cards[i].imageUrl);
-                }
+                // for(var i = 0; i < cards.length; i++) {
+                //     //console.log((i+1) + ": " + cards[i].imageUrl);
+                // }
 
                 selectedIndex = 0; // Start with the first card
                 updateAttackInfo();
@@ -2504,6 +2602,20 @@ Item {
             }
         }
     }
+
+    SettingsWindow {
+        id: settingsWindow
+        color: bezelColor
+        flags: Qt.SubWindow
+        height: 200
+        maximumHeight: settingsWindow.height
+        maximumWidth: settingsWindow.width
+        minimumHeight: settingsWindow.height
+        minimumWidth: settingsWindow.width
+        modality: Qt.WindowModal
+        visible: false
+        width: 400
+    }
 }
 
 
@@ -2511,7 +2623,7 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:107}D{i:109}D{i:113}D{i:114}
-D{i:115}D{i:122}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:105}D{i:106}D{i:108}D{i:110}
+D{i:112}D{i:122}
 }
 ##^##*/
