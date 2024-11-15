@@ -30,6 +30,9 @@
         "Search.qml",
         "discoverhandler.py",
         "SettingsWindow.qml",
-        "Collection.qml"
+        "Collection.qml",
+        "collectionhandler.py",
+        "CollectionButton.qml",
+        "CollectionController.qml"
     ]
 }

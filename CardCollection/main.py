@@ -14,7 +14,10 @@ if __name__ == "__main__":
 
     backendController = BackendController()
     engine.rootContext().setContextProperty("backendController", backendController)
+    print("backendController initialized:", backendController)
 
+    # Prevent object destruction (for testing) by keeping it in memory
+    app.aboutToQuit.connect(lambda: print("App about to quit"))
     qml_file = Path(__file__).resolve().parent / "main.qml"
     engine.load(qml_file)
     if not engine.rootObjects():

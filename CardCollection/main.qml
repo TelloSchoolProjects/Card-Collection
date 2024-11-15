@@ -41,6 +41,67 @@ Window {
 
     //onActiveFocusItemChanged: console.log(activeFocusItem)
 
+    // Save list property to store tuples
+    property var saveList: []
+    property var saveCards: []
+    property var processedCards: []
+    property var markedCards: []
+
+    // // Compile the save list based on card data
+    // function compileSaveList() {
+    //     window.saveList = [] // Initialize the save list
+    //     console.log("Debug: Starting to compile saveList...");
+
+    //     console.log("window.saveCards.length = " + window.saveCards.length);
+    //     for (var i = 0; i < window.saveCards.length; i++) {
+    //         var card = window.saveCards[i];  // Access card at index i
+    //         var cardIdTuple = ["", "id", card.id];  // Create tuple for card
+    //         window.saveList.push(cardIdTuple);  // Push the tuple into the save list
+    //         console.log("Debug: cardIdTuple created:", cardIdTuple);
+    //     }
+
+    //     console.log("Debug: Final saveList:", saveList);
+
+    //     //backendController.request_save_collection(window.saveList);
+    // }
+
+    // Connections {
+    //     target: backendController
+    //     function onSaveResults(response) {
+
+    //         console.log("backendController called back after saving with response: " + response);
+
+    //         // for(var i = 0; i < cards.length; i++) {
+    //         //     //console.log((i+1) + ": " + cards[i].imageUrl);
+    //         // }
+
+
+    //     }
+    // }
+
+    onProcessedCardsChanged: {
+
+        discoverPage.loadedCards = window.processedCards
+        searchPage.loadedCards = window.processedCards
+        // console.log("Window.onProcessedCardsChanged: discoverPage.loadedCards now length: " + discoverPage.loadedCards.length);
+    }
+
+
+
+
+    // Component.onDestruction: {
+    //     console.log("Window destruction Beginning!")
+    //     console.log("Debug: saveCards before destruction:");
+    //     for(var i = 0; i < window.saveCards.length; i++) {
+    //         console.log(window.saveCards[i].name)
+    //     }
+
+    //     console.log("Debug: saveList before Window destruction:", window.saveList);
+    //     backendController.request_save_collection(window.saveList);
+    //     console.log("Window request backendController.request_save.");
+    // }
+
+
     Rectangle {
         id: columnLayout1
         color: "#ffffff"
@@ -110,6 +171,8 @@ Window {
                     color: selectedTabIndex
                            === 1 ? "#ffffff" : "#000000" // White for selected, black for unselected
                     anchors.centerIn: parent
+
+
                 }
 
                 onClicked: {
@@ -162,18 +225,7 @@ Window {
             clip: false
 
             Search {
-                width: 700
-                height: 615
-                Layout.maximumHeight: 615
-                Layout.maximumWidth: 700
-                Layout.minimumHeight: 615
-                Layout.minimumWidth: 700
-                Layout.preferredHeight: 615
-                Layout.preferredWidth: 700
-                activeFocusOnTab: true
-            }
-
-            Discover {
+                id: searchPage
                 width: 700
                 height: 615
                 Layout.maximumHeight: 615
@@ -184,20 +236,68 @@ Window {
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
 
-            }
+                onCardsChanged: {
 
-            Collection {
-                width: 700
-                Layout.maximumHeight: 615
-                Layout.maximumWidth: 700
-                Layout.minimumHeight: 615
-                Layout.minimumWidth: 700
-                Layout.preferredHeight: 615
-                Layout.preferredWidth: 700
-                activeFocusOnTab: true
+                }
+
+                onUpdateMarkedCards: {
+                    window.markedCards = searchPage.markedCards;
+                    collectionPage.markedCards = window.markedCards;
+                }
+
+                }
+
+                    Discover {
+                        id: discoverPage
+                        width: 700
+                        height: 615
+                        Layout.maximumHeight: 615
+                        Layout.maximumWidth: 700
+                        Layout.minimumHeight: 615
+                        Layout.minimumWidth: 700
+                        Layout.preferredHeight: 615
+                        Layout.preferredWidth: 700
+                        activeFocusOnTab: true
+
+
+                        onUpdateMarkedCards: {
+
+                            // Log specific properties of each card object
+                            // for (var i = 0; i < discoverPage.markedCards.length; i++) {
+                            //     var card = discoverPage.markedCards[i];
+                            //     console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
+                            // }
+
+                            window.markedCards = discoverPage.markedCards;
+                            collectionPage.markedCards = window.markedCards;
+
+
+                        }
+
+                    }
+
+
+                    Collection {
+                        id: collectionPage
+                        width: 700
+                        Layout.maximumHeight: 615
+                        Layout.maximumWidth: 700
+                        Layout.minimumHeight: 615
+                        Layout.minimumWidth: 700
+                        Layout.preferredHeight: 615
+                        Layout.preferredWidth: 700
+                        activeFocusOnTab: true
+
+
+                        onProcessedCardsChanged: {
+
+                            window.processedCards = collectionPage.processedCards
+                        }
+
+
+                    }
+                }
             }
         }
-    }
-}
 
 

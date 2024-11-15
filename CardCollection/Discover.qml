@@ -44,6 +44,28 @@ Item { // Page 2: Discover Page
 
     property int selectedIndex: 0
     property var cards: [] // List of card objects
+    // List to store marked cards
+    property var markedCards: []
+    property var loadedCards: []
+    signal updateMarkedCards;
+    // Current card being displayed
+    property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
+
+    // Update the current card when selectedIndex changes
+    onSelectedIndexChanged: {
+
+        currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
+    }
+
+    onLoadedCardsChanged: {
+
+        markedCards = loadedCards;
+    }
+
+    onMarkedCardsChanged: {
+
+        updateMarkedCards();
+    }
 
     function toggleLeftDrawer() {
         toggleLockTimer.start(); // Start the timer to re-enable the button
@@ -398,41 +420,41 @@ Item { // Page 2: Discover Page
         //rightScrollView.contentY = 0;
     }
 
-    // Function to handle next button click
-    function onNextCard() {
-        if (selectedIndex < cards.length - 1) {
-            selectedIndex++
-            updateAttackInfo(); // Update UI for the new selectedIndex
-            updateAbilityInfo();
-            updateSubTypeInfo();
-            updateSuperTypeInfo();
-            updateTypeInfo();
-            updateFlavorText();
-            resetLeftColumnScroll();
-            resetRightColumnScroll();
-            resetCardRotation();
-            updateLeftScrollView();
-            //updateRightScrollView();
-        }
-    }
+    // // Function to handle next button click
+    // function onNextCard() {
+    //     if (selectedIndex < cards.length - 1) {
+    //         selectedIndex++
+    //         updateAttackInfo(); // Update UI for the new selectedIndex
+    //         updateAbilityInfo();
+    //         updateSubTypeInfo();
+    //         updateSuperTypeInfo();
+    //         updateTypeInfo();
+    //         updateFlavorText();
+    //         resetLeftColumnScroll();
+    //         resetRightColumnScroll();
+    //         resetCardRotation();
+    //         updateLeftScrollView();
+    //         //updateRightScrollView();
+    //     }
+    // }
 
-    // Function to handle next button click
-    function onPrevCard() {
-        if (selectedIndex >= 0) {
-            selectedIndex--
-            updateAttackInfo(); // Update UI for the new selectedIndex
-            updateAbilityInfo();
-            updateSubTypeInfo();
-            updateSuperTypeInfo();
-            updateTypeInfo();
-            updateFlavorText();
-            resetLeftColumnScroll();
-            resetRightColumnScroll();
-            resetCardRotation();
-            //updateLeftScrollView();
-            //updateRightScrollView();
-        }
-    }
+    // // Function to handle next button click
+    // function onPrevCard() {
+    //     if (selectedIndex >= 0) {
+    //         selectedIndex--
+    //         updateAttackInfo(); // Update UI for the new selectedIndex
+    //         updateAbilityInfo();
+    //         updateSubTypeInfo();
+    //         updateSuperTypeInfo();
+    //         updateTypeInfo();
+    //         updateFlavorText();
+    //         resetLeftColumnScroll();
+    //         resetRightColumnScroll();
+    //         resetCardRotation();
+    //         //updateLeftScrollView();
+    //         //updateRightScrollView();
+    //     }
+    // }
 
 
     Column {
@@ -987,11 +1009,37 @@ Item { // Page 2: Discover Page
                                                     source: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl : ""
                                                     sourceSize: Qt.size(width, height)
                                                     cache: false
+
+                                                    onSourceChanged: {
+
+                                                        // Add the card to markedCards if checked
+                                                        var cardExists = false;
+                                                        for(var i = 0; i < markedCards.length; i++) {
+                                                            if(markedCards[i].id === collectionButton.card.id) {
+                                                                cardExists = true;
+                                                            }
+                                                            //var index = markedCards.indexOf(collectionButton.card)
+                                                            //if (index !== -1) {
+                                                            if(cardExists){
+                                                                console.log("Card: " + collectionButton.card.id + " is in markedCards already")
+
+                                                                collectionButton.checked = true;
+                                                            }
+                                                            else {
+                                                                collectionButton.checked = false;
+                                                                console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
+
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
                                     ]
                                 }
+
+                                // CollectionButton overlay on the card
+
 
                                 // Back side of the card, rotated 180 degrees
                                 Model {
@@ -1116,8 +1164,55 @@ Item { // Page 2: Discover Page
                         }
                     }
 
+                    CollectionButton {
+                        id: collectionButton
+                        x: 71
+                        y: 24
+                        width: 100
+                        height: 100
+                        opacity: 1
+                        padding: 0
+                        rightPadding: 0
+                        bottomPadding: 0
+                        leftPadding: 0
+                        topPadding: 0
+                        // icon.source: "colorlessEnergyCropped.png"
+                        // icon.color: "#00ffffff"
+                        checkable: true
+                        z: 3
+                        //anchors.centerIn: parent  // Center the button on the card
+                        card: currentCard  // Bind the current card to the button
+                        alreadyMarkedCards: markedCards
 
+                        // Handle the checked signal to mark/unmark the card
+                        onCheckedChanged: {
 
+                            var cardExists = false;
+                            var indexOfCard = -1
+                            var isCheckedNow = collectionButton.checked
+                            var wasCheckedBefore = !collectionButton.checked
+
+                            for(var i = 0; i < markedCards.length; i++) {
+                                if(markedCards[i].id === collectionButton.card.id) {
+                                    cardExists = true;
+                                    indexOfCard = i
+                                }
+                            }
+
+                            if(isCheckedNow && !cardExists){
+
+                                markedCards.push(collectionButton.card)
+                            }
+
+                            else if (wasCheckedBefore && cardExists) {
+
+                                markedCards.splice(indexOfCard, 1)
+
+                            }
+
+                            updateMarkedCards();
+                        }
+                    }
                     clip: true
                 }
 
@@ -2148,6 +2243,10 @@ Item { // Page 2: Discover Page
                     searchParams = searchParams.concat(typesParams);
                     searchParams = searchParams.concat(setsParams);
 
+                    // for(var i = 0; i < setsParams.length; i++) {
+                    //     console.log(setsParams[i]);
+                    // }
+
                     //console.log(searchParams)
 
 
@@ -2261,7 +2360,7 @@ Item { // Page 2: Discover Page
 
 
                     function onReleased(){
-                        console.log("released")
+                        // console.log("released")
 
                         // ballToggleImage.opacity = 1;
 
@@ -2297,74 +2396,74 @@ Item { // Page 2: Discover Page
                 }
             }
 
-            Rectangle {
-                id: settingsButtonHighlight
-                x: 605
-                width: 80
-                height: 50
-                visible: true
-                color: "#c80d0d"
-                radius: 3
-                border.color: primaryColor
-                border.width: 0
-                anchors.verticalCenter: parent.verticalCenter
-                z: 0
-                Button {
-                    id: btnSettings
-                    x: -4
-                    y: 2
-                    text: ""
-                    anchors.fill: parent
-                    anchors.leftMargin: 3
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 3
-                    anchors.bottomMargin: 4
-                    z: 0
-                    verticalPadding: 0
-                    padding: 0
+            // Rectangle {
+            //     id: settingsButtonHighlight
+            //     x: 605
+            //     width: 80
+            //     height: 50
+            //     visible: true
+            //     color: "#c80d0d"
+            //     radius: 3
+            //     border.color: primaryColor
+            //     border.width: 0
+            //     anchors.verticalCenter: parent.verticalCenter
+            //     z: 0
+            //     Button {
+            //         id: btnSettings
+            //         x: -4
+            //         y: 2
+            //         text: ""
+            //         anchors.fill: parent
+            //         anchors.leftMargin: 3
+            //         anchors.rightMargin: 4
+            //         anchors.topMargin: 3
+            //         anchors.bottomMargin: 4
+            //         z: 0
+            //         verticalPadding: 0
+            //         padding: 0
 
-                    // hoverEnabled: true;
-                    ToolTip.timeout: 5000
-                    ToolTip.delay: 800
-                    ToolTip.visible: hovered
-                    ToolTip.text: qsTr("Search Settings")
+            //         // hoverEnabled: true;
+            //         ToolTip.timeout: 5000
+            //         ToolTip.delay: 800
+            //         ToolTip.visible: hovered
+            //         ToolTip.text: qsTr("Search Settings")
 
-                    onReleased: {
-                        settingsButtonHighlight.border.color = primaryColor;
-                        settingsButtonHighlight.color = primaryColor;
+            //         onReleased: {
+            //             settingsButtonHighlight.border.color = primaryColor;
+            //             settingsButtonHighlight.color = primaryColor;
 
-                    }
-                    onPressed: {
-                        settingsButtonHighlight.border.color = screenColor;
-                        settingsButtonHighlight.color = screenColor;
-                    }
-                    onClicked: {
-                        // setComboBox.clearParams();
-                        //console.log("Calling signal clearParams()");
-                        settingsWindow.visible = true;
-                    }
-                    horizontalPadding: 0
+            //         }
+            //         onPressed: {
+            //             settingsButtonHighlight.border.color = screenColor;
+            //             settingsButtonHighlight.color = screenColor;
+            //         }
+            //         onClicked: {
+            //             // setComboBox.clearParams();
+            //             //console.log("Calling signal clearParams()");
+            //             settingsWindow.visible = true;
+            //         }
+            //         horizontalPadding: 0
 
-                    Image {
-                        id: settingsButtonImage
-                        y: -59
-                        width: 176
-                        height: 210
-                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-                        sourceSize.width: 150
-                        sourceSize.height: 209
-                        scale: 0.52
-                        fillMode: Image.PreserveAspectCrop
-                        anchors.horizontalCenterOffset: 0
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    clip: true
-                    // activeFocusOnTab: false
+            //         Image {
+            //             id: settingsButtonImage
+            //             y: -59
+            //             width: 176
+            //             height: 210
+            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+            //             sourceSize.width: 150
+            //             sourceSize.height: 209
+            //             scale: 0.52
+            //             fillMode: Image.PreserveAspectCrop
+            //             anchors.horizontalCenterOffset: 0
+            //             anchors.horizontalCenter: parent.horizontalCenter
+            //         }
+            //         clip: true
+            //         // activeFocusOnTab: false
 
 
-                }
-                anchors.verticalCenterOffset: 0
-            }
+            //     }
+            //     anchors.verticalCenterOffset: 0
+            // }
 
             Rectangle {
                 id: clearButtonHighlight
@@ -2655,7 +2754,6 @@ Item { // Page 2: Discover Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57}D{i:76}D{i:125}D{i:127}
-D{i:136}
+    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/

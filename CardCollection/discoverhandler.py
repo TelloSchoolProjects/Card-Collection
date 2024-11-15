@@ -28,12 +28,12 @@ class DiscoverHandler:
     """
 
     def handle_discover(self, param_list: list[tuple[str, str, str]]) -> list[dict[str, str]]:
-        print([element for element in param_list if element[0] != 'set'])
+        #print([element for element in param_list if element[0] != 'set'])
 
         randomSelect = DiscoverHandler.random_select(param_list)
 
         query = Backend.construct_query(self, randomSelect)
-        print("Query: " + query)
+       # print("Query: " + query)
 
         results = Backend.query_api(self, query)
 

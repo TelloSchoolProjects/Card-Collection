@@ -53,6 +53,76 @@ Item { // Page 2: Collection Page
 
     property int cardWidth: 300
 
+    // Save list property to store tuples
+    property var saveList: []
+
+    // Alias to access cards in CardFlow
+    property alias saveCards: collectionFlow.cards
+
+    property var processedCards: []
+
+
+    property var markedCards: []
+
+    // Compile the save list based on card data
+    function compileSaveList() {
+        saveList = [] // Initialize the save list
+        //console.log("Collection: Starting to compile saveList...");
+
+        //console.log("Collection.saveCards.length = " + saveCards.length);
+
+        //console.log("Collection.markedCards.length = " + markedCards.length);
+        for (var i = 0; i < saveCards.length; i++) {
+            var card = saveCards[i];  // Access card at index i
+            var cardIdTuple = ["", "id", card.id];  // Create tuple for card
+            saveList.push(cardIdTuple);  // Push the tuple into the save list
+            //  console.log("Collection: cardIdTuple created:", cardIdTuple);
+        }
+
+        //console.log("Collection: Final saveList:", saveList);
+
+        backendController.request_save_collection(saveList);
+    }
+
+    // onSaveCardsChanged: {
+    //     compileSaveList();
+    // }
+
+    Connections {
+        target: Qt.application
+        function onAboutToQuit() {
+
+            //console.log("Collection: About to Quit")
+            compileSaveList();
+        }
+    }
+
+    Component.onCompleted: {
+
+        //console.log("Collection.qml onComplete Called");
+        backendController.request_load_collection();
+    }
+
+
+
+    onMarkedCardsChanged: {
+
+        //console.log("Collection: markedCards changed...");
+        saveCards = markedCards
+    }
+
+    function processLoadedCards() {
+
+        if(cards.length > 0){
+            //print("Collection: assigning: " + cards + " to saveCards")
+            //saveCards = cards
+            // print("saveCards now length: " + saveCards.length)
+            //print("Collection: assigning: " + cards + " to markedCards")
+            processedCards = cards
+            //print("processedCards now length: " + processedCards.length)
+
+        }
+    }
 
     function updateColumns(num: int) {
         // TODO update columns
@@ -61,9 +131,9 @@ Item { // Page 2: Collection Page
     }
     // Handle the left compare signal and set the material source for the left view
     function onLeftCompareSignal(leftCompareImageUrl: string) {
-       // console.log("onLeftCompare signal caught..." );
-       // console.log("trying to set viewLeft.leftImage.source with: " + leftCompareImageUrl);
-       leftImage.source = leftCompareImageUrl;
+        // console.log("onLeftCompare signal caught..." );
+        // console.log("trying to set viewLeft.leftImage.source with: " + leftCompareImageUrl);
+        leftImage.source = leftCompareImageUrl;
         //console.log("leftCardImage set to: " + leftCardImage);
 
     }
@@ -73,9 +143,9 @@ Item { // Page 2: Collection Page
     // Handle the right compare signal and set the material source for the right view
     function onRightCompareSignal(rightCompareImageUrl: string) {
         //console.log("onrightCompare signal caught..." );
-       // console.log("trying to set viewright.rightImage.source with: " + rightCompareImageUrl);
-       rightImage.source = rightCompareImageUrl;
-       // console.log("rightCardImage set to: " + rightCardImage);
+        // console.log("trying to set viewright.rightImage.source with: " + rightCompareImageUrl);
+        rightImage.source = rightCompareImageUrl;
+        // console.log("rightCardImage set to: " + rightCardImage);
 
     }
 
@@ -489,6 +559,7 @@ Item { // Page 2: Collection Page
     Column {
         id: column
         anchors.fill: parent
+        clip: true
         z: 1
 
 
@@ -499,6 +570,7 @@ Item { // Page 2: Collection Page
             height: 20
             color: blockBG
             border.width: 0
+            clip: true
             z: 1
             Rectangle {
                 id: rectangle28
@@ -680,7 +752,7 @@ Item { // Page 2: Collection Page
                             y: 0
                             visible: true
                             z: 0
-                           // scale: Qt.vector3d(1, 1, 1.4)
+                            // scale: Qt.vector3d(1, 1, 1.4)
 
                             Model {
                                 id: frontCardRight
@@ -700,7 +772,7 @@ Item { // Page 2: Collection Page
                                     // sourceSize.height: 300
                                     // sourceSize.width: 200
                                     opacity: 0
-                                   // z: 3
+                                    // z: 3
 
                                 }
 
@@ -931,7 +1003,7 @@ Item { // Page 2: Collection Page
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.horizontalCenter: parent.horizontalCenter
                         z: 1
-                        clip: true
+                        clip: false
                         flickableDirection: Flickable.VerticalFlick
                         contentWidth: 600
                         contentHeight: collectionFlow.implicitHeight  // Match to collectionFlow height
@@ -954,6 +1026,22 @@ Item { // Page 2: Collection Page
                             viewportY: flickable.contentY
                             cards: collectionPage.cards
 
+                            // onCardsChanged: {
+                            //     compileSaveList()
+                            // }
+
+                            onCardEntered: {
+                                //clipRectangle.clip = false;
+                                // flickable.clip = false
+                            }
+                            onCardExited: {
+                                //clipRectangle.clip = true;
+                                //flickable.clip = true
+
+                            }
+
+
+
                             onCardFlowLeftCompare: {
                                 console.log("collectionFlow.onLeftCompare caught: " + collectionFlowImageUrl);
                                 console.log("collectionFlow.onLeftCompare calling onLeftCompareSignal(" + collectionFlowImageUrl + ")");
@@ -969,6 +1057,7 @@ Item { // Page 2: Collection Page
                     }
 
                     Rectangle {
+                        id: clipRectangle
                         width: 590
                         height: 420
                         color: "#d5290202"
@@ -1243,7 +1332,7 @@ Item { // Page 2: Collection Page
                                     // sourceSize.height: 300
                                     // sourceSize.width: 200
                                     opacity: 0
-                                   // z: 3
+                                    // z: 3
 
                                 }
 
@@ -1296,6 +1385,7 @@ Item { // Page 2: Collection Page
             visible: true
             color: "#ffffff"
             border.width: 0
+            clip: true
             z: 1
             Rectangle {
                 id: rectangle18
@@ -1492,6 +1582,28 @@ Item { // Page 2: Collection Page
                     to: 3
 
                     onValueChanged: console.log(value)
+
+                }
+
+                Button {
+                    id: button
+                    x: 249
+                    y: 32
+                    width: 142
+                    height: 52
+                    text: qsTr("Edit Collection")
+                    font.styleName: "ExtraBold Italic"
+                    checkable: true
+                    palette {
+                        button: "blue"
+                    }
+
+                    onCheckedChanged: {
+                        if(checked) {
+                            collectionFlow.collectionButtonVisible = true;
+                        }
+                        else collectionFlow.collectionButtonVisible = false;
+                    }
 
                 }
             }
@@ -1703,6 +1815,7 @@ Item { // Page 2: Collection Page
             }
         }
     }
+
 
     Rectangle {
         id: rectangle34
@@ -2378,74 +2491,74 @@ Item { // Page 2: Collection Page
                 anchors.verticalCenterOffset: 0
             }
 
-            Rectangle {
-                id: settingsButtonHighlight
-                width: 80
-                height: 50
-                visible: true
-                color: "#c80d0d"
-                radius: 3
-                border.color: primaryColor
-                border.width: 0
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: 600
-                z: 1
-                Button {
-                    id: btnSettings
-                    x: -4
-                    y: 2
-                    text: ""
-                    anchors.fill: parent
-                    anchors.leftMargin: 3
-                    anchors.rightMargin: 4
-                    anchors.topMargin: 3
-                    anchors.bottomMargin: 4
-                    z: 0
-                    verticalPadding: 0
-                    padding: 0
+            // Rectangle {
+            //     id: settingsButtonHighlight
+            //     width: 80
+            //     height: 50
+            //     visible: true
+            //     color: "#c80d0d"
+            //     radius: 3
+            //     border.color: primaryColor
+            //     border.width: 0
+            //     anchors.verticalCenter: parent.verticalCenter
+            //     anchors.left: parent.left
+            //     anchors.leftMargin: 600
+            //     z: 1
+            //     Button {
+            //         id: btnSettings
+            //         x: -4
+            //         y: 2
+            //         text: ""
+            //         anchors.fill: parent
+            //         anchors.leftMargin: 3
+            //         anchors.rightMargin: 4
+            //         anchors.topMargin: 3
+            //         anchors.bottomMargin: 4
+            //         z: 0
+            //         verticalPadding: 0
+            //         padding: 0
 
-                    // hoverEnabled: true;
-                    ToolTip.timeout: 5000
-                    ToolTip.delay: 800
-                    ToolTip.visible: hovered
-                    ToolTip.text: qsTr("Search Settings")
+            //         // hoverEnabled: true;
+            //         ToolTip.timeout: 5000
+            //         ToolTip.delay: 800
+            //         ToolTip.visible: hovered
+            //         ToolTip.text: qsTr("Search Settings")
 
-                    onReleased: {
-                        settingsButtonHighlight.border.color = primaryColor;
-                        settingsButtonHighlight.color = primaryColor;
+            //         onReleased: {
+            //             settingsButtonHighlight.border.color = primaryColor;
+            //             settingsButtonHighlight.color = primaryColor;
 
-                    }
-                    onPressed: {
-                        settingsButtonHighlight.border.color = screenColor;
-                        settingsButtonHighlight.color = screenColor;
-                    }
-                    onClicked: {
-                        // setComboBox.clearParams();
-                        //console.log("Calling signal clearParams()");
-                        settingsWindow.visible = true;
-                    }
-                    horizontalPadding: 0
+            //         }
+            //         onPressed: {
+            //             settingsButtonHighlight.border.color = screenColor;
+            //             settingsButtonHighlight.color = screenColor;
+            //         }
+            //         onClicked: {
+            //             // setComboBox.clearParams();
+            //             //console.log("Calling signal clearParams()");
+            //             settingsWindow.visible = true;
+            //         }
+            //         horizontalPadding: 0
 
-                    Image {
-                        id: settingsButtonImage
-                        y: -59
-                        width: 176
-                        height: 210
-                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-                        sourceSize.width: 150
-                        sourceSize.height: 209
-                        scale: 0.52
-                        fillMode: Image.PreserveAspectCrop
-                        anchors.horizontalCenterOffset: 0
-                        anchors.horizontalCenter: parent.horizontalCenter
-                    }
-                    clip: true
-                    // activeFocusOnTab: false
+            //         Image {
+            //             id: settingsButtonImage
+            //             y: -59
+            //             width: 176
+            //             height: 210
+            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+            //             sourceSize.width: 150
+            //             sourceSize.height: 209
+            //             scale: 0.52
+            //             fillMode: Image.PreserveAspectCrop
+            //             anchors.horizontalCenterOffset: 0
+            //             anchors.horizontalCenter: parent.horizontalCenter
+            //         }
+            //         clip: true
+            //         // activeFocusOnTab: false
 
 
-                }
-            }
+            //     }
+            // }
         }
 
         // Animate the x position when it changes
@@ -2878,6 +2991,113 @@ Item { // Page 2: Collection Page
         }
     }
 
+    Connections {
+        target: backendController
+
+        function onLoadResults(response) {
+
+            // console.log("onLoadResults heard backendController loadResults signal")
+
+            var data = JSON.parse(response)
+
+            if (data.error) {
+                console.log("Error in response:",
+                            data.error) // Log the error message
+                cards = []
+            } else {
+                cards = data.map(card => ({
+                                              "name": card.name,
+                                              "id": card.id,
+                                              "supertype": card.supertype,
+                                              "type1": card.type1,
+                                              "type2": card.type2,
+
+                                              // Card Scan Image Hi-Res
+                                              "imageUrl": card.imageUrl
+                                                          || "",
+
+                                              "set": card.set,
+                                              "setSymbol": card.setSymbol,
+                                              "setLogo": card.setLogo,
+
+                                              "flavorText": card.flavorText,
+
+                                              "rule1": card.rule1,
+                                              "rule2": card.rule2,
+                                              "rule3": card.rule3,
+                                              "rule4": card.rule4,
+
+                                              // Ability 1
+                                              "ability1Name": card.ability1Name || "",
+                                              "ability1Text": card.ability1Text || "",
+                                              "ability1Type": card.ability1Type || "",
+
+                                              // Ability 2
+                                              "ability2Name": card.ability2Name || "",
+                                              "ability2Text": card.ability2Text || "",
+                                              "ability2Type": card.ability2Type || "",
+
+                                              // Attack 1
+                                              "attack1Name": card.attack1Name || "",
+                                              "attack1Text": card.attack1Text || "",
+                                              "attack1Damage": card.attack1Damage || "",
+                                              "attack1ConvertedEnergyCost": card.attack1ConvertedEnergyCost || 0,
+                                              "attack1Cost1": card.attack1Cost1 || "Cost 1",
+                                              "attack1Cost2": card.attack1Cost2 || "Cost 2",
+                                              "attack1Cost3": card.attack1Cost3 || "Cost 3",
+                                              "attack1Cost4": card.attack1Cost4 || "Cost 4",
+                                              "attack1Cost5": card.attack1Cost5 || "Cost 5",
+
+                                              // Attack 2
+                                              "attack2Name": card.attack2Name || "",
+                                              "attack2Text": card.attack2Text || "",
+                                              "attack2Damage": card.attack2Damage || "",
+                                              "attack2ConvertedEnergyCost": card.attack2ConvertedEnergyCost || 0,
+                                              "attack2Cost1": card.attack2Cost1 || "Cost 1",
+                                              "attack2Cost2": card.attack2Cost2 || "Cost 2",
+                                              "attack2Cost3": card.attack2Cost3 || "Cost 3",
+                                              "attack2Cost4": card.attack2Cost4 || "Cost 4",
+                                              "attack2Cost5": card.attack2Cost5 || "",
+
+                                              // Attack 3
+                                              "attack3Name": card.attack3Name || "",
+                                              "attack3Text": card.attack3Text || "",
+                                              "attack3Damage": card.attack3Damage || "",
+                                              "attack3ConvertedEnergyCost": card.attack3ConvertedEnergyCost || 0,
+                                              "attack3Cost1": card.attack3Cost1 || "Cost 1",
+                                              "attack3Cost2": card.attack3Cost2 || "Cost 2",
+                                              "attack3Cost3": card.attack3Cost3 || "Cost 3",
+                                              "attack3Cost4": card.attack3Cost4 || "Cost 4",
+                                              "attack3Cost5": card.attack3Cost5 || "",
+
+                                              // Attack 4
+                                              "attack4Name": card.attack4Name || "",
+                                              "attack4Text": card.attack4Text || "",
+                                              "attack4Damage": card.attack4Damage || "",
+                                              "attack4ConvertedEnergyCost": card.attack4ConvertedEnergyCost || 0,
+                                              "attack4Cost1": card.attack4Cost1 || "Cost 1",
+                                              "attack4Cost2": card.attack4Cost2 || "Cost 2",
+                                              "attack4Cost3": card.attack4Cost3 || "Cost 3",
+                                              "attack4Cost4": card.attack4Cost4 || "Cost 4",
+                                              "attack4Cost5": card.attack4Cost5 || "",
+
+                                              // Subtypes
+                                              "subtype1" : card.subtype1 || "",
+                                              "subtype2": card.subtype2 || "",
+                                              "subtype3": card.subtype3 || "",
+                                              "subtype4": card.subtype4 || ""
+                                          }))
+
+                selectedIndex = 0; // Start with the first card
+                processLoadedCards();
+                //viewRight.visible = true
+            }
+        }
+
+
+
+
+    }
 
 
 }
@@ -2890,6 +3110,6 @@ Item { // Page 2: Collection Page
 /*##^##
 Designer {
     D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
-D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:58;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
