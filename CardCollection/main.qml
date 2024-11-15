@@ -7,11 +7,11 @@ import QtQuick.Controls.Fusion 2.15
 
 Window {
     id: window
-    width: 600
+    width: 700
     height: 650
-    minimumWidth: 600
+    minimumWidth: 700
     minimumHeight: 650
-    maximumWidth: 600
+    maximumWidth: 700
     maximumHeight: 650
 
     visible: true
@@ -22,7 +22,7 @@ Window {
 
     // property int selectedIndex: 0
     // property var cards: [] // List of card objects
-    property int selectedTabIndex: 0
+    property int selectedTabIndex: 1
 
     // Define color scheme properties
     property color primaryColor: "#c80d0d"
@@ -150,8 +150,8 @@ Window {
 
         StackLayout {
             id: stackLayout
-            width: 600
-            height: 600
+            width: 700
+            height: 615
             visible: true
             anchors.top: tabBar.bottom
             anchors.topMargin: 0
@@ -162,12 +162,39 @@ Window {
             clip: false
 
             Search {
+                width: 700
+                height: 615
+                Layout.maximumHeight: 615
+                Layout.maximumWidth: 700
+                Layout.minimumHeight: 615
+                Layout.minimumWidth: 700
+                Layout.preferredHeight: 615
+                Layout.preferredWidth: 700
                 activeFocusOnTab: true
             }
 
-          Discover {
-              activeFocusOnTab: true
+            Discover {
+                width: 700
+                height: 615
+                Layout.maximumHeight: 615
+                Layout.maximumWidth: 700
+                Layout.minimumHeight: 615
+                Layout.minimumWidth: 700
+                Layout.preferredHeight: 615
+                Layout.preferredWidth: 700
+                activeFocusOnTab: true
 
+            }
+
+            Collection {
+                width: 700
+                Layout.maximumHeight: 615
+                Layout.maximumWidth: 700
+                Layout.minimumHeight: 615
+                Layout.minimumWidth: 700
+                Layout.preferredHeight: 615
+                Layout.preferredWidth: 700
+                activeFocusOnTab: true
             }
         }
     }

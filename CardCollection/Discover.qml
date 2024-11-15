@@ -9,8 +9,8 @@ Item { // Page 2: Discover Page
 
     focus: true
     id: discoverPage
-    width: 600
-    height: 600
+    width: 700
+    height: 615
     Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
     Layout.preferredWidth: 600
     Layout.preferredHeight: 600
@@ -72,15 +72,15 @@ Item { // Page 2: Discover Page
     function toggleRightDrawer() {
         toggleLockTimer.start(); // Start the timer to re-enable the button
 
-        if (customDrawer2.x >= 600) { // Closed position
-            customDrawer2.x = 600 - customDrawer2.width; // Slide into view
+        if (customDrawer2.x >= 700) { // Closed position
+            customDrawer2.x = 700 - customDrawer2.width; // Slide into view
             isDrawer2Open = true;
 
             rotateAnimation2.from = ballButton2.rotation;
             rotateAnimation2.to = 270;
             rotateAnimation2.start();
         } else { // Open position
-            customDrawer2.x = 600; // Hide off the right edge
+            customDrawer2.x = 700; // Hide off the right edge
             isDrawer2Open = false;
             rotateAnimation2.from = ballButton2.rotation;
             rotateAnimation2.to = 90;
@@ -439,22 +439,21 @@ Item { // Page 2: Discover Page
         id: column
         x: 0
         y: 0
-        width: 600
-        height: 600
+        width: 700
+        height: 615
         z: 1
 
 
 
         Rectangle {
             id: rectangle27
+            width: 700
             height: 20
             color: blockBG
             border.width: 0
             anchors.left: parent.left
-            anchors.right: parent.right
             anchors.leftMargin: 0
-            anchors.rightMargin: 0
-            z: 1
+            z: 0
             Rectangle {
                 id: rectangle28
                 y: -600
@@ -513,16 +512,13 @@ Item { // Page 2: Discover Page
 
         Rectangle {
             id: rectangle4
+            width: 700
             height: 440
             visible: true
             color: deepBG
             radius: 0
             border.color: borderColor
             border.width: 4
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
             z: 1
 
             Pane {
@@ -536,7 +532,7 @@ Item { // Page 2: Discover Page
                 rightPadding: 0
                 leftPadding: 0
                 horizontalPadding: 6
-                contentWidth: 600
+                contentWidth: 700
                 contentHeight: 440
                 Rectangle {
                     visible: true
@@ -554,8 +550,8 @@ Item { // Page 2: Discover Page
 
                 Rectangle {
                     id: customDrawer
-                    x: -274
-                    width: 274
+                    x: -324
+                    width: 324
                     height: 438
                     opacity: 1
                     visible: true
@@ -610,16 +606,17 @@ Item { // Page 2: Discover Page
 
                         Column {
                             id: leftSideColumn
-                            y: 10
-                            width: 253
+                            y: 8
+                            width: 290
                             height: 536
-                            anchors.horizontalCenterOffset: -47
+                            anchors.horizontalCenterOffset: -22
                             anchors.horizontalCenter: parent.horizontalCenter
                             spacing: 4
                             FlavorTextBlock {
                                 id: rule1TextBlock
-                                width: 250
+                                width: 290
                                 height: 100
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 screenShadeColor: window.screenShadeColor
                                 screenHighlightColor: window.screenHighlightColor
                                 screenColor: window.screenColor
@@ -631,9 +628,10 @@ Item { // Page 2: Discover Page
 
                             FlavorTextBlock {
                                 id: rule2TextBlock
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 screenShadeColor: window.screenShadeColor
                                 screenHighlightColor: window.screenHighlightColor
                                 screenColor: window.screenColor
@@ -645,9 +643,10 @@ Item { // Page 2: Discover Page
 
                             FlavorTextBlock {
                                 id: rule3TextBlock
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 screenShadeColor: window.screenShadeColor
                                 screenHighlightColor: window.screenHighlightColor
                                 screenColor: window.screenColor
@@ -659,9 +658,10 @@ Item { // Page 2: Discover Page
 
                             FlavorTextBlock {
                                 id: rule4TextBlock
-                                width: 250
+                                width: 290
                                 height: 100
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 screenShadeColor: window.screenShadeColor
                                 screenHighlightColor: window.screenHighlightColor
                                 screenColor: window.screenColor
@@ -673,9 +673,10 @@ Item { // Page 2: Discover Page
 
                             AttackInfoBlock {
                                 id: attack1Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: true
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 textColor: window.textColor
                                 screenColor: window.screenColor
                                 nameText: "Attack 1"
@@ -688,9 +689,10 @@ Item { // Page 2: Discover Page
 
                             AttackInfoBlock {
                                 id: attack2Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 textColor: window.textColor
                                 screenColor: window.screenColor
                                 nameText: "Attack 2"
@@ -703,9 +705,10 @@ Item { // Page 2: Discover Page
 
                             AttackInfoBlock {
                                 id: attack3Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 textColor: window.textColor
                                 screenColor: window.screenColor
                                 nameText: "Attack 3"
@@ -718,9 +721,10 @@ Item { // Page 2: Discover Page
 
                             AttackInfoBlock {
                                 id: attack4Block
-                                width: 250
+                                width: 290
                                 height: 200
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 textColor: window.textColor
                                 screenColor: window.screenColor
                                 nameText: "Attack 4"
@@ -733,7 +737,8 @@ Item { // Page 2: Discover Page
 
                             AbilityInfoBlock {
                                 id: ability1
-                                width: 250
+                                width: 290
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 typeText: "Ability 1 Type"
                                 nameText: "Ability 1"
                                 descText: "Ability 1 Description"
@@ -741,8 +746,9 @@ Item { // Page 2: Discover Page
 
                             AbilityInfoBlock {
                                 id: ability2
-                                width: 250
+                                width: 290
                                 visible: false
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 typeText: "Ability 2 Type"
                                 nameText: "Ability 2"
                                 descText: "Ability 2 Description"
@@ -901,6 +907,7 @@ Item { // Page 2: Discover Page
 
                 Rectangle {
                     id: dataFlow
+                    width: 700
                     height: 440
                     opacity: 1
                     visible: true
@@ -911,8 +918,13 @@ Item { // Page 2: Discover Page
                     anchors.horizontalCenter: parent.horizontalCenter
                     Frame {
                         id: frame
+                        width: 700
+                        height: 440
                         visible: true
                         anchors.verticalCenter: parent.verticalCenter
+                        z: 0
+                        contentWidth: 700
+                        contentHeight: 440
                         anchors.horizontalCenter: parent.horizontalCenter
                         padding: 0
                         rightPadding: 0
@@ -922,11 +934,11 @@ Item { // Page 2: Discover Page
                         clip: false
                         View3D {
                             id: view
-                            width: 540
+                            width: 605
                             height: 430
                             scale: 1
                             clip: false
-                            z: 0
+                            z: 1
                             visible: true
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -953,7 +965,7 @@ Item { // Page 2: Discover Page
                                 y: 200
                                 visible: true
                                 z: -25
-                                scale.y: 3
+                                scale.y: 3.5
                                 scale.x: 2.5
 
                                 // Front side of the card
@@ -1008,11 +1020,15 @@ Item { // Page 2: Discover Page
 
                             MouseArea {
                                 id: dragArea
-                                anchors.fill: parent
                                 property real previousX: 0
                                 property real velocityY: 0
                                 property real dragSensitivity: 0.2
-                                property real momentumDecay: 0.98 // Controls how quickly momentum fades
+                                property real momentumDecay: 0.98
+                                width: 700
+                                height: 440
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.horizontalCenter: parent.horizontalCenter
+                                // Controls how quickly momentum fades
 
                                 onPressed: {
                                     previousX = mouse.x
@@ -1079,11 +1095,24 @@ Item { // Page 2: Discover Page
 
                         Rectangle {
                             id: rectangle5
-                            visible: false
+                            width: 700
+                            height: 447
+                            visible: true
                             color: deepBG
                             border.width: 0
-                            anchors.fill: parent
-                            z: -1
+                            anchors.verticalCenter: parent.verticalCenter
+                            z: 0
+                        }
+
+                        Rectangle {
+                            x: 55
+                            y: 10
+                            width: 590
+                            height: 420
+                            color: "#d5290202"
+                            anchors.verticalCenter: parent.verticalCenter
+                            z: 0
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
 
@@ -1246,8 +1275,8 @@ Item { // Page 2: Discover Page
                 Layout.fillHeight: true
                 Rectangle {
                     id: customDrawer2
-                    x: 600
-                    width: 274
+                    x: 700
+                    width: 324
                     height: 438
                     opacity: 1
                     visible: true
@@ -1298,20 +1327,21 @@ Item { // Page 2: Discover Page
 
                         Column {
                             id: rightSideColumn1
-                            x: 12
-                            y: 10
-                            width: 245
+                            y: 8
+                            width: 290
                             height: 430
-                            anchors.horizontalCenterOffset: -47
+                            anchors.horizontalCenterOffset: -22
+                            anchors.horizontalCenter: parent.horizontalCenter
                             spacing: 3
                             Rectangle {
                                 id: supertypeBlock1
-                                width: 190
+                                width: 200
                                 height: 40
                                 color: "#c80d0d"
                                 radius: 8
                                 border.color: "#6c0101"
                                 border.width: 2
+                                anchors.horizontalCenter: parent.horizontalCenter
                                 Rectangle {
                                     id: rectangle37
                                     color: "#b2b2b2"
@@ -1408,12 +1438,11 @@ Item { // Page 2: Discover Page
                                     }
                                     clip: true
                                 }
-                                anchors.horizontalCenter: parent.horizontalCenter
                             }
 
                             Rectangle {
                                 id: nameBlock1
-                                width: 240
+                                width: 250
                                 height: 70
                                 color: "#c80d0d"
                                 radius: 8
@@ -1522,7 +1551,7 @@ Item { // Page 2: Discover Page
 
                             Row {
                                 id: typesRow1
-                                width: 221
+                                width: 285
                                 height: 106
                                 spacing: 4
                                 TypeBlock {
@@ -1540,7 +1569,7 @@ Item { // Page 2: Discover Page
 
                                 SubtypeBlock {
                                     id: subtypeBlock1
-                                    width: 164
+                                    width: 225
                                     height: 106
                                     color: window.blockBG
                                     radius: 6
@@ -1558,8 +1587,8 @@ Item { // Page 2: Discover Page
 
                             FlavorTextBlock {
                                 id: flavorTextBlock1
-                                width: 225
-                                height: 150
+                                width: 250
+                                height: 100
                                 visible: true
                                 screenShadeColor: window.screenShadeColor
                                 screenHighlightColor: window.screenHighlightColor
@@ -1573,7 +1602,7 @@ Item { // Page 2: Discover Page
 
                             SetLogoBlock {
                                 id: setLogoBlock1
-                                width: 225
+                                width: 240
                                 height: 200
                                 visible: true
                                 color: "#c80d0d"
@@ -1589,13 +1618,13 @@ Item { // Page 2: Discover Page
 
                             Row {
                                 id: setSymbolRow1
-                                width: 200
-                                height: 66
+                                width: 208
+                                height: 85
                                 spacing: 3
                                 SetSymbolBlock {
                                     id: setSymbolBlock1
-                                    width: 75
-                                    height: 65
+                                    width: 85
+                                    height: 85
                                     color: "#c80d0d"
                                     radius: 8
                                     border.color: "#6c0101"
@@ -1610,7 +1639,7 @@ Item { // Page 2: Discover Page
                                 Rectangle {
                                     id: setBlock1
                                     width: 120
-                                    height: 65
+                                    height: 85
                                     color: "#c80d0d"
                                     radius: 8
                                     border.color: "#6c0101"
@@ -1710,7 +1739,6 @@ Item { // Page 2: Discover Page
                                 }
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
-                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                         contentWidth: 368
                         contentHeight: 1651
@@ -1724,19 +1752,17 @@ Item { // Page 2: Discover Page
 
         Rectangle {
             id: rectangle6
+            width: 700
             height: 70
             opacity: 1
             color: "#00ffffff"
             border.color: "#6c0101"
             border.width: 2
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
             z: 1
 
             MySearchFilterTools {
                 id: searchFilterTools
+                width: 700
                 Layout.fillHeight: false
                 Layout.fillWidth: true
                 Layout.preferredHeight: 40
@@ -1746,14 +1772,11 @@ Item { // Page 2: Discover Page
                 border.color: "#006c0101"
                 border.width: 2
                 blockBorderWidth: 3
-                anchors.left: parent.left
-                anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
                 anchors.topMargin: 0
                 anchors.bottomMargin: 0
+                typesRowSpacing: 14
                 toolsBorderColor: "#ff0000"
                 toolsFillColor: deepBG
                 mainColor: "#790000"
@@ -1770,13 +1793,10 @@ Item { // Page 2: Discover Page
 
         Rectangle {
             id: rectangle17
+            width: 700
             height: 10
             color: "#ffffff"
             border.width: 0
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
             z: 1
             Rectangle {
                 id: rectangle18
@@ -1851,7 +1871,7 @@ Item { // Page 2: Discover Page
 
         Rectangle {
             id: bottomToolbar
-            width: 600
+            width: 700
             height: 65
             color: "#ee0000"
             border.color: borderColor
@@ -1874,14 +1894,13 @@ Item { // Page 2: Discover Page
             ComboBox {
                 id: setComboBox
                 y: 8
+                width: 300
                 height: 25
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.right: btnDiscover.left
+                anchors.left: toggleBothButton.right
                 //anchors.left: parent.left
                 //anchors.right: txtSearchBox.left
-                anchors.leftMargin: 25
-                anchors.rightMargin: 45
+                anchors.leftMargin: 20
                 z: 0
                 Layout.leftMargin: 6
                 Layout.preferredHeight: -1
@@ -1995,14 +2014,13 @@ Item { // Page 2: Discover Page
 
             Button {
                 id: btnDiscover
-                x: 295
                 y: 8
-                width: 125
+                width: 100
                 height: 35
                 text: qsTr("Discover")
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.right: toggleBothButton.left
-                anchors.rightMargin: 52
+                anchors.left: setComboBox.right
+                anchors.leftMargin: 15
                 anchors.verticalCenterOffset: 0
                 //   anchors.right: parent.right
                 //  anchors.rightMargin: -585
@@ -2165,11 +2183,11 @@ Item { // Page 2: Discover Page
 
             Image {
                 id: ballToggleImage
-                x: 493
-                y: -17
+                x: 85
                 width: 100
                 height: 100
                 opacity: 1
+                anchors.verticalCenter: parent.verticalCenter
                 source: "newBall.png"
                 z: 1
                 scale: 0.45
@@ -2190,19 +2208,16 @@ Item { // Page 2: Discover Page
 
             RoundButton {
                 id: toggleBothButton
-                x: 531
+                x: 115
                 width: 40
                 height: 40
                 opacity: 1
                 text: ""
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 37
                 enabled: !toggleLockTimer.running
                 //enabled: !toggleLockTimer.running
                 highlighted: false
                 flat: false
-                anchors.verticalCenterOffset: 0
                 hoverEnabled: true
 
                 ToolTip.delay: 800
@@ -2281,17 +2296,147 @@ Item { // Page 2: Discover Page
                     anchors.bottomMargin: -4
                 }
             }
+
+            Rectangle {
+                id: settingsButtonHighlight
+                x: 605
+                width: 80
+                height: 50
+                visible: true
+                color: "#c80d0d"
+                radius: 3
+                border.color: primaryColor
+                border.width: 0
+                anchors.verticalCenter: parent.verticalCenter
+                z: 0
+                Button {
+                    id: btnSettings
+                    x: -4
+                    y: 2
+                    text: ""
+                    anchors.fill: parent
+                    anchors.leftMargin: 3
+                    anchors.rightMargin: 4
+                    anchors.topMargin: 3
+                    anchors.bottomMargin: 4
+                    z: 0
+                    verticalPadding: 0
+                    padding: 0
+
+                    // hoverEnabled: true;
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Search Settings")
+
+                    onReleased: {
+                        settingsButtonHighlight.border.color = primaryColor;
+                        settingsButtonHighlight.color = primaryColor;
+
+                    }
+                    onPressed: {
+                        settingsButtonHighlight.border.color = screenColor;
+                        settingsButtonHighlight.color = screenColor;
+                    }
+                    onClicked: {
+                        // setComboBox.clearParams();
+                        //console.log("Calling signal clearParams()");
+                        settingsWindow.visible = true;
+                    }
+                    horizontalPadding: 0
+
+                    Image {
+                        id: settingsButtonImage
+                        y: -59
+                        width: 176
+                        height: 210
+                        source: "https://images.pokemontcg.io/swsh2/168_hires.png"
+                        sourceSize.width: 150
+                        sourceSize.height: 209
+                        scale: 0.52
+                        fillMode: Image.PreserveAspectCrop
+                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    clip: true
+                    // activeFocusOnTab: false
+
+
+                }
+                anchors.verticalCenterOffset: 0
+            }
+
+            Rectangle {
+                id: clearButtonHighlight
+                x: 15
+                width: 80
+                height: 50
+                visible: true
+                color: "#c80d0d"
+                radius: 3
+                border.color: primaryColor
+                border.width: 0
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 15
+                anchors.verticalCenterOffset: -1
+                z: 0
+                Button {
+                    id: btnClear
+                    x: -4
+                    y: 2
+                    text: ""
+                    anchors.fill: parent
+                    anchors.leftMargin: 3
+                    anchors.rightMargin: 4
+                    anchors.topMargin: 3
+                    anchors.bottomMargin: 4
+                    z: 0
+                    verticalPadding: 0
+                    padding: 0
+                    onReleased: {
+                        clearButtonHighlight.border.color = primaryColor;
+                        clearButtonHighlight.color = primaryColor;
+
+                    }
+                    onPressed: {
+                        clearButtonHighlight.border.color = screenColor;
+                        clearButtonHighlight.color = screenColor;
+                    }
+                    onClicked: {
+                        // setComboBox.clearParams();
+                        //console.log("Calling signal clearParams()");
+                        clearParams();
+
+                    }
+                    horizontalPadding: 0
+                    Image {
+                        id: image
+                        y: -52
+                        width: 176
+                        height: 210
+                        source: "https://images.pokemontcg.io/swsh35/51_hires.png"
+                        sourceSize.width: 150
+                        sourceSize.height: 209
+                        scale: 0.6
+                        fillMode: Image.PreserveAspectCrop
+                        anchors.horizontalCenterOffset: 0
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                    clip: true
+                    activeFocusOnTab: false
+                    ToolTip.timeout: 5000
+                    ToolTip.delay: 800
+                }
+            }
         }
 
         Rectangle {
             id: rectangle22
+            width: 700
             height: 10
             color: "#ffffff"
             border.width: 0
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: 0
-            anchors.rightMargin: 0
             z: 1
             Rectangle {
                 id: rectangle23
@@ -2479,19 +2624,38 @@ Item { // Page 2: Discover Page
         anchors.fill: parent
         z: 0
         border.color: borderColor
+        border.width: 0
     }
 
     Item {
         id: __materialLibrary__
     }
     // Page content for browsePage
+
+    SettingsWindow {
+        id: settingsWindow
+        color: bezelColor
+        flags: Qt.SubWindow
+        height: 200
+        maximumHeight: settingsWindow.height
+        maximumWidth: settingsWindow.width
+        minimumHeight: settingsWindow.height
+        minimumWidth: settingsWindow.width
+        modality: Qt.WindowModal
+        visible: false
+        width: 400
+    }
+
 }
+
+
 
 
 
 
 /*##^##
 Designer {
-    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0}D{i:41;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57}D{i:76}D{i:125}D{i:127}
+D{i:136}
 }
 ##^##*/

@@ -25,6 +25,8 @@ Rectangle {
     property alias topButtonsMargin: typesRow.anchors.top
     property alias bottomButtonsMargin: typesRow.anchors.bottom
 
+    property alias typesRowSpacing: typesRow.spacing
+
 
     // Exposed properties
     property color blockBG: "#ff0000"

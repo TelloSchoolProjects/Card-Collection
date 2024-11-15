@@ -30,8 +30,8 @@ Rectangle {
 
     property alias imageSource: setSymbolImage.source
     property alias blockText: setSymbolText.text
-    width: 50
-    height: 50
+    width: 100
+    height: 100
 
     Rectangle {
         id: setSymbolBezel
