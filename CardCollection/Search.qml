@@ -46,7 +46,13 @@ Item {
     property var loadedCards: []
 
     signal updateMarkedCards;
+    property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
 
+    // Update the current card when selectedIndex changes
+    onSelectedIndexChanged: {
+
+        currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
+    }
 
     onMarkedCardsChanged: {
 
@@ -1019,36 +1025,39 @@ Item {
                                         DefaultMaterial {
                                             diffuseMap: Texture {
                                                 sourceItem: Image {
+                                                    id: frontCardSourceItem
                                                     anchors.centerIn: parent
                                                     width: 413
                                                     height: 577
                                                     source: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl : ""
                                                     sourceSize: Qt.size(width, height)
                                                     cache: false
-                                                }
 
-                                                onSourceChanged: {
+                                                    onSourceChanged: {
 
-                                                    // Add the card to markedCards if checked
-                                                    var cardExists = false;
-                                                    for(var i = 0; i < markedCards.length; i++) {
-                                                        if(markedCards[i].id === collectionButton.card.id) {
-                                                            cardExists = true;
-                                                        }
-                                                        //var index = markedCards.indexOf(collectionButton.card)
-                                                        //if (index !== -1) {
-                                                        if(cardExists){
-                                                            console.log("Card: " + collectionButton.card.id + " is in markedCards already")
+                                                        // Add the card to markedCards if checked
+                                                        var cardExists = false;
+                                                        for(var i = 0; i < markedCards.length; i++) {
+                                                            if(markedCards[i].id === collectionButton.card.id) {
+                                                                cardExists = true;
+                                                            }
+                                                            //var index = markedCards.indexOf(collectionButton.card)
+                                                            //if (index !== -1) {
+                                                            if(cardExists){
+                                                                console.log("Card: " + collectionButton.card.id + " is in markedCards already")
 
-                                                            collectionButton.checked = true;
-                                                        }
-                                                        else {
-                                                            collectionButton.checked = false;
-                                                            console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
+                                                                collectionButton.checked = true;
+                                                            }
+                                                            else {
+                                                                collectionButton.checked = false;
+                                                                console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
 
+                                                            }
                                                         }
                                                     }
                                                 }
+
+
                                             }
                                         }
                                     ]
@@ -1178,10 +1187,9 @@ Item {
                         anchors.leftMargin: 10
                         anchors.topMargin: 10
                         height: width
-                        card: cards ? cards[selectedIndex] : null  // Pass only the individual card data
+                        card: currentCard  // Pass only the individual card data
                         //visible: collectionButtonVisible
                         // Handle marking/unmarking of the card for collection
-                        checked: false // collectionFlow.cards.includes(card)  // Check if the card is already marked
                         alreadyMarkedCards: markedCards
 
                         // Handle the checked signal to mark/unmark the card
