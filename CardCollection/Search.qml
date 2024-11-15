@@ -43,6 +43,20 @@ Item {
     property bool isDrawerOpen: false // Start with the drawer closed
 
     property var markedCards: []
+    property var loadedCards: []
+
+    signal updateMarkedCards;
+
+
+    onMarkedCardsChanged: {
+
+        updateMarkedCards();
+    }
+
+    onLoadedCardsChanged: {
+
+        markedCards = loadedCards;
+    }
 
     function toggleDrawer() {
         if (customDrawer.x < 0) {
@@ -1012,6 +1026,29 @@ Item {
                                                     sourceSize: Qt.size(width, height)
                                                     cache: false
                                                 }
+
+                                                onSourceChanged: {
+
+                                                    // Add the card to markedCards if checked
+                                                    var cardExists = false;
+                                                    for(var i = 0; i < markedCards.length; i++) {
+                                                        if(markedCards[i].id === collectionButton.card.id) {
+                                                            cardExists = true;
+                                                        }
+                                                        //var index = markedCards.indexOf(collectionButton.card)
+                                                        //if (index !== -1) {
+                                                        if(cardExists){
+                                                            console.log("Card: " + collectionButton.card.id + " is in markedCards already")
+
+                                                            collectionButton.checked = true;
+                                                        }
+                                                        else {
+                                                            collectionButton.checked = false;
+                                                            console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
+
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     ]
@@ -1141,47 +1178,40 @@ Item {
                         anchors.leftMargin: 10
                         anchors.topMargin: 10
                         height: width
-                        card: modelData  // Pass only the individual card data
-                        visible: collectionButtonVisible
+                        card: cards ? cards[selectedIndex] : null  // Pass only the individual card data
+                        //visible: collectionButtonVisible
                         // Handle marking/unmarking of the card for collection
-                        checked: true // collectionFlow.cards.includes(card)  // Check if the card is already marked
+                        checked: false // collectionFlow.cards.includes(card)  // Check if the card is already marked
+                        alreadyMarkedCards: markedCards
 
+                        // Handle the checked signal to mark/unmark the card
                         onCheckedChanged: {
-                           // console.log("CollectionFlow.CollectionButton.onCheckedChanged");
-                            if(!checked){ // used to be checked
 
-                                var removeIndex = -1
-                                for(var i = 0; i < cards.length; i++) {
-                                    if(card.id === cards[i].id) {
-                                        removeIndex = i;
-                                    }
+                            var cardExists = false;
+                            var indexOfCard = -1
+                            var isCheckedNow = collectionButton.checked
+                            var wasCheckedBefore = !collectionButton.checked
+
+                            for(var i = 0; i < markedCards.length; i++) {
+                                if(markedCards[i].id === collectionButton.card.id) {
+                                    cardExists = true;
+                                    indexOfCard = i
                                 }
+                            }
 
-                                if (removeIndex !== -1) {
-                                    console.log("splicing collectionFlow.cards[index]: " + cards[removeIndex].name + ": " + cards[removeIndex].id);
-                                    cards.splice(removeIndex, 1)
-                                    // Iterate over the model and assign to markedCards
-                                        for (var i = 0; i < cards.length; i++) {
-                                            markedCards.push(cards[i]);  // Get data from model and push to markedCards
-                                        }
+                            if(isCheckedNow && !cardExists){
 
-                                }
+                                markedCards.push(collectionButton.card)
+                            }
+
+                            else if (wasCheckedBefore && cardExists) {
+
+                                markedCards.splice(indexOfCard, 1)
 
                             }
-                            // if (checked) {
-                            //     // Mark card for collection (add to internal cards list)
-                            //     if (!collectionFlow.cards.includes(card)) {
-                            //         collectionFlow.cards.push(card)
-                            //     }
-                            // } else {
-                            //     // Unmark card from collection (remove from internal cards list)
-                            //     var index = collectionFlow.cards.indexOf(card)
-                            //     if (index !== -1) {
-                            //         collectionFlow.cards.splice(index, 1)
-                            //     }
-                            // }
-                        }
 
+                            updateMarkedCards();
+                        }
                     }
                 }
 

@@ -82,6 +82,7 @@ Window {
     onProcessedCardsChanged: {
 
         discoverPage.loadedCards = window.processedCards
+        searchPage.loadedCards = window.processedCards
         // console.log("Window.onProcessedCardsChanged: discoverPage.loadedCards now length: " + discoverPage.loadedCards.length);
     }
 
@@ -224,6 +225,7 @@ Window {
             clip: false
 
             Search {
+                id: searchPage
                 width: 700
                 height: 615
                 Layout.maximumHeight: 615
@@ -237,59 +239,65 @@ Window {
                 onCardsChanged: {
 
                 }
-            }
-
-            Discover {
-                id: discoverPage
-                width: 700
-                height: 615
-                Layout.maximumHeight: 615
-                Layout.maximumWidth: 700
-                Layout.minimumHeight: 615
-                Layout.minimumWidth: 700
-                Layout.preferredHeight: 615
-                Layout.preferredWidth: 700
-                activeFocusOnTab: true
-
 
                 onUpdateMarkedCards: {
-
-                    // Log specific properties of each card object
-                    // for (var i = 0; i < discoverPage.markedCards.length; i++) {
-                    //     var card = discoverPage.markedCards[i];
-                    //     console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
-                    // }
-
-                    window.markedCards = discoverPage.markedCards;
+                    window.markedCards = searchPage.markedCards;
                     collectionPage.markedCards = window.markedCards;
-
+                }
 
                 }
 
-            }
+                    Discover {
+                        id: discoverPage
+                        width: 700
+                        height: 615
+                        Layout.maximumHeight: 615
+                        Layout.maximumWidth: 700
+                        Layout.minimumHeight: 615
+                        Layout.minimumWidth: 700
+                        Layout.preferredHeight: 615
+                        Layout.preferredWidth: 700
+                        activeFocusOnTab: true
 
 
-            Collection {
-                id: collectionPage
-                width: 700
-                Layout.maximumHeight: 615
-                Layout.maximumWidth: 700
-                Layout.minimumHeight: 615
-                Layout.minimumWidth: 700
-                Layout.preferredHeight: 615
-                Layout.preferredWidth: 700
-                activeFocusOnTab: true
+                        onUpdateMarkedCards: {
+
+                            // Log specific properties of each card object
+                            // for (var i = 0; i < discoverPage.markedCards.length; i++) {
+                            //     var card = discoverPage.markedCards[i];
+                            //     console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
+                            // }
+
+                            window.markedCards = discoverPage.markedCards;
+                            collectionPage.markedCards = window.markedCards;
 
 
-                onProcessedCardsChanged: {
+                        }
 
-                    window.processedCards = collectionPage.processedCards
+                    }
+
+
+                    Collection {
+                        id: collectionPage
+                        width: 700
+                        Layout.maximumHeight: 615
+                        Layout.maximumWidth: 700
+                        Layout.minimumHeight: 615
+                        Layout.minimumWidth: 700
+                        Layout.preferredHeight: 615
+                        Layout.preferredWidth: 700
+                        activeFocusOnTab: true
+
+
+                        onProcessedCardsChanged: {
+
+                            window.processedCards = collectionPage.processedCards
+                        }
+
+
+                    }
                 }
-
-
             }
         }
-    }
-}
 
 
