@@ -1103,7 +1103,6 @@ Item { // Page 2: Discover Page
                     clip: true
                 }
 
-
                 MouseArea {
                     id: openButton2
                     x: 572
