@@ -23,7 +23,6 @@ Item {
     property int selectedIndex: 0
     property var cards: [] // List of card objects
     property var cachedSets: [] // List to hold set names
-    //property int selectedTabIndex: 0
 
     // Define color scheme properties
     property color primaryColor: "#c80d0d"
@@ -42,26 +41,12 @@ Item {
     // Add a boolean variable to track the drawer's state
     property bool isDrawerOpen: false // Start with the drawer closed
 
-    property var markedCards: []
-    property var loadedCards: []
-
-    signal updateMarkedCards;
     property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
 
     // Update the current card when selectedIndex changes
     onSelectedIndexChanged: {
 
         currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
-    }
-
-    onMarkedCardsChanged: {
-
-        updateMarkedCards();
-    }
-
-    onLoadedCardsChanged: {
-
-        markedCards = loadedCards;
     }
 
     function toggleDrawer() {
@@ -185,7 +170,6 @@ Item {
                 typesRow.height = 106;
             }
         }
-
     }
 
     function updateSuperTypeInfo() {
@@ -216,14 +200,12 @@ Item {
 
         // Check if the card exists
         if (!cards[selectedIndex]) {
-            // console.log("cards[selectedIndex] doesn't exist")
             // Reset to defaults if no card is selected
             typeBlock.type1Type = defaultType1;
             typeBlock.type2Type= defaultType2;
             return; // Exit early if no card is found
         }
         else {
-            //  console.log(cards[selectedIndex].type1)
         }
 
         // Normalize type strings for image source mapping
@@ -252,13 +234,10 @@ Item {
         } else if (!typeBlock.visible && subtypeBlock.visible) {
             // typesRow.width = subtypeBlock.width
         }
-
-
     }
 
     function updateFlavorText() {
         if(cards[selectedIndex] && cards[selectedIndex].flavorText !== "") {
-            // console.log();
             flavorTextBlock.descText = cards[selectedIndex].flavorText;
             rule1TextBlock.descText = cards[selectedIndex].rule1;
             rule2TextBlock.descText = cards[selectedIndex].rule2;
@@ -369,8 +348,6 @@ Item {
         rightScrollView.contentHeight = rightContentHeight + 55; // Set the final content height
     }
 
-
-
     function resetCardRotation() {
         momentumTimer.stop()
         cardNode.eulerRotation.y = 0;
@@ -444,7 +421,6 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 40
                 Layout.topMargin: 0
-                //toolbarContentHeight: 30
                 height: 60
                 color: "#00000000"
                 radius: 0
@@ -487,7 +463,6 @@ Item {
                     z: -2
                 }
             }
-
             ToolBar {
                 id: searchTools
                 width: 700
@@ -540,7 +515,6 @@ Item {
                         Connections {
                             target: btnClear
                             function onClearParams() {
-                                //console.log("Signal onClearParams() called");
 
                                 // Clear all items in setsModel
                                 setsModel.clear();
@@ -549,7 +523,6 @@ Item {
                                 var tempList = [];
                                 for(var i = 0; i < cachedSets.length; i++) {
                                     setsModel.append(cachedSets[i]);
-                                    //console.log(cachedSets[i].name);
                                 }
 
                                 // Reset filter states
@@ -580,14 +553,12 @@ Item {
                             Connections {
                                 target: setComboBox
                                 function onClearSignal() {
-                                    // console.log("onClearSignal called");
                                     toggle();
                                 }
 
                             }
 
                             function toggle() {
-                                // console.log("itemDelegate.toggle() called...");
                                 checkDelegate.toggle()
                             }
 
@@ -646,8 +617,6 @@ Item {
                                     cachedSets = tempSets;
                                 }
                             }
-
-
                         }
                     }
                     TextField {
@@ -729,8 +698,6 @@ Item {
                                     var setItem = setsModel.get(setIdx)
                                     setsParams.push(
                                                 ['set', 'name', setItem.name])
-                                    //console.log(setsParams[setIdx]);
-
                                 }
                             }
 
@@ -780,20 +747,6 @@ Item {
                                 typesParams.push(
                                             ['types', '', 'colorless'])
                             }
-
-                            // if(typesParams.length === 0) {
-                            //     typesParams.push(['types', '', 'fire']);
-                            //     typesParams.push(['types', '', 'grass']);
-                            //     typesParams.push(['types', '', 'water']);
-                            //     typesParams.push(['types', '', 'lightning']);
-                            //     typesParams.push(['types', '', 'fighting']);
-                            //     typesParams.push(['types', '', 'psychic']);
-                            //     typesParams.push(['types', '', 'darkness']);
-                            //     typesParams.push(['types', '', 'metal']);
-                            //     typesParams.push(['types', '', 'fairy']);
-                            //     typesParams.push(['types', '', 'dragon']);
-                            //     typesParams.push(['types', '', 'colorless']);
-                            // }
 
                             searchParams = searchParams.concat(typesParams);
                             searchParams = searchParams.concat(setsParams);
@@ -1032,36 +985,10 @@ Item {
                                                     source: (selectedIndex >= 0 && selectedIndex < cards.length) ? cards[selectedIndex].imageUrl : ""
                                                     sourceSize: Qt.size(width, height)
                                                     cache: false
-
-                                                    onSourceChanged: {
-
-                                                        // Add the card to markedCards if checked
-                                                        var cardExists = false;
-                                                        for(var i = 0; i < markedCards.length; i++) {
-                                                            if(markedCards[i].id === collectionButton.card.id) {
-                                                                cardExists = true;
-                                                            }
-                                                            //var index = markedCards.indexOf(collectionButton.card)
-                                                            //if (index !== -1) {
-                                                            if(cardExists){
-                                                                console.log("Card: " + collectionButton.card.id + " is in markedCards already")
-
-                                                                collectionButton.checked = true;
-                                                            }
-                                                            else {
-                                                                collectionButton.checked = false;
-                                                                console.log("Card: " + collectionButton.card.id + " not in markedCards yet")
-
-                                                            }
-                                                        }
-                                                    }
                                                 }
-
-
                                             }
                                         }
                                     ]
-
                                 }
 
                                 // Back side of the card, rotated 180 degrees
@@ -1086,7 +1013,6 @@ Item {
                                             }
                                         }
                                     ]
-
                                 }
                             }
 
@@ -1150,8 +1076,6 @@ Item {
                                         // Gradually reduce the angle towards zero
                                         var returnSpeed = 0.07; // Adjust the return speed to control how quickly it comes to rest
                                         if (cardNode.rotation.y > 0) {
-                                            // console.log(cardNode.rotation.y)
-                                            //console.log(cardNode.eulerRotation.y)
                                             cardNode.rotation.y -= returnSpeed; // Move back towards 0
                                             if (cardNode.rotation.y < 0) cardNode.rotation.y = 0; // Clamp to zero
                                         } else {
@@ -1177,49 +1101,6 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
                         anchors.horizontalCenter: parent.horizontalCenter
-                    }
-
-                    CollectionButton {
-                        id: collectionButton
-                        width: 77
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.leftMargin: 10
-                        anchors.topMargin: 10
-                        height: width
-                        card: currentCard  // Pass only the individual card data
-                        //visible: collectionButtonVisible
-                        // Handle marking/unmarking of the card for collection
-                        alreadyMarkedCards: markedCards
-
-                        // Handle the checked signal to mark/unmark the card
-                        onCheckedChanged: {
-
-                            var cardExists = false;
-                            var indexOfCard = -1
-                            var isCheckedNow = collectionButton.checked
-                            var wasCheckedBefore = !collectionButton.checked
-
-                            for(var i = 0; i < markedCards.length; i++) {
-                                if(markedCards[i].id === collectionButton.card.id) {
-                                    cardExists = true;
-                                    indexOfCard = i
-                                }
-                            }
-
-                            if(isCheckedNow && !cardExists){
-
-                                markedCards.push(collectionButton.card)
-                            }
-
-                            else if (wasCheckedBefore && cardExists) {
-
-                                markedCards.splice(indexOfCard, 1)
-
-                            }
-
-                            updateMarkedCards();
-                        }
                     }
                 }
 
@@ -1263,7 +1144,6 @@ Item {
                             }
                         }
 
-
                         Rectangle {
                             id: rectangle29
                             color: "#00ffffff"
@@ -1298,7 +1178,6 @@ Item {
                         Behavior on scale {
                             NumberAnimation {
                                 duration: 200
-                                // easing: Easing.InOutQuad
                             }
                         }
 
@@ -1323,7 +1202,6 @@ Item {
                             }
                         }
                     }
-
 
                     Image {
                         id: ballButton
@@ -1420,8 +1298,6 @@ Item {
                             y: 0
                             width: 283
                             height: 446
-                            // anchors.verticalCenter: parent.verticalCenter
-                            // anchors.verticalCenterOffset: -16
                             spacing: 4
 
                             FlavorTextBlock {
@@ -1454,8 +1330,6 @@ Item {
                                 width: 290
                                 height: 100
                                 visible: false
-                                //  anchors.top: parent.top
-
                                 descText: "Rule 2"
                             }
 
@@ -1490,8 +1364,6 @@ Item {
                                 width: 290
                                 height: 100
                                 visible: false
-                                //  anchors.top: parent.top
-
                                 descText: "Rule 4"
                             }
 
@@ -1508,12 +1380,7 @@ Item {
                                 dropTextColor: window.dropTextColor
                                 borderColor: window.borderColor
                                 dropBorderColor: window.dropBorderColor
-                                //anchors.horizontalCenter: parent.anchors.horizontalCenter
                             }
-
-
-
-
 
                             AttackInfoBlock {
                                 id: attack2Block
@@ -1528,12 +1395,7 @@ Item {
                                 dropTextColor: window.dropTextColor
                                 borderColor: window.borderColor
                                 dropBorderColor: window.dropBorderColor
-                                //anchors.horizontalCenter: parent.horizontalCenter
                             }
-
-
-
-
 
                             AttackInfoBlock {
                                 id: attack3Block
@@ -1548,12 +1410,7 @@ Item {
                                 dropTextColor: window.dropTextColor
                                 borderColor: window.borderColor
                                 dropBorderColor: window.dropBorderColor
-                                //anchors.horizontalCenter: parent.horizontalCenter
                             }
-
-
-
-
 
                             AttackInfoBlock {
                                 id: attack4Block
@@ -1568,12 +1425,7 @@ Item {
                                 dropTextColor: window.dropTextColor
                                 borderColor: window.borderColor
                                 dropBorderColor: window.dropBorderColor
-                                //anchors.horizontalCenter: parent.horizontalCenter
                             }
-
-
-
-
 
                             AbilityInfoBlock {
                                 id: ability1
@@ -1583,10 +1435,6 @@ Item {
                                 descText: "Ability 1 Description"
                             }
 
-
-
-
-
                             AbilityInfoBlock {
                                 id: ability2
                                 width: 290
@@ -1595,10 +1443,6 @@ Item {
                                 typeText: "Ability 2 Type"
                                 descText: "Ability 2 Description"
                             }
-
-
-
-
                         }
                     }
                     Flickable {
@@ -1893,24 +1737,12 @@ Item {
                                 }
                             }
 
-
-
                             FlavorTextBlock {
                                 id: flavorTextBlock
-
-                                // blockBG: window.blockBG
-                                // screenColor: window.screenColor
-                                // screenShadeColor: window.screenShadeColor
-                                // bezelColor: window.bezelColor
-                                // bezelBorderColor: window.bezelBorderColor
-                                // screenHighlightColor: window.screenHighlightColor
-
                                 width: 260
                                 height: 100
                                 visible: true
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                //  anchors.top: parent.top
-
                                 descText: "Flavor Text"
                             }
 
@@ -1930,8 +1762,6 @@ Item {
                                                  && selectedIndex < cards.length) ? "" // Fallback if name is undefined
                                                                                   : "Set Logo"
                             }
-
-
                             Row {
                                 id: setSymbolRow
                                 width: 250
@@ -2064,11 +1894,6 @@ Item {
                                     }
                                 }
                             }
-
-
-
-
-
                         }
                     }
                 }
@@ -2341,8 +2166,6 @@ Item {
                     ToolTip.text: qsTr("Clear all search parameters.")
 
                     onClicked: {
-                        // setComboBox.clearParams();
-                        //console.log("Calling signal clearParams()");
                         clearParams();
 
                     }
@@ -2353,7 +2176,6 @@ Item {
                     onReleased: {
                         clearButtonHighlight.border.color = primaryColor;
                         clearButtonHighlight.color = primaryColor;
-
                     }
 
                     Image {
@@ -2466,80 +2288,7 @@ Item {
                     }
                 }
             }
-
-            // Rectangle {
-            //     id: settingsButtonHighlight
-            //     x: 580
-            //     width: 100
-            //     height: 70
-            //     visible: true
-            //     color: "#c80d0d"
-            //     radius: 3
-            //     border.color: primaryColor
-            //     border.width: 0
-            //     anchors.verticalCenter: parent.verticalCenter
-            //     z: 0
-            //     Button {
-            //         id: btnSettings
-            //         x: -4
-            //         y: 2
-            //         text: ""
-            //         anchors.fill: parent
-            //         anchors.leftMargin: 3
-            //         anchors.rightMargin: 4
-            //         anchors.topMargin: 3
-            //         anchors.bottomMargin: 4
-            //         z: 0
-            //         verticalPadding: 0
-            //         padding: 0
-
-            //         // hoverEnabled: true;
-            //         ToolTip.timeout: 5000
-            //         ToolTip.delay: 800
-            //         ToolTip.visible: hovered
-            //         ToolTip.text: qsTr("Search Settings")
-
-            //         onReleased: {
-            //             settingsButtonHighlight.border.color = primaryColor;
-            //             settingsButtonHighlight.color = primaryColor;
-
-            //         }
-            //         onPressed: {
-            //             settingsButtonHighlight.border.color = screenColor;
-            //             settingsButtonHighlight.color = screenColor;
-            //         }
-            //         onClicked: {
-            //             // setComboBox.clearParams();
-            //             //console.log("Calling signal clearParams()");
-            //             settingsWindow.visible = true;
-            //         }
-            //         horizontalPadding: 0
-
-            //         Image {
-            //             id: settingsButtonImage
-            //             y: -43
-            //             width: 176
-            //             height: 210
-            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-            //             sourceSize.width: 150
-            //             sourceSize.height: 209
-            //             scale: 0.7
-            //             fillMode: Image.PreserveAspectCrop
-            //             anchors.horizontalCenterOffset: 0
-            //             anchors.horizontalCenter: parent.horizontalCenter
-            //         }
-            //         clip: true
-            //         // activeFocusOnTab: false
-
-
-            //     }
-            //     anchors.verticalCenterOffset: 0
-            // }
-
-
-
         }
-
     }
 
     ListModel {
