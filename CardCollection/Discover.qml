@@ -44,10 +44,7 @@ Item { // Page 2: Discover Page
 
     property int selectedIndex: 0
     property var cards: [] // List of card objects
-    // List to store marked cards
-    property var markedCards: []
-    property var loadedCards: []
-    signal updateMarkedCards;
+
     // Current card being displayed
     property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
 
@@ -55,16 +52,6 @@ Item { // Page 2: Discover Page
     onSelectedIndexChanged: {
 
         currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
-    }
-
-    onLoadedCardsChanged: {
-
-        markedCards = loadedCards;
-    }
-
-    onMarkedCardsChanged: {
-
-        updateMarkedCards();
     }
 
     function toggleLeftDrawer() {
@@ -220,7 +207,6 @@ Item { // Page 2: Discover Page
 
             // console.log(subtypeBlock1.sub1Text)
         }
-
     }
 
     function updateSuperTypeInfo() {
@@ -287,8 +273,6 @@ Item { // Page 2: Discover Page
         } else if (!typeBlock1.visible && subtypeBlock1.visible) {
             typesRow1.width = subtypeBlock1.width
         }
-
-
     }
 
     function updateFlavorText() {
@@ -420,43 +404,6 @@ Item { // Page 2: Discover Page
         //rightScrollView.contentY = 0;
     }
 
-    // // Function to handle next button click
-    // function onNextCard() {
-    //     if (selectedIndex < cards.length - 1) {
-    //         selectedIndex++
-    //         updateAttackInfo(); // Update UI for the new selectedIndex
-    //         updateAbilityInfo();
-    //         updateSubTypeInfo();
-    //         updateSuperTypeInfo();
-    //         updateTypeInfo();
-    //         updateFlavorText();
-    //         resetLeftColumnScroll();
-    //         resetRightColumnScroll();
-    //         resetCardRotation();
-    //         updateLeftScrollView();
-    //         //updateRightScrollView();
-    //     }
-    // }
-
-    // // Function to handle next button click
-    // function onPrevCard() {
-    //     if (selectedIndex >= 0) {
-    //         selectedIndex--
-    //         updateAttackInfo(); // Update UI for the new selectedIndex
-    //         updateAbilityInfo();
-    //         updateSubTypeInfo();
-    //         updateSuperTypeInfo();
-    //         updateTypeInfo();
-    //         updateFlavorText();
-    //         resetLeftColumnScroll();
-    //         resetRightColumnScroll();
-    //         resetCardRotation();
-    //         //updateLeftScrollView();
-    //         //updateRightScrollView();
-    //     }
-    // }
-
-
     Column {
         id: column
         x: 0
@@ -464,8 +411,6 @@ Item { // Page 2: Discover Page
         width: 700
         height: 615
         z: 1
-
-
 
         Rectangle {
             id: rectangle27
@@ -922,9 +867,6 @@ Item { // Page 2: Discover Page
                         anchors.verticalCenterOffset: 0
                     }
                     cursorShape: Qt.PointingHandCursor
-
-
-
                 }
 
                 Rectangle {
@@ -1038,9 +980,6 @@ Item { // Page 2: Discover Page
                                     ]
                                 }
 
-                                // CollectionButton overlay on the card
-
-
                                 // Back side of the card, rotated 180 degrees
                                 Model {
                                     id: backCard
@@ -1076,7 +1015,6 @@ Item { // Page 2: Discover Page
                                 height: 440
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                // Controls how quickly momentum fades
 
                                 onPressed: {
                                     previousX = mouse.x
@@ -1138,7 +1076,6 @@ Item { // Page 2: Discover Page
                                     }
                                 }
                             }
-
                         }
 
                         Rectangle {
@@ -1176,11 +1113,8 @@ Item { // Page 2: Discover Page
                         bottomPadding: 0
                         leftPadding: 0
                         topPadding: 0
-                        // icon.source: "colorlessEnergyCropped.png"
-                        // icon.color: "#00ffffff"
                         checkable: true
                         z: 3
-                        //anchors.centerIn: parent  // Center the button on the card
                         card: currentCard  // Bind the current card to the button
                         alreadyMarkedCards: markedCards
 
@@ -1200,14 +1134,11 @@ Item { // Page 2: Discover Page
                             }
 
                             if(isCheckedNow && !cardExists){
-
                                 markedCards.push(collectionButton.card)
                             }
 
                             else if (wasCheckedBefore && cardExists) {
-
                                 markedCards.splice(indexOfCard, 1)
-
                             }
 
                             updateMarkedCards();
@@ -1359,7 +1290,6 @@ Item { // Page 2: Discover Page
                         alwaysRunToEnd: true
                         duration: drawerAnimationDuration  // Duration of the animation in milliseconds
                         easing.type: Easing.InOutQuad  // Easing function for smoothness
-
                     }
 
                 }
@@ -1844,7 +1774,6 @@ Item { // Page 2: Discover Page
             }
         }
 
-
         Rectangle {
             id: rectangle6
             width: 700
@@ -1884,7 +1813,6 @@ Item { // Page 2: Discover Page
                 }
             }
         }
-
 
         Rectangle {
             id: rectangle17
@@ -2095,14 +2023,8 @@ Item { // Page 2: Discover Page
                         })
 
                         // Append sorted sets to the model
-                        tempSets.forEach(
-                                    function (sortedSet) {
-                                        setsModel.append(
-                                                    sortedSet)
-                                        //console.log("Appending set: ", sortedSet.name); // Debugging each appended set
-                                    })
-
-                        //console.log("SetsModel updated with new sets: ", setsModel.count); // Check the number of elements
+                        tempSets.forEach(function (sortedSet) {
+                            setsModel.append(sortedSet)})
                     }
                 }
             }
@@ -2117,13 +2039,8 @@ Item { // Page 2: Discover Page
                 anchors.left: setComboBox.right
                 anchors.leftMargin: 15
                 anchors.verticalCenterOffset: 0
-                //   anchors.right: parent.right
-                //  anchors.rightMargin: -585
                 z: 1
                 font.styleName: "Bold Italic"
-                // Layout.fillHeight: false
-                // Layout.rightMargin: 6
-                //Layout.fillWidth: false
                 palette {
                     button: "blue"
                 }
@@ -2237,18 +2154,8 @@ Item { // Page 2: Discover Page
                         typesParams.push(['types', '', 'colorless']);
                     }
 
-                    // console.log(setsParams);
-                    // console.log(typesParams)
-
                     searchParams = searchParams.concat(typesParams);
                     searchParams = searchParams.concat(setsParams);
-
-                    // for(var i = 0; i < setsParams.length; i++) {
-                    //     console.log(setsParams[i]);
-                    // }
-
-                    //console.log(searchParams)
-
 
                     // Call the request_search function with the built tuples if there are any
                     if (searchParams.length > 0) {
@@ -2297,12 +2204,6 @@ Item { // Page 2: Discover Page
                 id: toggleLockTimer
                 interval: lockTimerDuration
                 repeat: false
-                onTriggered: {
-                    // console.log("Toggle Timer Triggered");
-                    // toggleBothButton.enabled = true;
-                    // toggleBothButton.hoverEnabled = true;
-
-                }
             }
 
             RoundButton {
@@ -2340,10 +2241,7 @@ Item { // Page 2: Discover Page
                 Connections {
                     target: toggleBothButton
                     function onClicked() {
-                        // console.log("clicked")
-
                     }
-
                 }
 
                 Connections {
@@ -2358,12 +2256,7 @@ Item { // Page 2: Discover Page
                 Connections {
                     target: toggleBothButton
 
-
                     function onReleased(){
-                        // console.log("released")
-
-                        // ballToggleImage.opacity = 1;
-
                         if(isDrawerOpen &! isDrawer2Open) {
                             toggleRightDrawer();
                         }
@@ -2371,10 +2264,8 @@ Item { // Page 2: Discover Page
                             toggleLeftDrawer();
                         }
                         else {
-                            toggleBothDrawers()
-
+                            toggleBothDrawers();
                         }
-
 
                         toggleButtonHighlight.border.color = releasedToggleColor;
                     }
@@ -2395,75 +2286,6 @@ Item { // Page 2: Discover Page
                     anchors.bottomMargin: -4
                 }
             }
-
-            // Rectangle {
-            //     id: settingsButtonHighlight
-            //     x: 605
-            //     width: 80
-            //     height: 50
-            //     visible: true
-            //     color: "#c80d0d"
-            //     radius: 3
-            //     border.color: primaryColor
-            //     border.width: 0
-            //     anchors.verticalCenter: parent.verticalCenter
-            //     z: 0
-            //     Button {
-            //         id: btnSettings
-            //         x: -4
-            //         y: 2
-            //         text: ""
-            //         anchors.fill: parent
-            //         anchors.leftMargin: 3
-            //         anchors.rightMargin: 4
-            //         anchors.topMargin: 3
-            //         anchors.bottomMargin: 4
-            //         z: 0
-            //         verticalPadding: 0
-            //         padding: 0
-
-            //         // hoverEnabled: true;
-            //         ToolTip.timeout: 5000
-            //         ToolTip.delay: 800
-            //         ToolTip.visible: hovered
-            //         ToolTip.text: qsTr("Search Settings")
-
-            //         onReleased: {
-            //             settingsButtonHighlight.border.color = primaryColor;
-            //             settingsButtonHighlight.color = primaryColor;
-
-            //         }
-            //         onPressed: {
-            //             settingsButtonHighlight.border.color = screenColor;
-            //             settingsButtonHighlight.color = screenColor;
-            //         }
-            //         onClicked: {
-            //             // setComboBox.clearParams();
-            //             //console.log("Calling signal clearParams()");
-            //             settingsWindow.visible = true;
-            //         }
-            //         horizontalPadding: 0
-
-            //         Image {
-            //             id: settingsButtonImage
-            //             y: -59
-            //             width: 176
-            //             height: 210
-            //             source: "https://images.pokemontcg.io/swsh2/168_hires.png"
-            //             sourceSize.width: 150
-            //             sourceSize.height: 209
-            //             scale: 0.52
-            //             fillMode: Image.PreserveAspectCrop
-            //             anchors.horizontalCenterOffset: 0
-            //             anchors.horizontalCenter: parent.horizontalCenter
-            //         }
-            //         clip: true
-            //         // activeFocusOnTab: false
-
-
-            //     }
-            //     anchors.verticalCenterOffset: 0
-            // }
 
             Rectangle {
                 id: clearButtonHighlight
