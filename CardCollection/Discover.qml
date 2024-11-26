@@ -1100,50 +1100,6 @@ Item { // Page 2: Discover Page
                             anchors.horizontalCenter: parent.horizontalCenter
                         }
                     }
-
-                    CollectionButton {
-                        id: collectionButton
-                        x: 71
-                        y: 24
-                        width: 100
-                        height: 100
-                        opacity: 1
-                        padding: 0
-                        rightPadding: 0
-                        bottomPadding: 0
-                        leftPadding: 0
-                        topPadding: 0
-                        checkable: true
-                        z: 3
-                        card: currentCard  // Bind the current card to the button
-                        alreadyMarkedCards: markedCards
-
-                        // Handle the checked signal to mark/unmark the card
-                        onCheckedChanged: {
-
-                            var cardExists = false;
-                            var indexOfCard = -1
-                            var isCheckedNow = collectionButton.checked
-                            var wasCheckedBefore = !collectionButton.checked
-
-                            for(var i = 0; i < markedCards.length; i++) {
-                                if(markedCards[i].id === collectionButton.card.id) {
-                                    cardExists = true;
-                                    indexOfCard = i
-                                }
-                            }
-
-                            if(isCheckedNow && !cardExists){
-                                markedCards.push(collectionButton.card)
-                            }
-
-                            else if (wasCheckedBefore && cardExists) {
-                                markedCards.splice(indexOfCard, 1)
-                            }
-
-                            updateMarkedCards();
-                        }
-                    }
                     clip: true
                 }
 
