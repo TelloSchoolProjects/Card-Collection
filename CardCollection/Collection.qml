@@ -961,41 +961,7 @@ Item { // Page 2: Collection Page
                     visible: true
                     color: "#541515"
                     border.width: 0
-                    // Frame {
-                    //     id: frame
-                    //     visible: true
-                    //     anchors.verticalCenter: parent.verticalCenter
-                    //     anchors.horizontalCenter: parent.horizontalCenter
-                    //     padding: 0
-                    //     rightPadding: 0
-                    //     bottomPadding: 0
-                    //     leftPadding: 0
-                    //     topPadding: 0
-                    //     clip: false
 
-                    //     Rectangle {
-                    //         id: rectangle5
-                    //         visible: false
-                    //         color: deepBG
-                    //         border.width: 0
-                    //         anchors.fill: parent
-                    //         z: -1
-                    //     }
-                    // }
-
-
-                    // property var cardList: [
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/166_hires.png"}, // water
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/167_hires.png"}, // lightning
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/168_hires.png"}, // psychic
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/169_hires.png"}, // fighting
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/170_hires.png"}, // darkness
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/171_hires.png"}, // metal
-                    //     {imageUrl: "https://images.pokemontcg.io/sm1/172_hires.png"} // fairy
-                    // ];
-
-                    // Collection.qml
-                    // Collection.qml
                     Flickable {
                         id: flickable
                         width: 590

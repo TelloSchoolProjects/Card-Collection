@@ -103,7 +103,7 @@ Flow {
                 anchors.topMargin: 10
                 width: Math.min(cardImage.width, cardImage.height) * 0.25
                 height: width
-                card: modelData  // Pass only the individual card data
+                //card: modelData  // Pass only the individual card data
                 visible: collectionButtonVisible
                 // Handle marking/unmarking of the card for collection
                 checked: true // collectionFlow.cards.includes(card)  // Check if the card is already marked

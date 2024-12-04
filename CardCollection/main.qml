@@ -19,8 +19,6 @@ Window {
 
     title: qsTr("Card Collection")
 
-    property int selectedTabIndex: 1
-
     // Define color scheme properties
     property color primaryColor: "#c80d0d"
     property color blockBG: "#ff0000"
@@ -34,6 +32,33 @@ Window {
     property color dropTextColor: "#c5002a02"
     property color borderColor: "#6c0101"
     property color dropBorderColor: "#25fb2e"
+
+    property int selectedTabIndex: 0
+
+
+    property var collection: [] // A list of card ids representing the user's collection
+
+    function isCardInCollection(cardId) {
+        for(var i = 0; i < collection.length; i++) {
+            if(collection[i] === cardId) {
+                console.log("main.qml: Card " + cardId + " is in the collection.");
+                return true
+            }
+        }
+        return false;
+    }
+
+    function addCardToCollection(cardId) {
+        collection.push(cardId)
+    }
+
+    function removeCardFromCollection(cardId) {
+        collection = collection.filter(function(id) {
+            return id !== cardId
+        })
+    }
+
+
 
     Rectangle {
         id: columnLayout1
@@ -161,6 +186,25 @@ Window {
                 Layout.preferredHeight: 615
                 Layout.preferredWidth: 700
                 activeFocusOnTab: true
+
+                onRequestCollectionAdd: function(cardId) {
+                    if (!isCardInCollection(cardId)) {
+                        addCardToCollection(cardId)
+                    }
+
+                    console.log("Collection now contains: ");
+                    for(var i = 0; i < collection.length; i++) {
+                        console.log(collection[i].id)
+                    }
+                }
+                onRequestCollectionRemove: {
+
+                }
+                onRequestCollectionButtonSync: function(cardId) {
+                    searchPage.syncedState = isCardInCollection(cardId);
+                    searchPage.syncing = false;
+                    console.log("done syncing");
+                }
             }
             Discover {
                 id: discoverPage

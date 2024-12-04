@@ -38,15 +38,26 @@ Item {
     property color borderColor: "#6c0101"
     property color dropBorderColor: "#25fb2e"
 
-    // Add a boolean variable to track the drawer's state
     property bool isDrawerOpen: false // Start with the drawer closed
 
     property var currentCard: cards[selectedIndex]  // Use selectedIndex to get the current card
 
+    property bool syncing: false
+    property bool syncedState: collectionButton.checked
+
+    signal requestCollectionAdd(var card);
+    signal requestCollectionRemove(var card);
+    signal requestCollectionButtonSync(var card);
+
     // Update the current card when selectedIndex changes
     onSelectedIndexChanged: {
+        currentCard = cards[selectedIndex];  // Update the current card when the selected index changes
+        console.log("selectecIndex is now: " + selectedIndex);
+        console.log("currentCard is now: " + currentCard.id);
+        syncing = true;
+        console.log("syncing")
+        requestCollectionButtonSync(currentCard.id);
 
-        currentCard = cards[selectedIndex]  // Update the current card when the selected index changes
     }
 
     function toggleDrawer() {
@@ -70,7 +81,6 @@ Item {
             rotateAnimation.start()
         }
     }
-    // Function to update attack information based on selectedIndex
     function updateAttackInfo() {
         if (cards[selectedIndex]) {
 
@@ -95,7 +105,6 @@ Item {
                 cost3: cards[selectedIndex].attack2Cost3 || defaultCost3,
                 cost4: cards[selectedIndex].attack2Cost4 || defaultCost4,
                 cost5: cards[selectedIndex].attack2Cost5 || defaultCost5
-
             };
 
             const attack3Costs = {
@@ -104,7 +113,6 @@ Item {
                 cost3: cards[selectedIndex].attack3Cost3 || defaultCost3,
                 cost4: cards[selectedIndex].attack3Cost4 || defaultCost4,
                 cost5: cards[selectedIndex].attack3Cost5 || defaultCost5
-
             };
 
             const attack4Costs = {
@@ -113,7 +121,6 @@ Item {
                 cost3: cards[selectedIndex].attack4Cost3 || defaultCost3,
                 cost4: cards[selectedIndex].attack4Cost4 || defaultCost4,
                 cost5: cards[selectedIndex].attack4Cost5 || defaultCost5
-
             };
 
             // Update attack blocks
@@ -121,10 +128,8 @@ Item {
             attack2Block.updateAttack(cards[selectedIndex].attack2Name, cards[selectedIndex].attack2Text, 1, attack2Costs);
             attack3Block.updateAttack(cards[selectedIndex].attack3Name, cards[selectedIndex].attack3Text, 2, attack3Costs);
             attack4Block.updateAttack(cards[selectedIndex].attack4Name, cards[selectedIndex].attack4Text, 3, attack4Costs);
-
         }
     }
-    // Function to update ability information based on selectedIndex
     function updateAbilityInfo() {
 
         if (cards[selectedIndex]) {
@@ -199,8 +204,6 @@ Item {
             typeBlock.type1Type = defaultType1;
             typeBlock.type2Type= defaultType2;
             return; // Exit early if no card is found
-        }
-        else {
         }
 
         // Normalize type strings for image source mapping
@@ -351,7 +354,6 @@ Item {
         rightScrollView.contentX = 0;
         rightScrollView.contentY = 0;
     }
-    // Function to handle next button click
     function onNextCard() {
         if (selectedIndex < cards.length - 1) {
             selectedIndex++
@@ -368,7 +370,6 @@ Item {
             updateRightScrollView();
         }
     }
-    // Function to handle next button click
     function onPrevCard() {
         if (selectedIndex >= 0) {
             selectedIndex--
@@ -542,7 +543,6 @@ Item {
                                 function onClearSignal() {
                                     toggle();
                                 }
-
                             }
 
                             function toggle() {
@@ -2072,6 +2072,28 @@ Item {
                     onClicked: selectedIndex = cards.length - 1
                 }
 
+                CollectionButton {
+                    id: collectionButton
+                    x: 482
+                    y: -5
+                    width: 58
+                    height: 58
+                    checked: syncedState
+                    onCheckedChanged: {
+                        if(searchPage.syncing) {
+                            // ignore the change in checked state
+                        }
+                        else {
+                            if(collectionButton.checked) {
+                                requestCollectionAdd(cards[selectedIndex]);
+                            }
+                            else {
+                                requestCollectionRemove(cards[selectedIndex]);
+                            }
+                        }
+                    }
+                }
+
             }
 
             Rectangle {
@@ -2450,6 +2472,6 @@ Item {
 /*##^##
 Designer {
     D{i:0}D{i:30;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:31;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
-D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:49}
+D{i:33;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/

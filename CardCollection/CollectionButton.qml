@@ -3,31 +3,13 @@ import QtQuick.Controls 2.13
 
 Button {
     id: collectionButton
-    // text: "Mark for collection"  // You can replace this with an icon if preferred
-
-    property bool oldCheckedStatus: false
-    property var alreadyMarkedCards: []
-    // Checkable state
-    //property bool checked: false  // Track whether the card is marked
-
-    property var card
-
-    property real pressedOpacity: 1
-    property real unpressedOpacity: 0.5
     width: 100
     height: 100
     clip: true  // Property to store the card data
     checkable: true
 
-    // Change the visual appearance of the button based on the checked state
-    // background: Rectangle {
-    //     color: checked ? "red" : "green"
-    //     radius: 5
-    // }
-
-    // Handle the click to toggle the checked state
-    onClicked: {
-    }
+    property real pressedOpacity: 1
+    property real unpressedOpacity: 0.5
 
     // Listen for changes in the checked state and trigger necessary actions
     onCheckedChanged: {
