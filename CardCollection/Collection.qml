@@ -1957,7 +1957,7 @@ Item { // Page 2: Collection Page
     MouseArea {
         id: openButtonFilterDrawer
         x: 25
-        y: 381
+        y: 460
         width: 650
         height: 20
         opacity: 1
@@ -2097,7 +2097,7 @@ Item { // Page 2: Collection Page
     Column {
         id: filtersColumn
         x: 0
-        y: 615
+        y: 480
         height: 135
         z: 1
 
@@ -3109,7 +3109,8 @@ Item { // Page 2: Collection Page
 
 /*##^##
 Designer {
-    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}
-D{i:58;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+    D{i:0}D{i:15;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}D{i:16;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:57;cameraSpeed3d:25;cameraSpeed3dMultiplier:1;invisible:true}D{i:58;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
+D{i:66;cameraSpeed3d:25;cameraSpeed3dMultiplier:1}
 }
 ##^##*/
