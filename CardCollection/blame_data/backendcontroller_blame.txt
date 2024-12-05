@@ -1,0 +1,215 @@
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800   1) import threading
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800   2) from PySide6.QtCore import QObject, Signal, QMetaObject, Slot, Qt, Q_ARG
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800   3) 
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700   4) import json
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700   5) 
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700   6) #from requests.exceptions import RequestException
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700   7) 
+69261be8 (Josh Lollis 2024-10-15 10:30:18 -0700   8) import inithandler
+69261be8 (Josh Lollis 2024-10-15 10:30:18 -0700   9) import searchhandler
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700  10) import discoverhandler
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800  11) import collectionhandler
+69261be8 (Josh Lollis 2024-10-15 10:30:18 -0700  12) 
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  13) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  14) class BackendController(QObject):
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  15)     """
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  16)     Handles any front end requests for backend interaction.
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  17) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  18)     Args:
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  19)          QObject: Inheritance of QObject allows for the use of QT Signals and Slots
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  20) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  21)     ## Note:
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  22)     The `@Slot` decorator in this code is used to define a slot function that can be connected to a
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  23)     signal in a Qt application. Slots are functions or methods that can be called in response to a
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  24)     signal being emitted. By using the `@Slot` decorator, you're explicitly defining which functions
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  25)     can be connected to signals in the Qt framework. This helps in maintaining a clear separation
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  26)     between signals and slots in the codebase and ensures that the connections are set up correctly.
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  27)     """
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  28) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  29)     def __init__(self):
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  30)             super().__init__()
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  31)             print("backendController __init__ called.")
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  32) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  33) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  34)     def __del__(self):
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  35)       print("BackendController being destructed")
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  36) 
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  37)     setsResults = Signal(str)  # Signal that emits JSON string
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  38)     searchResults = Signal(str)  # Signal that emits JSON string
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  39)     discoverResults = Signal(str)  # Signal that emits JSON string
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  40)     loadResults = Signal(str)  # Signal that emits JSON string
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  41)     saveResults = Signal(str)
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  42) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  43)     @Slot()
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  44)     def request_sets_retrieve(self):
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  45)         """
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  46)         ## Description:
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  47)             Provide an interface for the front end to retrieve all available sets.
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  48)         Args:
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  49)             params none
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  50)         """
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  51)         try:
+e98e0221 (TelloViz    2024-10-25 11:22:45 -0700  52) 
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  53)             initHandler = inithandler.InitHandler()
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  54) 
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  55)             sets = initHandler.handle_sets_retrieve()
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  56) 
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  57)             setList = [{"name" : set.name} for set in sets]
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  58) 
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  59)             self.setsResults.emit(json.dumps(setList))
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  60) 
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  61)         except Exception as e:
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  62)             self.setsResults.emit(json.dump({"error": str(e)}))
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700  63) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  64)     @Slot(list)
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700  65)     def request_search(self, params: list[tuple[str, str, str]]):
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  66)         print("DEBUG: request_search called on main thread:", threading.current_thread().name)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  67) 
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  68)         # Start the search in a new thread
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  69)         query_thread = threading.Thread(target=self._perform_search, args=(params,))
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  70)         query_thread.start()
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  71)         print("DEBUG: Started query_thread:", query_thread.name)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  72) 
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  73)     def _perform_search(self, params):
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  74)         print("DEBUG: _perform_search called on thread:", threading.current_thread().name)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  75) 
+5e04de80 (TelloViz    2024-10-23 13:33:28 -0700  76)         try:
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  77)             # Instantiate search handler and process the search
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  78)             search_handler = searchhandler.SearchHandler()
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  79)             cards = search_handler.handle_search(params)
+7e4d64f3 (TelloViz    2024-10-23 13:26:17 -0700  80) 
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  81)             if cards is not None:
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  82)                 json_result = json.dumps(cards)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  83)                 print("DEBUG: Cards found and serialized")
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  84)             else:
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  85)                 json_result = json.dumps({"error": "No cards found"})
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  86)                 print("DEBUG: No cards found")
+7e4d64f3 (TelloViz    2024-10-23 13:26:17 -0700  87) 
+5e04de80 (TelloViz    2024-10-23 13:33:28 -0700  88)         except Exception as e:
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  89)             json_result = json.dumps({"error": str(e)})
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  90)             print("DEBUG: Exception occurred:", e)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  91) 
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  92)         # Emit the searchResults signal from the main thread
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  93)         print("DEBUG: Invoking _emit_search_results on main thread via QueuedConnection")
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  94)         QMetaObject.invokeMethod(self, "_emit_search_results",
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  95)                                  Qt.QueuedConnection,
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  96)                                  Q_ARG(str, json_result))
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  97) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800  98) 
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800  99)     @Slot(str)  # Mark as Slot so it’s recognized by invokeMethod
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800 100)     def _emit_search_results(self, json_result):
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800 101)         print("DEBUG: _emit_search_results called on main thread:", threading.current_thread().name)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800 102)         self.searchResults.emit(json_result)
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800 103)         print("DEBUG: searchResults signal emitted to QML")
+d6da94dd (TelloViz    2024-11-05 09:11:07 -0800 104) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 105)     @Slot(list)
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 106)     def request_discover(self, params: list[tuple[str, str, str]]):
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 107)         """
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 108)         ## Description
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700 109)             Provide an interface for the front end
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700 110)             to make discover requests with the given parameters.
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 111) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 112)         Args:
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700 113)             params (list[tuple[str, str, str]]):
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700 114)                 List of search parameter tuples of the form (category, subcategory, target)
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 115)         """
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 116) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 117)         print("DEBUG: request_discover called on main thread:", threading.current_thread().name)
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 118) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 119)         # Start the discover in a new thread
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 120)         query_thread = threading.Thread(target=self._perform_discover, args=(params,))
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 121)         query_thread.start()
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 122)         print("DEBUG: Started query_thread:", query_thread.name)
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 123) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 124)     def _perform_discover(self, params):
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 125)         print("DEBUG: _perform_discover called on thread:", threading.current_thread().name)
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 126) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 127)         try:
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 128)             # Instantiate discover handler and process the discover
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 129)             discover_handler = discoverhandler.DiscoverHandler()
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 130)             cards = discover_handler.handle_discover(params)
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 131) 
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 132)             if cards is not None:
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 133)                 json_result = json.dumps(cards)
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 134)                 print("DEBUG: Cards found and serialized")
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 135)             else:
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 136)                 json_result = json.dumps({"error": "No cards found"})
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 137)                 print("DEBUG: No cards found")
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 138) 
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 139)         except Exception as e:
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 140)             json_result = json.dumps({"error": str(e)})
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 141)             print("DEBUG: Exception occurred:", e)
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 142) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 143)         # Emit the discoverResults signal from the main thread
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 144)         print("DEBUG: Invoking _emit_discover_results on main thread via QueuedConnection")
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 145)         QMetaObject.invokeMethod(self, "_emit_discover_results",
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 146)                                  Qt.QueuedConnection,
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 147)                                  Q_ARG(str, json_result))
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 148) 
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 149) 
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 150)     @Slot(str)  # Mark as Slot so it’s recognized by invokeMethod
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 151)     def _emit_discover_results(self, json_result):
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 152)         print("DEBUG: _emit_discover_results called on main thread:", threading.current_thread().name)
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 153)         self.discoverResults.emit(json_result)
+9bb5bb30 (TelloViz    2024-11-08 20:04:33 -0800 154)         print("DEBUG: discoverResults signal emitted to QML")
+2a39194d (TelloViz    2024-11-01 14:57:39 -0700 155) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 156)     @Slot()
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 157)     def request_load_collection(self):
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 158)         """
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 159)         Provide an interface for the front end to request the backend to load and return the user's collection.
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 160)         """
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 161)         # Start the loading process in a new thread to keep frontend responsive
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 162)         load_thread = threading.Thread(target=self._perform_load_collection)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 163)         load_thread.start()
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 164)         print("DEBUG: Started load_thread:", load_thread.name)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 165) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 166)     def _perform_load_collection(self):
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 167)         print("DEBUG: _perform_load_collection called on thread:", threading.current_thread().name)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 168) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 169)         try:
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 170)             # Load collection using CollectionHandler
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 171)             collection_handler = collectionhandler.CollectionHandler()
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 172)             collection_results = collection_handler.handle_load_collection()
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 173) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 174)             if collection_results is not None:
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 175)                 json_result = json.dumps(collection_results)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 176)                 print("DEBUG: Collection loaded and serialized")
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 177)             else:
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 178)                 json_result = json.dumps({"error": "No collection data found"})
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 179)                 print("DEBUG: No collection data found")
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 180) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 181)         except Exception as e:
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 182)             json_result = json.dumps({"error": str(e)})
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 183)             print("DEBUG: Exception occurred during collection load:", e)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 184) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 185)         # Emit the loadResults signal from the main thread
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 186)         print("DEBUG: Invoking _emit_load_results on main thread via QueuedConnection")
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 187)         QMetaObject.invokeMethod(self, "_emit_load_results",
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 188)                                  Qt.QueuedConnection,
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 189)                                  Q_ARG(str, json_result))
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 190) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 191)     @Slot(str)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 192)     def _emit_load_results(self, json_result):
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 193)         print("DEBUG: _emit_load_results called on main thread:", threading.current_thread().name)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 194)         self.loadResults.emit(json_result)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 195)         print("DEBUG: loadResults signal emitted to QML")
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 196) 
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 197)     @Slot(list)
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 198)     def request_save_collection(self, params: list[tuple[str, str, str]]):
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 199)         """
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 200)         Provide an interface for the front end to save the user's collection with the provided parameters.
+20186f0d (TelloViz    2024-10-15 10:27:32 -0700 201)         """
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 202)         try:
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 203)             print("request_save_collection recieved: ")
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 204)             # Save collection using CollectionHandler
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 205)             collection_handler = collectionhandler.CollectionHandler()
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 206)             collection_handler.handle_save_collection(params)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 207)             json_result = json.dumps({"status": "success", "message": "Collection saved successfully."})
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 208)             print("DEBUG: Collection saved successfully")
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 209) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 210)         except Exception as e:
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 211)             json_result = json.dumps({"error": str(e)})
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 212)             print("DEBUG: Exception occurred during collection save:", e)
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 213) 
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 214)         # Emit the saveResults signal with confirmation or error
+6e656b29 (TelloViz    2024-11-08 20:21:43 -0800 215)         self.saveResults.emit(json_result)

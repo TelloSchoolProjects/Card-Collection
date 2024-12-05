@@ -1,0 +1,151 @@
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   1) import QtQuick 2.13
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   2) import QtQuick.Controls 2.13
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   3) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   4) Flow {
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   5)     id: collectionFlow
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   6) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800   7)     property alias cards: repeaterModel.model  // Collection of cards
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   8)     property int viewportHeight: 0
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800   9)     property int viewportY: 0
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  10) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  11)     property bool collectionButtonVisible: false
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  12) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  13)     // Signals to emit for comparison and collection
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  14)     signal cardFlowLeftCompare(string imageUrl)
+6d06e011 (TelloViz 2024-11-08 14:48:49 -0800  15)     signal cardFlowRightCompare(string imageUrl)
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  16) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  17)     signal cardEntered;
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  18)     signal cardExited;
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  19) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  20)     property string collectionFlowImageUrl  // URL for the card image (for comparison)
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  21)     property int numCardColumns: 4
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  22)     flow: Flow.LeftToRight
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  23) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  24)     Repeater {
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  25)         id: repeaterModel
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  26) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  27)         model: []
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  28) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  29)         delegate: Item {
+6d06e011 (TelloViz 2024-11-08 14:48:49 -0800  30)             width: collectionFlow.width / numCardColumns
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  31)             height: width * 3.5 / 2.5
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  32) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  33)             property bool isVisible: (y + height) > collectionFlow.viewportY &&
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  34)                                      y < (collectionFlow.viewportY + collectionFlow.viewportHeight)
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  35) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  36)             Image {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  37)                 id: cardImage
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  38)                 visible: parent.isVisible
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  39)                 source: modelData.imageUrl
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  40) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  41)                 fillMode: Image.PreserveAspectFit
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  42)                 smooth: true
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  43)                 sourceSize.width: parent.width
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  44)                 sourceSize.height: parent.height * 3.5 / 2.5
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  45)                 anchors.margins: 5
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  46)                 anchors.fill: parent
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  47) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  48)                 MouseArea {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  49)                     //anchors.fill: parent
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  50) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  51)                     anchors.fill: cardImage
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  52)                     anchors.leftMargin: 20
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  53)                     anchors.rightMargin: 20
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  54)                     anchors.topMargin: 20
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  55)                     anchors.bottomMargin: 20
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  56)                     // anchors.rightMargin: cardImage.right - cardImage.width * 0.25;
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  57) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  58)                     hoverEnabled: true
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  59) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  60)                     onEntered: {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  61)                         cardEntered();
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  62)                         cardImage.scale += .1;
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  63)                         z = 1;
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  64)                     }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  65)                     onExited: {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  66)                         cardImage.scale -= .1;
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  67)                         cardExited();
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  68)                         z = 0
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  69)                     }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  70)                 }
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  71)             }
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800  72) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  73)             // Add CompareButton to handle left and right image toggling
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  74)             CompareButton {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  75)                 anchors.top: parent.top
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  76)                 anchors.rightMargin: 10
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  77)                 anchors.topMargin: 10
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  78)                 anchors.right: parent.right
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  79)                 width: Math.min(cardImage.width, cardImage.height) * 0.25
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  80)                 height: width
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  81)                 opacity: 0.7
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  82)                 controller: compareController
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  83)                 cardImageUrl: modelData.imageUrl  // Pass the image URL directly
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  84) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  85)                 // Emit signals from CardFlow on button clicks for comparison
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  86)                 onLeftCompare: {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  87)                     collectionFlowImageUrl = cardImageUrl
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  88)                     collectionFlow.cardFlowLeftCompare(cardImageUrl)
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  89)                 }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  90) 
+6d06e011 (TelloViz 2024-11-08 14:48:49 -0800  91)                 onRightCompare: {
+6d06e011 (TelloViz 2024-11-08 14:48:49 -0800  92)                     collectionFlowImageUrl = cardImageUrl
+6d06e011 (TelloViz 2024-11-08 14:48:49 -0800  93)                     collectionFlow.cardFlowRightCompare(cardImageUrl)
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  94)                 }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  95)             }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  96) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  97)             // Add CollectionButton to handle adding/removing card to/from collection
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  98)             CollectionButton {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  99)                 id: collectionButton
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 100)                 anchors.top: parent.top
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 101)                 anchors.left: parent.left
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 102)                 anchors.leftMargin: 10
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 103)                 anchors.topMargin: 10
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 104)                 width: Math.min(cardImage.width, cardImage.height) * 0.25
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 105)                 height: width
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 106)                 card: modelData  // Pass only the individual card data
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 107)                 visible: collectionButtonVisible
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 108)                 // Handle marking/unmarking of the card for collection
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 109)                 checked: true // collectionFlow.cards.includes(card)  // Check if the card is already marked
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 110) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 111)                 onCheckedChanged: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 112)                     console.log("CollectionFlow.CollectionButton.onCheckedChanged");
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 113)                     if(!checked){ // used to be checked
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 114) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 115)                         var removeIndex = -1
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 116)                         for(var i = 0; i < collectionFlow.cards.length; i++) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 117)                             if(card.id === collectionFlow.cards[i].id) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 118)                                 removeIndex = i;
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 119)                             }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 120)                         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 121) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 122)                         if (removeIndex !== -1) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 123)                             console.log("splicing collectionFlow.cards[index]: " + collectionFlow.cards[removeIndex].name + ": " + collectionFlow.cards[removeIndex].id);
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 124)                             collectionFlow.cards.splice(removeIndex, 1)
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 125)                             // Iterate over the model and assign to markedCards
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 126)                                 for (var i = 0; i < collectionFlow.cards.length; i++) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 127)                                     processedCards.push(collectionFlow.cards[i]);  // Get data from model and push to markedCards
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 128)                                 }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 129) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 130)                         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 131) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 132)                     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 133)                     // if (checked) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 134)                     //     // Mark card for collection (add to internal cards list)
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 135)                     //     if (!collectionFlow.cards.includes(card)) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 136)                     //         collectionFlow.cards.push(card)
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 137)                     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 138)                     // } else {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 139)                     //     // Unmark card from collection (remove from internal cards list)
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 140)                     //     var index = collectionFlow.cards.indexOf(card)
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 141)                     //     if (index !== -1) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 142)                     //         collectionFlow.cards.splice(index, 1)
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 143)                     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 144)                     // }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 145)                 }
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 146) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800 147)             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 148) 
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800 149)         }
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800 150)     }
+3a8b499b (TelloViz 2024-11-07 20:41:39 -0800 151) }

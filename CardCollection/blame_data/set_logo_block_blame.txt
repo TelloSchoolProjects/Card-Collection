@@ -1,0 +1,163 @@
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   1) import QtQuick 2.13
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   2) import QtQuick.Controls 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   3) import QtQuick.Layouts
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   4) import QtQuick.Window 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   5) import QtQuick.Controls.Fusion 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   6) import Qt5Compat.GraphicalEffects
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   7) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   8) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   9) Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  10)     id: setLogoBlock
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  11) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  12)     // Define color scheme properties
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  13)     property color primaryColor: "#c80d0d"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  14)     property color blockBG: "#ff0000"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  15)     property color bezelColor: "#b2b2b2"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  16)     property color bezelBorderColor: "#616161"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  17)     property color screenColor: "#02d20b"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  18)     property color screenShadeColor: "#128c17"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  19)     property color screenHighlightColor: "#25fb2e"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  20)     property color textColor: "#095f0c"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  21)     property color dropTextColor: "#c5002a02"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  22)     property color borderColor: "#6c0101"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  23)     property color dropBorderColor: "#25fb2e"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  24) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  25)     property alias logoSource: setLogoImage.source
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  26)     property alias logoScreenText: setLogoText.text
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  27) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  28)     Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  29)         id: setLogoBezel
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  30)         color: bezelColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  31)         radius: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  32)         border.color: "#616161"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  33)         border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  34)         anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  35)         anchors.leftMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  36)         anchors.rightMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  37)         anchors.topMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  38)         anchors.bottomMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  39)         state: "base state4"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  40) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  41)         Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  42)             id: setLogoScreen
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  43)             x: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  44)             y: -1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  45)             color: screenColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  46)             radius: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  47)             border.color: "#095f0c"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  48)             border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  49)             anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  50)             anchors.leftMargin: 10
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  51)             anchors.rightMargin: 10
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  52)             anchors.topMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  53)             anchors.bottomMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  54)             clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  55) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  56)             Text {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  57)                 id: setLogoText
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  58)                 color: dropTextColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  59)                 text: (selectedIndex >= 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  60)                        && selectedIndex < cards.length) ? "" // Fallback if name is undefined
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  61)                                                         : "Set Logo"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  62)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  63)                 horizontalAlignment: Text.AlignHCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  64)                 verticalAlignment: Text.AlignVCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  65)                 lineHeight: 0.8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  66)                 wrapMode: Text.Wrap
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  67)                 font.family: "Ubuntu Sans"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  68)                 z: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  69)                 font.styleName: "ExtraBold Italic"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  70)                 font.italic: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  71)                 font.bold: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  72)                 font.pointSize: 32
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  73)                 fontSizeMode: Text.Fit
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  74)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  75) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  76)             // // Apply a DropShadow effect to the image
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  77)             // DropShadow {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  78)             //     anchors.fill: setLogoText
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  79)             //     source: setLogoText // The image to which we are applying the shadow
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  80)             //     horizontalOffset: 5 // Adjust X-axis shadow offset
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  81)             //     verticalOffset: 5 // Adjust Y-axis shadow offset
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  82)             //     radius: 3.8 // Blur effect, adjust for smoothness
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  83)             //     samples: 16 // Higher value for smoother shadows
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  84)             //     color: "#095f0c" // Color of the shadow
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  85)             //     opacity: 0.8 // Transparency of the shadow
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  86)             // }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  87) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  88)             Image {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  89)                 id: setLogoImage
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  90)                 anchors.verticalCenter: setLogoText.verticalCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  91)                 anchors.right: parent.right
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  92)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  93)                 anchors.leftMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  94)                 anchors.rightMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  95)                 anchors.topMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  96)                 anchors.bottomMargin: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  97)                 source: (selectedIndex >= 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  98)                          && selectedIndex < cards.length) ? cards[selectedIndex].setLogo : ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  99)                 z: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 100) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 101)                 scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 102)                 fillMode: Image.PreserveAspectFit
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 103)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 104)             // Apply a DropShadow effect to the image
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 105)             DropShadow {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 106)                 anchors.fill: setLogoImage
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 107)                 source: setLogoImage // The image to which we are applying the shadow
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 108)                 horizontalOffset: 5 // Adjust X-axis shadow offset
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 109)                 verticalOffset: 5 // Adjust Y-axis shadow offset
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 110)                 radius: 3.8 // Blur effect, adjust for smoothness
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 111)                 samples: 16 // Higher value for smoother shadows
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 112)                 color: textColor // Color of the shadow
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 113)                 opacity: 0.8 // Transparency of the shadow
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 114)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 115) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 116)             Text {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 117)                 id: setLogoDropText
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 118)                 x: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 119)                 y: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 120)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 121)                 color: textColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 122)                 text: (selectedIndex >= 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 123)                        && selectedIndex < cards.length) ? "" // Fallback if name is undefined
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 124)                                                         : "Set Logo"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 125)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 126)                 anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 127)                 anchors.rightMargin: -4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 128)                 anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 129)                 anchors.bottomMargin: -4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 130)                 horizontalAlignment: Text.AlignHCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 131)                 verticalAlignment: Text.AlignVCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 132)                 lineHeight: 0.8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 133)                 wrapMode: Text.Wrap
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 134)                 z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 135)                 fontSizeMode: Text.Fit
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 136)                 font.styleName: "ExtraBold Italic"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 137)                 font.pointSize: 32
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 138)                 font.italic: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 139)                 font.family: "Ubuntu Sans"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 140)                 font.bold: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 141)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 142) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 143)             Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 144)                 id: screenHightlight
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 145)                 x: -13
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 146)                 y: -9
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 147)                 color: "#00ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 148)                 radius: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 149)                 border.color: screenHighlightColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 150)                 border.width: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 151)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 152)                 anchors.leftMargin: 3
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 153)                 anchors.rightMargin: 3
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 154)                 anchors.topMargin: 3
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 155)                 anchors.bottomMargin: 3
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 156)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 157)         }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 158)     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 159) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 160)     Item {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 161)         id: __materialLibrary__
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 162)     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 163) }

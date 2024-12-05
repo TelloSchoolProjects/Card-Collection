@@ -1,0 +1,268 @@
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   1) import QtQuick 2.13
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   2) import QtQuick.Controls 2.2
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   3) import QtQuick.Layouts
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   4) import QtQuick.Window 2.15
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   5) import QtQuick.Controls.Fusion 2.15
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   6) import Qt5Compat.GraphicalEffects
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   7) import QtQuick3D
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   8) 
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800   9) 
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  10) // Page 1: Search Page
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  11) Window {
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  12)     id: settingsWindow
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  13)     width: 400
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  14)     height: 200
+309ab01e (TelloViz 2024-11-06 22:31:15 -0800  15)     color: "#00737373"
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  16)     maximumHeight: 200
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  17)     maximumWidth: 400
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  18)     minimumHeight: 200
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  19)     minimumWidth: 400
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800  20)     title: "Settings"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  21)     // onVisibleChanged: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  22)     //     if(settingsWindow.visible) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  23)     //         forceActiveFocus();
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  24)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  25)     // }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  26) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  27)     // StackLayout {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  28)     //     id: settingsStack
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  29) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  30)     //     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  31)     //         id: settingsHomePage
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  32)     //         anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  33)     //         Layout.minimumHeight: 200
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  34)     //         Layout.minimumWidth: 400
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  35)     //         Layout.preferredHeight: 200
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  36)     //         Layout.preferredWidth: 400
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  37)     //         Layout.fillHeight: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  38)     //         Layout.fillWidth: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  39)     //         color: bezelColor
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  40)     //         visible: settingsStack.currentIndex === 0
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  41) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  42)     //         //onVisibleChanged: console.log("settingsHomePage visible changed");
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  43) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  44)     //         Button {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  45)     //             id: btnAbout
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  46)     //             x: 33
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  47)     //             y: 20
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  48) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  49)     //             width: 150
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  50)     //             height: 40
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  51) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  52) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  53)     //             text: "About"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  54)     //             palette {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  55)     //                 button: "blue"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  56)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  57) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  58)     //             Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  59)     //                 id: homeAboutButtonBorder
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  60)     //                 color: "#003173ff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  61)     //                 radius: 8
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  62)     //                 border.color: "#142c37"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  63)     //                 border.width: 4
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  64)     //                 anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  65)     //                 anchors.leftMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  66)     //                 anchors.rightMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  67)     //                 anchors.topMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  68)     //                 anchors.bottomMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  69)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  70) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  71)     //             onClicked: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  72)     //                 settingsStack.currentIndex = 1;
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  73)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  74) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  75) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  76)     //         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  77) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  78)     //         Button {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  79)     //             id: btnHomeDevTools
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  80)     //             x: 33
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  81)     //             y: 87
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  82)     //             width: 150
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  83)     //             height: 40
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  84)     //             text: "Dev Tools"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  85) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  86)     //             palette {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  87)     //                 button: "blue"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  88)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  89) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  90)     //             Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  91)     //                 id: homeDevToolsButtonBorder
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  92)     //                 x: -81
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  93)     //                 y: -110
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  94)     //                 color: "#003173ff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  95)     //                 radius: 8
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  96)     //                 border.color: "#142c37"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  97)     //                 border.width: 4
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  98)     //                 anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800  99)     //                 anchors.leftMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 100)     //                 anchors.rightMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 101)     //                 anchors.topMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 102)     //                 anchors.bottomMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 103)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 104) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 105) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 106)     //             onClicked: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 107)     //                 settingsStack.currentIndex = 3
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 108)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 109)     //         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 110) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 111)     //         Button {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 112)     //             id: btnHomeThemes
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 113)     //             x: 225
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 114)     //             y: 87
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 115)     //             width: 150
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 116) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 117)     //             height: 40
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 118) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 119)     //             text: "Themes"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 120) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 121)     //             palette {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 122)     //                 button: "blue"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 123)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 124) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 125)     //             Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 126)     //                 id: homeThemesButtonBorder
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 127)     //                 x: -81
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 128)     //                 y: -64
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 129)     //                 color: "#003173ff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 130)     //                 radius: 8
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 131)     //                 border.color: "#142c37"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 132)     //                 border.width: 4
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 133)     //                 anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 134)     //                 anchors.leftMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 135)     //                 anchors.rightMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 136)     //                 anchors.topMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 137)     //                 anchors.bottomMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 138)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 139) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 140)     //             onClicked: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 141)     //                 settingsStack.currentIndex = 2;
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 142)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 143)     //         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 144) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 145)     //         Button {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 146)     //             id: btnHomeData
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 147)     //             x: 225
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 148)     //             y: 20
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 149)     //             width: 150
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 150)     //             height: 40
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 151)     //             text: "Data"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 152)     //             palette.button: "blue"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 153) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 154)     //             onClicked: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 155)     //                 settingsStack.currentIndex = 4;
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 156)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 157) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 158)     //             Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 159)     //                 id: homeDataButtonBorder
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 160)     //                 color: "#003173ff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 161)     //                 radius: 8
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 162)     //                 border.color: "#142c37"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 163)     //                 border.width: 4
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 164)     //                 anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 165)     //                 anchors.leftMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 166)     //                 anchors.rightMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 167)     //                 anchors.topMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 168)     //                 anchors.bottomMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 169)     //             }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 170)     //         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 171) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 172) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 173)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 174) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 175)     //     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 176)     //         id: aboutPage
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 177)     //         anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 178)     //         Layout.fillHeight: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 179)     //         Layout.fillWidth: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 180)     //         color: blockBG
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 181)     //         visible: settingsStack.currentIndex === 1
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 182) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 183)     //         //onVisibleChanged: console.log("aboutPage visible changed");
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 184) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 185)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 186)     //     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 187)     //         id: themePage
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 188)     //         anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 189)     //         Layout.fillHeight: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 190)     //         Layout.fillWidth: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 191)     //         color: screenColor
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 192)     //         visible: settingsStack.currentIndex === 2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 193) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 194)     //         //onVisibleChanged: console.log("themePage visible changed");
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 195) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 196)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 197)     //     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 198)     //         id: devToolsPage
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 199)     //         anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 200)     //         Layout.fillHeight: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 201)     //         Layout.fillWidth: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 202)     //         visible: settingsStack.currentIndex === 3
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 203)     //         color: "#26bd4b"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 204)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 205)     //     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 206)     //         id: dataPage
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 207)     //         anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 208)     //         Layout.fillHeight: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 209)     //         Layout.fillWidth: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 210)     //         visible: settingsStack.currentIndex === 3
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 211)     //         color: "#feff6a"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 212)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 213)     // }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 214) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 215)     // Button {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 216)     //     id: btnBack
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 217)     //     y: 146
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 218) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 219)     //     height: 40
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 220)     //     text: "Back"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 221)     //     anchors.left: parent.left
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 222)     //     anchors.right: parent.right
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 223)     //     anchors.bottom: parent.bottom
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 224)     //     anchors.leftMargin: 70
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 225)     //     anchors.rightMargin: 70
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 226)     //     anchors.bottomMargin: 10
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 227) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 228)     //     palette {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 229)     //         button: "blue"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 230)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 231) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 232)     //     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 233)     //         id: backButtonBorder
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 234)     //         x: -81
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 235)     //         y: -156
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 236)     //         color: "#003173ff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 237)     //         radius: 8
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 238)     //         border.color: "#142c37"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 239)     //         border.width: 4
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 240)     //         anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 241)     //         anchors.leftMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 242)     //         anchors.rightMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 243)     //         anchors.topMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 244)     //         anchors.bottomMargin: -2
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 245)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 246) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 247)     //     onClicked: {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 248)     //         if(settingsStack.currentIndex > 0) {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 249)     //             settingsStack.currentIndex = 0;
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 250)     //         } else {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 251)     //             settingsWindow.visible = false;
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 252)     //         }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 253)     //     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 254)     // }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 255) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 256)     // Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 257)     //     id: rectangle
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 258)     //     color: "#00ffffff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 259)     //     radius: 32
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 260)     //     border.color: "#585858"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 261)     //     border.width: 16
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 262)     //     anchors.fill: parent
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 263)     //     anchors.leftMargin: -12
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 264)     //     anchors.rightMargin: -12
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 265)     //     anchors.topMargin: -12
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 266)     //     anchors.bottomMargin: -12
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 267)     // }
+bd9d9f8b (TelloViz 2024-11-06 22:19:48 -0800 268) }

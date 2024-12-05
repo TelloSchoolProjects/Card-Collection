@@ -1,0 +1,144 @@
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700   1) class CardProcessor:
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700   2)     @staticmethod
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   3)     def process_cards(cards):
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700   4)         processed_cards = []
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700   5)         for card in cards:
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700   6)             processed_card = {
+21c058db (TelloViz 2024-10-29 14:26:53 -0700   7)                 **CardProcessor.process_abilities(card),
+21c058db (TelloViz 2024-10-29 14:26:53 -0700   8)                 **CardProcessor.process_attacks(card),
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   9)                 **CardProcessor.process_types(card),
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  10)                 **CardProcessor.process_subtypes(card),
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700  11)                 **CardProcessor.process_rules(card),
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  12)                 "name": card.name,
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  13)                 "id": card.id,
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  14)                 "supertype": card.supertype,
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  15)                 "imageUrl": card.images.large,
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  16)                 "set": card.set.name,
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  17)                 "setSymbol": card.set.images.symbol,
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  18)                 "setLogo": card.set.images.logo,
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700  19)                 "flavorText": card.flavorText
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  20)             }
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  21)             processed_cards.append(processed_card)
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  22)         return processed_cards
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  23) 
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  24)     @staticmethod
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  25)     def process_abilities(card):
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  26)         abilities = {
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  27)             "ability1Name": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  28)             "ability1Text": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  29)             "ability1Type": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  30)             "ability2Name": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  31)             "ability2Text": "",
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  32)             "ability2Type": ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  33)         }
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  34) 
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  35)         if hasattr(card, 'abilities') and card.abilities:  # Check if abilities exists and is not None
+c494e95f (TelloViz 2024-10-27 10:17:37 -0700  36)             if len(card.abilities) > 0:
+c494e95f (TelloViz 2024-10-27 10:17:37 -0700  37)                 abilities["ability1Name"] = card.abilities[0].name
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  38)                 abilities["ability1Text"] = card.abilities[0].text if hasattr(card.abilities[0], 'text') else ""
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  39)                 abilities["ability1Type"] = card.abilities[0].type if hasattr(card.abilities[0], 'type') else ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  40)             if len(card.abilities) > 1:
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  41)                 abilities["ability2Name"] = card.abilities[1].name
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  42)                 abilities["ability2Text"] = card.abilities[1].text if hasattr(card.abilities[1], 'text') else ""
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  43)                 abilities["ability2Type"] = card.abilities[1].type if hasattr(card.abilities[1], 'type') else ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  44) 
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  45)         return abilities
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  46) 
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  47)     @staticmethod
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  48)     def process_attacks(card):
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  49)         attacks = {}
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  50)         if hasattr(card, 'attacks') and card.attacks:  # Ensure attacks exists
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  51)             for i in range(4):
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  52)                 attack_prefix = f"attack{i+1}"
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  53)                 if len(card.attacks) > i:
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  54)                     attack = card.attacks[i]
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  55)                     cost = attack.cost if hasattr(attack, 'cost') and attack.cost else []
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  56)                     attacks.update({
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  57)                         f"{attack_prefix}Cost1": cost[0] if len(cost) > 0 else "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  58)                         f"{attack_prefix}Cost2": cost[1] if len(cost) > 1 else "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  59)                         f"{attack_prefix}Cost3": cost[2] if len(cost) > 2 else "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  60)                         f"{attack_prefix}Cost4": cost[3] if len(cost) > 3 else "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  61)                         f"{attack_prefix}Cost5": cost[4] if len(cost) > 4 else "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  62)                         f"{attack_prefix}Name": attack.name,
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  63)                         f"{attack_prefix}Text": attack.text if hasattr(attack, 'text') else "",
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  64)                         f"{attack_prefix}Damage": attack.damage if hasattr(attack, 'damage') else "",
+21c058db (TelloViz 2024-10-29 14:26:53 -0700  65)                         f"{attack_prefix}ConvertedEnergyCost": attack.convertedEnergyCost if hasattr(attack, 'convertedEnergyCost') else 0
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  66)                     })
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  67)                 else:
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  68)                     attacks.update({
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  69)                         f"{attack_prefix}Cost1": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  70)                         f"{attack_prefix}Cost2": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  71)                         f"{attack_prefix}Cost3": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  72)                         f"{attack_prefix}Cost4": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  73)                         f"{attack_prefix}Cost5": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  74)                         f"{attack_prefix}Name": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  75)                         f"{attack_prefix}Text": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  76)                         f"{attack_prefix}Damage": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  77)                         f"{attack_prefix}ConvertedEnergyCost": 0
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  78)                     })
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  79)         else:
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  80)             # If attacks is None or empty, set defaults
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  81)             for i in range(4):
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  82)                 attack_prefix = f"attack{i+1}"
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  83)                 attacks.update({
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  84)                     f"{attack_prefix}Cost1": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  85)                     f"{attack_prefix}Cost2": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  86)                     f"{attack_prefix}Cost3": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  87)                     f"{attack_prefix}Cost4": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  88)                     f"{attack_prefix}Cost5": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  89)                     f"{attack_prefix}Name": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  90)                     f"{attack_prefix}Text": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  91)                     f"{attack_prefix}Damage": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  92)                     f"{attack_prefix}ConvertedEnergyCost": 0
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  93)                 })
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  94) 
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  95)         return attacks
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  96) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  97) 
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700  98)     @staticmethod
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  99)     def process_types(card):
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 100)         types = {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 101)             "type1": "",
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 102)             "type2": ""
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 103)         }
+2570d9f2 (TelloViz 2024-10-25 12:00:19 -0700 104) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 105)         if hasattr(card, 'types') and card.types:  # Check if types exists
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 106)             types["type1"] = card.types[0] if len(card.types) > 0 else ""
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 107)             types["type2"] = card.types[1] if len(card.types) > 1 else ""
+2570d9f2 (TelloViz 2024-10-25 12:00:19 -0700 108) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 109)         return types
+2570d9f2 (TelloViz 2024-10-25 12:00:19 -0700 110) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 111)     @staticmethod
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 112)     def process_subtypes(card):
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 113)         subtypes = {
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 114)             "subtype1": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 115)             "subtype2": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 116)             "subtype3": "",
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 117)             "subtype4": ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 118)         }
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 119) 
+21c058db (TelloViz 2024-10-29 14:26:53 -0700 120)         if hasattr(card, 'subtypes') and card.subtypes:  # Check if subtypes exists
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 121)             subtypes["subtype1"] = card.subtypes[0] if len(card.subtypes) > 0 else ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 122)             subtypes["subtype2"] = card.subtypes[1] if len(card.subtypes) > 1 else ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 123)             subtypes["subtype3"] = card.subtypes[2] if len(card.subtypes) > 2 else ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 124)             subtypes["subtype4"] = card.subtypes[3] if len(card.subtypes) > 3 else ""
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 125) 
+21c058db (TelloViz 2024-10-29 14:26:53 -0700 126) 
+698b1ddd (TelloViz 2024-10-25 10:54:03 -0700 127)         return subtypes
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 128) 
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 129)     @staticmethod
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 130)     def process_rules(card):
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 131)         rules = {
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 132)             "rule1": "",
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 133)             "rule2": "",
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 134)             "rule3": "",
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 135)             "rule4": ""
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 136)         }
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 137) 
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 138)         if hasattr(card, 'rules') and card.rules:  # Check if rules exists and is a list
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 139)             rules["rule1"] = card.rules[0] if len(card.rules) > 0 else ""
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 140)             rules["rule2"] = card.rules[1] if len(card.rules) > 1 else ""
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 141)             rules["rule3"] = card.rules[2] if len(card.rules) > 2 else ""
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 142)             rules["rule4"] = card.rules[3] if len(card.rules) > 3 else ""
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 143) 
+48b38705 (TelloViz 2024-10-31 12:25:53 -0700 144)         return rules

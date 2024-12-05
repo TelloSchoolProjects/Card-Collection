@@ -1,0 +1,303 @@
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700   1) import QtQuick 2.13
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700   2) import QtQuick.Controls 2.15
+9431731a (TelloViz    2024-10-14 10:25:16 -0700   3) import QtQuick.Layouts
+7284e2a9 (TelloViz    2024-10-16 19:06:10 -0700   4) import QtQuick.Window 2.15
+7284e2a9 (TelloViz    2024-10-16 19:06:10 -0700   5) import QtQuick.Controls.Fusion 2.15
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700   6) 
+f19ced5e (Josh Lollis 2024-09-23 10:10:10 -0700   7) 
+f19ced5e (Josh Lollis 2024-09-23 10:10:10 -0700   8) Window {
+07733e2d (TelloViz    2024-10-17 17:57:23 -0700   9)     id: window
+9d04ab31 (TelloViz    2024-11-08 14:48:56 -0800  10)     width: 700
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  11)     height: 650
+9d04ab31 (TelloViz    2024-11-08 14:48:56 -0800  12)     minimumWidth: 700
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  13)     minimumHeight: 650
+9d04ab31 (TelloViz    2024-11-08 14:48:56 -0800  14)     maximumWidth: 700
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  15)     maximumHeight: 650
+377cf01f (TelloViz    2024-10-25 10:52:16 -0700  16) 
+f19ced5e (Josh Lollis 2024-09-23 10:10:10 -0700  17)     visible: true
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  18)     color: borderColor
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700  19) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700  20)     title: qsTr("Card Collection")
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700  21) 
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800  22) 
+f8d79449 (TelloViz    2024-10-31 22:06:35 -0700  23)     // property int selectedIndex: 0
+f8d79449 (TelloViz    2024-10-31 22:06:35 -0700  24)     // property var cards: [] // List of card objects
+26301cb2 (TelloViz    2024-11-08 18:01:55 -0800  25)     property int selectedTabIndex: 1
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700  26) 
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  27)     // Define color scheme properties
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  28)     property color primaryColor: "#c80d0d"
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  29)     property color blockBG: "#ff0000"
+f75c0f40 (TelloViz    2024-10-31 19:15:25 -0700  30)     property color blockBorderHightlight: "#ee0000"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  31)     property color bezelColor: "#b2b2b2"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  32)     property color bezelBorderColor: "#616161"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  33)     property color screenColor: "#02d20b"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  34)     property color screenShadeColor: "#128c17"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  35)     property color screenHighlightColor: "#25fb2e"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  36)     property color textColor: "#095f0c"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  37)     property color dropTextColor: "#c5002a02"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  38)     property color borderColor: "#6c0101"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  39)     property color dropBorderColor: "#25fb2e"
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  40) 
+a3e6761b (TelloViz    2024-10-31 11:36:29 -0700  41) 
+790f6224 (TelloViz    2024-11-04 12:36:39 -0800  42)     //onActiveFocusItemChanged: console.log(activeFocusItem)
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700  43) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  44)     // Save list property to store tuples
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  45)     property var saveList: []
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  46)     property var saveCards: []
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  47)     property var processedCards: []
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  48)     property var markedCards: []
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  49) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  50)     // // Compile the save list based on card data
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  51)     // function compileSaveList() {
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  52)     //     window.saveList = [] // Initialize the save list
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  53)     //     console.log("Debug: Starting to compile saveList...");
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  54) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  55)     //     console.log("window.saveCards.length = " + window.saveCards.length);
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  56)     //     for (var i = 0; i < window.saveCards.length; i++) {
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  57)     //         var card = window.saveCards[i];  // Access card at index i
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  58)     //         var cardIdTuple = ["", "id", card.id];  // Create tuple for card
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  59)     //         window.saveList.push(cardIdTuple);  // Push the tuple into the save list
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  60)     //         console.log("Debug: cardIdTuple created:", cardIdTuple);
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  61)     //     }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  62) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  63)     //     console.log("Debug: Final saveList:", saveList);
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  64) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  65)     //     //backendController.request_save_collection(window.saveList);
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  66)     // }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  67) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  68)     // Connections {
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  69)     //     target: backendController
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  70)     //     function onSaveResults(response) {
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  71) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  72)     //         console.log("backendController called back after saving with response: " + response);
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  73) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  74)     //         // for(var i = 0; i < cards.length; i++) {
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  75)     //         //     //console.log((i+1) + ": " + cards[i].imageUrl);
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  76)     //         // }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  77) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  78) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  79)     //     }
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  80)     // }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  81) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  82)     onProcessedCardsChanged: {
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800  83) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800  84)         discoverPage.loadedCards = window.processedCards
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800  85)         searchPage.loadedCards = window.processedCards
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800  86)         // console.log("Window.onProcessedCardsChanged: discoverPage.loadedCards now length: " + discoverPage.loadedCards.length);
+750d0557 (TelloViz    2024-11-08 23:43:56 -0800  87)     }
+750d0557 (TelloViz    2024-11-08 23:43:56 -0800  88) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  89) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  90) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  91) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  92)     // Component.onDestruction: {
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  93)     //     console.log("Window destruction Beginning!")
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  94)     //     console.log("Debug: saveCards before destruction:");
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  95)     //     for(var i = 0; i < window.saveCards.length; i++) {
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  96)     //         console.log(window.saveCards[i].name)
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  97)     //     }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  98) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800  99)     //     console.log("Debug: saveList before Window destruction:", window.saveList);
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 100)     //     backendController.request_save_collection(window.saveList);
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 101)     //     console.log("Window request backendController.request_save.");
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 102)     // }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 103) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 104) 
+5ab44d8f (TelloViz    2024-10-31 22:37:02 -0700 105)     Rectangle {
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 106)         id: columnLayout1
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800 107)         color: "#ffffff"
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 108)         anchors.fill: parent
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 109) 
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 110)         // TabBar for navigation
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 111)         TabBar {
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 112)             id: tabBar
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 113)             Layout.fillWidth: true
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 114)             currentIndex: selectedTabIndex
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 115)             width: parent.width
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 116)             Layout.preferredHeight: parent.height * 0.08
+64290ead (TelloViz    2024-11-06 11:52:24 -0800 117)             height: 35
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 118) 
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 119)             TabButton {
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 120)                 opacity: 1
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 121)                 anchors.top: parent.top
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 122)                 anchors.bottom: parent.bottom
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 123) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 124)                 // Set button background color based on the selected index
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 125)                 palette {
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800 126)                     button: selectedTabIndex === 0 ? borderColor : "#c80d0d" // Dark red for selected, light red for unselected
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 127)                 }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 128) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 129)                 hoverEnabled: true
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 130) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 131)                 ToolTip.delay: 800
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 132)                 ToolTip.timeout: 5000
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 133)                 ToolTip.visible: hovered
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 134)                 ToolTip.text: qsTr("Search by Set, Type, and Name.")
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 135) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 136)                 // Use a Text element for the label
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 137)                 Text {
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 138)                     text: "Search"
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 139)                     font.pointSize: 14
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 140)                     font.styleName: "Bold Italic"
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 141)                     color: selectedTabIndex
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 142)                            === 0 ? "#ffffff" : "#000000" // White for selected, black for unselected
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 143)                     anchors.centerIn: parent
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 144)                 }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 145) 
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 146)                 onClicked: {
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 147)                     selectedTabIndex = 0
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 148)                     stackLayout.currentIndex = selectedTabIndex
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 149)                 }
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 150)             }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 151) 
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 152)             TabButton {
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 153)                 anchors.top: parent.top
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 154)                 anchors.bottom: parent.bottom
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 155) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 156)                 // Set button background color based on the selected index
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 157)                 palette {
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800 158)                     button: selectedTabIndex === 1 ? borderColor : "#c80d0d" // Dark red for selected, light red for unselected
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 159)                 }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 160) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 161)                 hoverEnabled: true
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 162)                 ToolTip.delay: 800
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 163)                 ToolTip.timeout: 5000
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 164)                 ToolTip.visible: hovered
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 165)                 ToolTip.text: qsTr("Discover a random card, optionally filtered by Set and Type.")
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 166) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 167)                 Text {
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 168)                     text: "Discover"
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 169)                     font.pointSize: 14
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 170)                     font.styleName: "Bold Italic"
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 171)                     color: selectedTabIndex
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 172)                            === 1 ? "#ffffff" : "#000000" // White for selected, black for unselected
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 173)                     anchors.centerIn: parent
+750d0557 (TelloViz    2024-11-08 23:43:56 -0800 174) 
+750d0557 (TelloViz    2024-11-08 23:43:56 -0800 175) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 176)                 }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 177) 
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 178)                 onClicked: {
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 179)                     selectedTabIndex = 1
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 180)                     stackLayout.currentIndex = selectedTabIndex
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 181)                 }
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 182)             }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 183) 
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 184)             TabButton {
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 185)                 anchors.top: parent.top
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 186)                 anchors.bottom: parent.bottom
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 187) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 188)                 // Set button background color based on the selected index
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 189)                 palette {
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800 190)                     button: selectedTabIndex === 2 ? borderColor : "#c80d0d" // Dark red for selected, light red for unselected
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 191)                 }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 192) 
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 193)                 hoverEnabled: true
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 194)                 ToolTip.delay: 800
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 195)                 ToolTip.timeout: 5000
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 196)                 ToolTip.visible: hovered
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 197)                 ToolTip.text: qsTr("Collect your favorite cards found in Search and Discover.")
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 198)                 Text {
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 199)                     text: "Collection"
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 200)                     font.pointSize: 14
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 201)                     font.styleName: "Bold Italic"
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 202)                     color: selectedTabIndex
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 203)                            === 2 ? "#ffffff" : "#000000" // White for selected, black for unselected
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 204)                     anchors.centerIn: parent
+ff79d44d (TelloViz    2024-10-23 14:49:53 -0700 205)                 }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 206) 
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 207)                 onClicked: {
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 208)                     selectedTabIndex = 2
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 209)                     stackLayout.currentIndex = selectedTabIndex
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 210)                 }
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 211)             }
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 212)         }
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 213) 
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 214)         StackLayout {
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 215)             id: stackLayout
+9d04ab31 (TelloViz    2024-11-08 14:48:56 -0800 216)             width: 700
+e406448f (TelloViz    2024-11-07 16:18:51 -0800 217)             height: 615
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 218)             visible: true
+f75c0f40 (TelloViz    2024-10-31 19:15:25 -0700 219)             anchors.top: tabBar.bottom
+f75c0f40 (TelloViz    2024-10-31 19:15:25 -0700 220)             anchors.topMargin: 0
+f75c0f40 (TelloViz    2024-10-31 19:15:25 -0700 221)             z: 1
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 222)             Layout.fillHeight: true
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 223)             Layout.fillWidth: true
+d436197c (TelloViz    2024-10-16 19:54:15 -0700 224)             currentIndex: selectedTabIndex
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 225)             clip: false
+6b7896bb (TelloViz    2024-10-23 19:07:04 -0700 226) 
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800 227)             Search {
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 228)                 id: searchPage
+9d04ab31 (TelloViz    2024-11-08 14:48:56 -0800 229)                 width: 700
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 230)                 height: 615
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 231)                 Layout.maximumHeight: 615
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 232)                 Layout.maximumWidth: 700
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 233)                 Layout.minimumHeight: 615
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 234)                 Layout.minimumWidth: 700
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 235)                 Layout.preferredHeight: 615
+cf125a07 (TelloViz    2024-11-08 16:39:04 -0800 236)                 Layout.preferredWidth: 700
+01430e1f (TelloViz    2024-11-04 11:07:26 -0800 237)                 activeFocusOnTab: true
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 238) 
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 239)                 onCardsChanged: {
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 240) 
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 241)                 }
+377cf01f (TelloViz    2024-10-25 10:52:16 -0700 242) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 243)                 onUpdateMarkedCards: {
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 244)                     window.markedCards = searchPage.markedCards;
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 245)                     collectionPage.markedCards = window.markedCards;
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 246)                 }
+e406448f (TelloViz    2024-11-07 16:18:51 -0800 247) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 248)                 }
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 249) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 250)                     Discover {
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 251)                         id: discoverPage
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 252)                         width: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 253)                         height: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 254)                         Layout.maximumHeight: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 255)                         Layout.maximumWidth: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 256)                         Layout.minimumHeight: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 257)                         Layout.minimumWidth: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 258)                         Layout.preferredHeight: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 259)                         Layout.preferredWidth: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 260)                         activeFocusOnTab: true
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 261) 
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 262) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 263)                         onUpdateMarkedCards: {
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 264) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 265)                             // Log specific properties of each card object
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 266)                             // for (var i = 0; i < discoverPage.markedCards.length; i++) {
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 267)                             //     var card = discoverPage.markedCards[i];
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 268)                             //     console.log("Window: card marked - id:", card.id, "name:", card.name); // Example
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 269)                             // }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 270) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 271)                             window.markedCards = discoverPage.markedCards;
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 272)                             collectionPage.markedCards = window.markedCards;
+750d0557 (TelloViz    2024-11-08 23:43:56 -0800 273) 
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 274) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 275)                         }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 276) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 277)                     }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 278) 
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 279) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 280)                     Collection {
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 281)                         id: collectionPage
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 282)                         width: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 283)                         Layout.maximumHeight: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 284)                         Layout.maximumWidth: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 285)                         Layout.minimumHeight: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 286)                         Layout.minimumWidth: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 287)                         Layout.preferredHeight: 615
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 288)                         Layout.preferredWidth: 700
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 289)                         activeFocusOnTab: true
+89f8cc5c (TelloViz    2024-11-14 13:56:10 -0800 290) 
+f18de1c0 (TelloViz    2024-11-09 12:55:00 -0800 291) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 292)                         onProcessedCardsChanged: {
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 293) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 294)                             window.processedCards = collectionPage.processedCards
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 295)                         }
+baa42e00 (TelloViz    2024-11-09 11:43:20 -0800 296) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 297) 
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 298)                     }
+f47a205d (TelloViz    2024-11-15 09:09:21 -0800 299)                 }
+377cf01f (TelloViz    2024-10-25 10:52:16 -0700 300)             }
+4348d8c8 (Josh Lollis 2024-09-26 18:49:24 -0700 301)         }
+26cadfe4 (TelloViz    2024-10-30 10:09:57 -0700 302) 
+f8d79449 (TelloViz    2024-10-31 22:06:35 -0700 303) 

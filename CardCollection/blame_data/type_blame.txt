@@ -1,0 +1,318 @@
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   1) // TypeBlock.qml
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   2) import QtQuick 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   3) import QtQuick.Controls 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   4) import Qt5Compat.GraphicalEffects
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   5) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   6) Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   7)     id: root
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   8)     width: 50
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   9)     height: 50
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  10)     visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  11)     color: blockBG
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  12)     radius: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  13)     border.color: "#6c0101"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  14)     border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  15) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  16)     // Add a property for the type
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  17)     property string type: ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  18) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  19)     // Exposed properties
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  20)     property color blockBG: "#ff0000"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  21)     property color blockBorderColor:"#00ff0000"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  22)     property color mainColor: "#c80d0d"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  23)     property color bezelColor: "#b2b2b2"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  24)     property color bezelBorderColor: "#616161"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  25)     property color screenColor: "#02d20b"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  26)     property color dimScreenColor: "#1c3e1d"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  27)     property color screenShadeColor: "#128c17"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  28)     property color screenHighlightColor: "#25fb2e"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  29)     property color textColor: "#095f0c"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  30)     property color dropTextColor: "#c5002a02"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  31)     property color borderColor: "#6c0101"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  32) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  33) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  34)     // Logic to change appearance based on type
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  35)     onTypeChanged: {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  36)         const typeMap = {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  37)             "grass": "https://images.pokemontcg.io/sm1/164_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  38)             "fire": "https://images.pokemontcg.io/sm1/165_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  39)             "water": "https://images.pokemontcg.io/sm1/166_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  40)             "lightning": "https://images.pokemontcg.io/sm1/167_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  41)             "psychic": "https://images.pokemontcg.io/sm1/168_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  42)             "fighting": "https://images.pokemontcg.io/sm1/169_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  43)             "darkness": "https://images.pokemontcg.io/sm1/170_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  44)             "metal": "https://images.pokemontcg.io/sm1/171_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  45)             "fairy": "https://images.pokemontcg.io/sm1/172_hires.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  46)             "dragon": "dragonEnergyCropped.png",
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  47)             "colorless": "colorlessEnergyCropped.png"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  48)         };
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  49) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  50)         // Normalize type strings for image source mapping
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  51)         const normalizedType1 = type?.trim().toLowerCase() || "";
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  52) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  53)         // console.log("Type is " + normalizedType1)
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  54)         // console.log(typeMap[normalizedType1])
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  55) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  56) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  57)         // Handle images and special cases for colorless and dragon types
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  58)         if (type === "colorless")
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  59)         {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  60)             colorlessType1DummyImage.source = typeMap[normalizedType1] || ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  61)             dragonType1DummyImage.source = ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  62)             colorlessType1DummyImage.visible = true;
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  63)             dragonType1DummyImage.visible = false;
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  64)             type1Image.visible = false;  // Hide the normal type image
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  65)         }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  66)         else if (type === "dragon")
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  67)         {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  68)             dragonType1DummyImage.source = typeMap[normalizedType1] || ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  69)             colorlessType1DummyImage.source = ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  70)             dragonType1DummyImage.visible = true;
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  71)             colorlessType1DummyImage.visible = false;
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  72)             type1Image.visible = false;  // Hide the normal type image
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  73)         }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  74)         else
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  75)         {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  76)             type1Image.source = typeMap[normalizedType1] || ""; // Use the mapped source
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  77)             colorlessType1DummyImage.source = ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  78)             dragonType1DummyImage.source = ""
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  79)             colorlessType1DummyImage.visible = false;  // Hide dummy images
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  80)             dragonType1DummyImage.visible = false;
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  81)             type1Image.visible = true;  // Show the normal type image
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  82)         }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  83)         // console.log(type1Image.source)
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  84) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  85)     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  86) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  87)     Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  88)         id: type1Bezel
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  89)         visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  90)         color: "#b2b2b2"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  91)         radius: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  92)         border.color: bezelColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  93)         border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  94)         anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  95)         anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  96)         anchors.rightMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  97)         anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  98)         anchors.bottomMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  99)         z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 100) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 101)         Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 102)             id: type1Screen
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 103)             x: 7
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 104)             y: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 105)             visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 106)             color: screenColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 107)             radius: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 108)             border.color: "#128c17"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 109)             border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 110)             anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 111)             anchors.leftMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 112)             anchors.rightMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 113)             anchors.topMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 114)             anchors.bottomMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 115)             z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 116) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 117)             Text {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 118)                 id: type1Text
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 119)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 120)                 color: textColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 121)                 text: type // Use the type property here
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 122)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 123)                 anchors.leftMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 124)                 anchors.rightMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 125)                 anchors.topMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 126)                 anchors.bottomMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 127)                 horizontalAlignment: Text.AlignHCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 128)                 verticalAlignment: Text.AlignVCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 129)                 wrapMode: Text.Wrap
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 130)                 z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 131)                 state: "base state4"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 132)                 minimumPointSize: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 133)                 minimumPixelSize: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 134)                 fontSizeMode: Text.Fit
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 135)                 font.styleName: "Bold Italic"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 136)                 font.pointSize: 30
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 137)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 138) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 139)             Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 140)                 id: type1BlockHightlight
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 141)                 x: -8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 142)                 y: -4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 143)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 144)                 color: "#00ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 145)                 radius: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 146)                 border.color: "#25fb2e"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 147)                 border.width: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 148)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 149)                 anchors.leftMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 150)                 anchors.rightMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 151)                 anchors.topMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 152)                 anchors.bottomMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 153)                 z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 154)                 clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 155)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 156) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 157)             Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 158)                 id: type1ImageBlock
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 159)                 visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 160)                 color: "#00ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 161)                 radius: 10
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 162)                 border.color: "#0002d20b"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 163)                 border.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 164)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 165)                 scale: 0.9
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 166) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 167)                 Image {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 168)                     id: type1Image
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 169)                     x: -154
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 170)                     y: -154
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 171)                     width: 350
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 172)                     height: 350
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 173)                     opacity: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 174)                     visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 175)                     sourceSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 176)                     sourceSize.height: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 177)                     scale: 0.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 178)                     layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 179)                     layer.effect: OpacityMask {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 180)                         width: 34
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 181)                         height: 34
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 182)                         opacity: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 183)                         visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 184)                         scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 185)                         maskSource: type1Mask
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 186)                         layer.textureSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 187)                         layer.textureSize.height: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 188)                         layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 189)                         enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 190)                         clip: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 191)                     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 192)                     fillMode: Image.Pad
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 193)                     clip: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 194)                 }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 195) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 196)                 Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 197)                     id: type1Mask
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 198)                     x: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 199)                     y: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 200)                     width: 50
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 201)                     height: 50
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 202)                     visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 203)                     color: "#ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 204)                     radius: 46
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 205)                     border.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 206)                     scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 207)                     layer.textureSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 208)                     layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 209)                     enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 210)                     clip: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 211)                 }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 212)                 clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 213)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 214) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 215)             Image {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 216)                 id: colorlessType1DummyImage
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 217)                 x: -157
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 218)                 y: -157
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 219)                 width: 350
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 220)                 height: 350
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 221)                 opacity: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 222)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 223)                 source: "colorlessEnergyCropped.png"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 224)                 z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 225)                 sourceSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 226)                 sourceSize.height: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 227)                 scale: 0.95
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 228)                 layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 229)                 layer.effect: OpacityMask {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 230)                     width: 34
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 231)                     height: 34
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 232)                     opacity: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 233)                     visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 234)                     scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 235)                     maskSource: colorlessType1Mask
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 236)                     layer.textureSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 237)                     layer.textureSize.height: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 238)                     layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 239)                     enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 240)                     clip: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 241)                 }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 242)                 fillMode: Image.Pad
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 243)                 clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 244)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 245) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 246)             Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 247)                 id: colorlessType1Mask
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 248)                 x: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 249)                 y: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 250)                 width: 36
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 251)                 height: 36
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 252)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 253)                 color: "#ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 254)                 radius: 46
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 255)                 border.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 256)                 scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 257)                 layer.textureSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 258)                 layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 259)                 enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 260)                 clip: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 261)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 262) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 263)             Image {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 264)                 id: dragonType1DummyImage
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 265)                 x: -157
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 266)                 y: -157
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 267)                 width: 350
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 268)                 height: 350
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 269)                 opacity: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 270)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 271)                 source: "dragonEnergyCropped.png"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 272)                 z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 273)                 sourceSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 274)                 sourceSize.height: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 275)                 scale: 0.95
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 276)                 layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 277)                 layer.effect: OpacityMask {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 278)                     width: 34
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 279)                     height: 34
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 280)                     opacity: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 281)                     visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 282)                     scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 283)                     maskSource: dragonType1Mask
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 284)                     layer.textureSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 285)                     layer.textureSize.height: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 286)                     layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 287)                     enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 288)                     clip: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 289)                 }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 290)                 fillMode: Image.Pad
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 291)                 clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 292)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 293) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 294)             Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 295)                 id: dragonType1Mask
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 296)                 x: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 297)                 y: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 298)                 width: 36
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 299)                 height: 36
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 300)                 visible: false
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 301)                 color: "#ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 302)                 radius: 46
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 303)                 border.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 304)                 scale: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 305)                 layer.textureSize.width: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 306)                 layer.enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 307)                 enabled: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 308)                 clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 309)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 310)             clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 311)         }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 312)         clip: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 313)     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 314) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 315)     Item {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 316)         id: __materialLibrary__
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 317)     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 318) }

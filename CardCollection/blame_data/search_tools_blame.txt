@@ -1,0 +1,193 @@
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   1) import QtQuick 2.13
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   2) import QtQuick.Controls.Fusion 2.15
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   3) import QtQuick.Layouts
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   4) import QtQuick.Window 2.15
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   5) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   6) ToolBar {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   7)                             id: searchTools
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   8)                             RowLayout {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700   9)                                 id: searchRow
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  10)                                 x: 6
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  11)                                 y: 6
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  12)                                 anchors.fill: parent
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  13)                                 z: 3
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  14)                                 spacing: 5
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  15) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  16)                                 TextField {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  17)                                     id: txtSearchBox
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  18)                                     width: 200
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  19)                                     height: 36
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  20)                                     anchors.verticalCenter: btnSearch.verticalCenter
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  21)                                     anchors.left: btnSearch.right
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  22)                                     anchors.right: btnSearch.left
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  23)                                     anchors.top: btnSearch.bottom
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  24)                                     anchors.bottom: btnSearch.top
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  25)                                     anchors.leftMargin: -468
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  26)                                     anchors.rightMargin: 5
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  27)                                     anchors.topMargin: -26
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  28)                                     anchors.bottomMargin: -26
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  29)                                     anchors.horizontalCenter: btnSearch.horizontalCenter
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  30)                                     z: 0
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  31)                                     Layout.leftMargin: 6
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  32)                                     Layout.preferredHeight: -1
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  33)                                     Layout.preferredWidth: -1
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  34)                                     placeholderText: qsTr("Enter card name")
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  35)                                     Layout.fillWidth: true
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  36) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  37)                                     Rectangle {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  38)                                         id: rectangle7
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  39)                                         color: "#00951111"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  40)                                         radius: 4
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  41)                                         border.color: "#6c0101"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  42)                                         border.width: 2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  43)                                         anchors.fill: parent
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  44)                                         anchors.leftMargin: -2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  45)                                         anchors.rightMargin: -2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  46)                                         clip: false
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  47)                                         scale: 1
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  48)                                         z: 0
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  49)                                     }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  50)                                 }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  51)                                 Button {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  52)                                     id: btnSearch
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  53)                                     width: 100
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  54)                                     height: 40
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  55)                                     text: qsTr("Search")
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  56)                                     font.styleName: "Bold Italic"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  57)                                     Layout.fillHeight: false
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  58)                                     Layout.rightMargin: 6
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  59)                                     Layout.fillWidth: false
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  60)                                     palette {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  61)                                         button: "blue"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  62)                                     }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  63)                                     hoverEnabled: true
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  64) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  65)                                     ToolTip.delay: 800
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  66)                                     ToolTip.timeout: 5000
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  67)                                     ToolTip.visible: hovered
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  68)                                     ToolTip.text: qsTr("Search the database with the selected filters")
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  69) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  70)                                     // Change scale when hovered
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  71)                                     scale: hovered ? 1.05 : 1.0
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  72) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  73) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  74)                                     onClicked: {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  75)                                         // console.log("Search Button clicked...");
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  76)                                         // Initialize an empty array for the search parameters
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  77)                                         var searchParams = []
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  78) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  79)                                         // Check if the search box is not empty
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  80)                                         if (txtSearchBox.text.trim() !== "") {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  81)                                             // Create a tuple with the entered name
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  82)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  83)                                                         ['', 'name', txtSearchBox.text])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  84)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  85) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  86)                                         // Collecting selected items from the ComboBox
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  87)                                         for (var i = 0; i < setsModel.count; i++) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  88)                                             var item = setsModel.get(i)
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  89)                                             if (item.selected) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  90)                                                 // Build the tuple for each selected set item
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  91)                                                 searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  92)                                                             ['set', 'name', item.name])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  93)                                             }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  94)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  95) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  96)                                         // Check the state of each Pokémon TCG type button and add to search parameters if checked
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  97)                                         if (searchFilterTools.fireChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  98)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700  99)                                                         ['types', '', 'fire'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 100)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 101)                                         if (searchFilterTools.waterChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 102)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 103)                                                         ['types', '', 'water'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 104)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 105)                                         if (searchFilterTools.grassChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 106)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 107)                                                         ['types', '', 'grass'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 108)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 109)                                         if (searchFilterTools.lightningChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 110)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 111)                                                         ['types', '', 'lightning'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 112)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 113)                                         if (searchFilterTools.psychicChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 114)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 115)                                                         ['types', '', 'psychic'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 116)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 117)                                         if (searchFilterTools.fightingChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 118)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 119)                                                         ['types', '', 'fighting'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 120)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 121)                                         if (searchFilterTools.darknessChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 122)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 123)                                                         ['types', '', 'darkness'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 124)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 125)                                         if (searchFilterTools.fairyChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 126)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 127)                                                         ['types', '', 'fairy'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 128)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 129)                                         if (searchFilterTools.dragonChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 130)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 131)                                                         ['types', '', 'dragon'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 132)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 133)                                         if (searchFilterTools.metalChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 134)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 135)                                                         ['types', '', 'metal'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 136)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 137)                                         if (searchFilterTools.colorlessChecked) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 138)                                             searchParams.push(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 139)                                                         ['types', '', 'colorless'])
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 140)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 141) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 142)                                         // Call the request_search function with the built tuples if there are any
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 143)                                         if (searchParams.length > 0) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 144)                                             //console.log("Search Button Pressed...")
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 145)                                             //console.log("Calling backendController.request_search with parameters:")
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 146)                                             //Print each tuple as a string to the console
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 147)                                             for (var i = 0; i < searchParams.length; i++) {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 148)                                                 var tupleString = "[" + searchParams[i][0] + ", "
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 149)                                                         + searchParams[i][1] + ", "
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 150)                                                         + searchParams[i][2] + "]"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 151) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 152)                                                 //console.log(tupleString);
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 153)                                             }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 154)                                             //  console.log("search button is calling request_search");
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 155)                                             backendController.request_search(
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 156)                                                         searchParams)
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 157)                                             //  console.log("Search button regains control after request search");
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 158)                                             resetLeftColumnScroll()
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 159)                                         }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 160)                                     }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 161)                                 }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 162)                             }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 163) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 164)                             Rectangle {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 165)                                 id: rectangle5
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 166)                                 color: "#00ffffff"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 167)                                 radius: 4
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 168)                                 border.color: "#6c0101"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 169)                                 border.width: 2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 170)                                 anchors.fill: parent
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 171)                                 z: 1
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 172) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 173)                                 Rectangle {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 174)                                     id: rectangle30
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 175)                                     color: "#00ffffff"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 176)                                     radius: 4
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 177)                                     border.color: "#ee0000"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 178)                                     border.width: 2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 179)                                     anchors.fill: parent
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 180)                                     anchors.leftMargin: 2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 181)                                     anchors.rightMargin: 2
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 182)                                     anchors.topMargin: 4
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 183)                                     anchors.bottomMargin: 4
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 184)                                 }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 185)                             }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 186) 
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 187)                             Rectangle {
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 188)                                 id: rectangle6
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 189)                                 color: "#cc1c1c"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 190)                                 border.color: "#00000000"
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 191)                                 anchors.fill: parent
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 192)                             }
+377cf01f (TelloViz 2024-10-25 10:52:16 -0700 193)                         }

@@ -1,0 +1,68 @@
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800  1) import random
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800  2) from collections import defaultdict
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800  3) 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700  4) from pokemontcgsdk import Card
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700  5) from backend import Backend
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700  6) from cardprocessor import CardProcessor
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800  7) 
+092d3368 (Batu Demirtas 2024-10-31 10:44:55 -0700  8) 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700  9) class DiscoverHandler:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 10)     """
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 11)     DiscoverHandler Class:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 12)     
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 13)     Summary:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 14)         The `DiscoverHandler` class provides methods to discover a 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 15)             single random card based on search criteria. 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 16)         The class uses `Backend.fetch_data` to retrieve data and 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 17)             `CardProcessor.process_cards` for data processing.
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 18)         
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 19)     Methods:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 20)         handle_discover:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 21)             Returns a single card matching randomized criteria from a list of possible parameters.
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 22)             
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 23)         random_select_set:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 24)             Randomly selects a set from the input list of sets.
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 25)             
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 26)         random_select_type:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 27)             Randomly selects a type from the input list of types.
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 28)     """
+092d3368 (Batu Demirtas 2024-10-31 10:44:55 -0700 29) 
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 30)     def handle_discover(self, param_list: list[tuple[str, str, str]]) -> list[dict[str, str]]:
+f18de1c0 (TelloViz      2024-11-09 12:55:00 -0800 31)         #print([element for element in param_list if element[0] != 'set'])
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 32) 
+790f6224 (TelloViz      2024-11-04 12:36:39 -0800 33)         randomSelect = DiscoverHandler.random_select(param_list)
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 34) 
+790f6224 (TelloViz      2024-11-04 12:36:39 -0800 35)         query = Backend.construct_query(self, randomSelect)
+f18de1c0 (TelloViz      2024-11-09 12:55:00 -0800 36)        # print("Query: " + query)
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 37) 
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 38)         results = Backend.query_api(self, query)
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 39) 
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 40)         processed_cards = CardProcessor.process_cards(results)
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 41) 
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 42)         randomChoice = []
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 43)         randomChoice.append(random.choice(processed_cards))
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 44) 
+2a39194d (TelloViz      2024-11-01 14:57:39 -0700 45)         return randomChoice
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 46) 
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 47)     def random_select(select_list: list[tuple[str, str, str]]) -> list[tuple[str, str, str]]:
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 48)         """
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 49)         Summary:
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 50)             Builds a list containing one randomly selected tuple from each unique category (first element of each tuple).
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 51) 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 52)         Args:
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 53)             select_list : A list[tuple[str, str, str]] representing the available items,
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 54)                           where each tuple's first element represents a category.
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 55) 
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 56)         Return:
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 57)             A list[tuple[str, str, str]] with one randomly selected item from each category.
+a315fc2b (Batu Demirtas 2024-10-31 10:26:00 -0700 58)         """
+092d3368 (Batu Demirtas 2024-10-31 10:44:55 -0700 59) 
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 60)         # Group items by category
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 61)         category_dict = defaultdict(list)
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 62)         for item in select_list:
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 63)             category_dict[item[0]].append(item)
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 64) 
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 65)         # Randomly select one item per category
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 66)         result = [random.choice(items) for items in category_dict.values()]
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 67) 
+ef20ed1c (TelloViz      2024-11-04 11:24:09 -0800 68)         return result

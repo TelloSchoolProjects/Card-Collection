@@ -1,0 +1,318 @@
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   1) // AttackInfoBlock.qml
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   2) import QtQuick 2.15
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   3) import QtQuick.Controls 2.15
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   4) import QtQuick.Layouts 2.15
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   5) import Qt5Compat.GraphicalEffects
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   6) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   7) /*
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   8) https://images.pokemontcg.io/sm1/162_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700   9) https://images.pokemontcg.io/sm1/163_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  10) https://images.pokemontcg.io/sm1/164_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  11) https://images.pokemontcg.io/sm1/165_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  12) https://images.pokemontcg.io/sm1/166_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  13) https://images.pokemontcg.io/sm1/167_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  14) https://images.pokemontcg.io/sm1/168_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  15) https://images.pokemontcg.io/sm1/169_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  16) https://images.pokemontcg.io/sm1/170_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  17) https://images.pokemontcg.io/sm1/171_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  18) https://images.pokemontcg.io/sm1/172_hires.png
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  19) */
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  20) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  21) Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  22)     id: root
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  23)     property alias nameText: nameText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  24)     property alias typeText: abilityTypeText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  25)     property alias descText: descriptionText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  26)     property alias isVisible: root.visible
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  27) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  28)     // Exposed properties
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  29)     property color blockBG: "#ff0000"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  30)     property color blockBorderColor:"#00ff0000"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  31)     property color mainColor: "#c80d0d"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  32)     property color bezelColor: "#b2b2b2"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  33)     property color bezelBorderColor: "#616161"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  34)     property color screenColor: "#02d20b"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  35)     property color dimScreenColor: "#1c3e1d"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  36)     property color screenShadeColor: "#128c17"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  37)     property color screenHighlightColor: "#25fb2e"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  38)     property color textColor: "#095f0c"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  39)     property color dropTextColor: "#c5002a02"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  40)     property color borderColor: "#6c0101"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  41)     property color dropBorderColor: "#25fb2e"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  42) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  43)     // Width and Height
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  44)     width: 300 // Default value, can be overridden
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  45)     height: 197
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  46)     color: blockBG
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  47)     radius: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  48)     border.color: "#6c0101"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  49)     border.width: 2 // Default value, can be overridden
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  50) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  51) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  52)     Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  53)         id: abilityNameBlock
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  54)         height: 40
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  55)         color: mainColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  56)         radius: 8
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  57)         border.color: borderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  58)         border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  59)         anchors.left: parent.left
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  60)         anchors.right: parent.right
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  61)         anchors.top: parent.top
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  62)         anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  63)         anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  64)         anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  65)         // Fill the parent rectangle
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  66) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  67)         Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  68)             id: abilityNameBezel
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  69)             color: bezelColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  70)             radius: 8
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  71)             border.color: bezelBorderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  72)             border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  73)             anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  74)             anchors.leftMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  75)             anchors.rightMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  76)             anchors.topMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  77)             anchors.bottomMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  78) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  79)             Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  80)                 id: abilityNameScreen
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  81)                 color: screenColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  82)                 radius: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  83)                 border.color: screenShadeColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  84)                 border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  85)                 anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  86)                 anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  87)                 anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  88)                 anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  89)                 anchors.bottomMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  90) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  91)                 Text {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  92)                     id: nameText
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  93)                     color: textColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  94)                     text: "Ability Name"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  95)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  96)                     horizontalAlignment: Text.AlignHCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  97)                     verticalAlignment: Text.AlignVCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  98)                     wrapMode: Text.Wrap
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700  99)                     fontSizeMode: Text.HorizontalFit
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 100)                     font.styleName: "ExtraBold Italic"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 101) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 102)                     onTextChanged: {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 103)                         nameDropText.text = nameText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 104)                     }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 105)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 106) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 107)                 Text {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 108)                     id: nameDropText
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 109)                     color: dropTextColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 110)                     text: nameText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 111)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 112)                     horizontalAlignment: Text.AlignHCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 113)                     verticalAlignment: Text.AlignVCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 114)                     wrapMode: Text.Wrap
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 115)                     font.pointSize: nameText.font.pointSize
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 116)                     minimumPointSize: 10
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 117)                     minimumPixelSize: 10
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 118)                     fontSizeMode: Text.HorizontalFit
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 119)                     font.styleName: "ExtraBold Italic"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 120) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 121)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 122) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 123)                 Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 124)                     id: screenHighlight
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 125)                     color: "#00ffffff"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 126)                     radius: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 127)                     border.color: dropBorderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 128)                     border.width: 1
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 129)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 130)                     anchors.leftMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 131)                     anchors.rightMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 132)                     anchors.topMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 133)                     anchors.bottomMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 134)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 135)             }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 136)         }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 137)     }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 138) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 139)     Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 140)         id: abilityTypeBlock
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 141)         height: 40
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 142)         color: "#00c80d0d"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 143)         radius: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 144)         border.color: "#006c0101"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 145)         border.width: 0
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 146)         anchors.left: parent.left
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 147)         anchors.right: parent.right
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 148)         anchors.top: abilityNameBlock.bottom
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 149)         anchors.leftMargin: 60
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 150)         anchors.rightMargin: 60
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 151)         anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 152) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 153)         Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 154)             id: abilityTypeBezel
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 155)             x: -22
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 156)             color: bezelColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 157)             radius: 8
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 158)             border.color: bezelBorderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 159)             border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 160)             anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 161)             Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 162)                 id: abilityTypeScreen
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 163)                 color: screenColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 164)                 radius: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 165)                 border.color: screenShadeColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 166)                 border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 167)                 anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 168)                 anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 169)                 anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 170)                 anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 171)                 anchors.bottomMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 172)                 Text {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 173)                     id: abilityTypeText
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 174)                     color: textColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 175)                     text: "Ability Type"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 176)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 177)                     horizontalAlignment: Text.AlignHCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 178)                     verticalAlignment: Text.AlignVCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 179)                     wrapMode: Text.Wrap
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 180)                     onTextChanged: {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 181)                         abilityTypeDropText.text = abilityTypeText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 182)                     }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 183)                     fontSizeMode: Text.HorizontalFit
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 184)                     font.styleName: "ExtraBold Italic"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 185)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 186) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 187)                 Text {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 188)                     id: abilityTypeDropText
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 189)                     color: dropTextColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 190)                     text: abilityTypeText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 191)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 192)                     horizontalAlignment: Text.AlignHCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 193)                     verticalAlignment: Text.AlignVCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 194)                     wrapMode: Text.Wrap
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 195)                     minimumPointSize: 10
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 196)                     minimumPixelSize: 10
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 197)                     fontSizeMode: Text.HorizontalFit
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 198)                     font.styleName: "ExtraBold Italic"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 199)                     font.pointSize: abilityTypeText.font.pointSize
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 200)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 201) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 202)                 Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 203)                     id: abilityScreenHighlight
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 204)                     color: "#00ffffff"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 205)                     radius: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 206)                     border.color: dropBorderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 207)                     border.width: 1
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 208)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 209)                     anchors.leftMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 210)                     anchors.rightMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 211)                     anchors.topMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 212)                     anchors.bottomMargin: 3
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 213)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 214)             }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 215)         }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 216)     }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 217) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 218)     Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 219)         id: descriptionBlock
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 220)         color: mainColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 221)         radius: 8
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 222)         border.color: borderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 223)         border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 224)         anchors.left: parent.left
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 225)         anchors.right: parent.right
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 226)         anchors.top: abilityTypeBlock.bottom
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 227)         anchors.bottom: parent.bottom
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 228)         anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 229)         anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 230)         anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 231)         anchors.bottomMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 232) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 233)         Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 234)             id: descriptionTextBezel
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 235)             color: bezelColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 236)             radius: 8
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 237)             border.color: bezelBorderColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 238)             border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 239)             anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 240)             anchors.leftMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 241)             anchors.rightMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 242)             anchors.topMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 243)             anchors.bottomMargin: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 244) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 245)             Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 246)                 id: textScreen
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 247)                 color: screenColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 248)                 radius: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 249)                 border.color: screenHighlightColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 250)                 border.width: 2
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 251)                 anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 252)                 anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 253)                 anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 254)                 anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 255)                 anchors.bottomMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 256) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 257)                 Text {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 258)                     id: descriptionDropText
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 259)                     visible: true
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 260)                     color: dropTextColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 261)                     text: descriptionText.text
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 262)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 263)                     anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 264)                     anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 265)                     anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 266)                     anchors.bottomMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 267)                     horizontalAlignment: Text.AlignHCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 268)                     verticalAlignment: Text.AlignVCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 269)                     wrapMode: Text.Wrap
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 270)                     font.pointSize: descriptionText.font.pointSize
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 271)                     minimumPointSize: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 272)                     minimumPixelSize: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 273)                     z: 1
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 274)                     fontSizeMode: Text.Fit
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 275)                     font.styleName: "ExtraBold Italic"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 276)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 277) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 278)                 Text {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 279)                     id: descriptionText
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 280)                     visible: true
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 281)                     color: textColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 282)                     text: "Ability Description"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 283)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 284)                     anchors.leftMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 285)                     anchors.rightMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 286)                     anchors.topMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 287)                     anchors.bottomMargin: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 288)                     horizontalAlignment: Text.AlignHCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 289)                     verticalAlignment: Text.AlignVCenter
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 290)                     wrapMode: Text.Wrap
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 291)                     font.pointSize: 15
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 292)                     minimumPointSize: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 293)                     minimumPixelSize: 6
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 294)                     z: 0
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 295)                     fontSizeMode: Text.Fit
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 296)                     font.styleName: "ExtraBold Italic"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 297)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 298) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 299)                 Rectangle {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 300)                     id: descriptionScreenShadeBorder
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 301)                     color: "#00ffffff"
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 302)                     radius: 4
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 303)                     border.color: screenShadeColor
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 304)                     border.width: 1
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 305)                     anchors.fill: parent
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 306)                 }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 307)             }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 308)         }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 309)     }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 310) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 311) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 312) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 313)     Item {
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 314)         id: __materialLibrary__
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 315)     }
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 316) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 317) 
+26cadfe4 (TelloViz 2024-10-30 10:09:57 -0700 318) }

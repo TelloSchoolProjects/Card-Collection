@@ -1,0 +1,110 @@
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700   1) from pokemontcgsdk import Card, Set, RestClient
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700   2) 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700   3) RestClient.configure('12345678-1234-1234-1234-123456789ABCD')
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700   4) 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700   5) class Backend:
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700   6)     """
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700   7)     Summary:
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700   8)         Handles all actual API interaction from constructing queries, to querying for data.
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700   9)     """
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  10) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  11)     def construct_query(self, query_data: list[tuple[str, str, str]]) -> str:
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  12)         """
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  13)         Constructs a query string from the given search parameters.
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  14)         Args:
+72f05e03 (Batu Demirtas 2024-10-29 20:57:50 -0700  15)             search_parameters (list[tuple[str,str,str]]):
+72f05e03 (Batu Demirtas 2024-10-29 20:57:50 -0700  16)             A list of tuples representing the search parameters.
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  17) 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  18)         Returns:
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  19)             str: The constructed query string.
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  20)         """
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  21) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  22)         # Initialize an empty dictionary to hold query parts
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  23)         query_parts = {}
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  24) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  25)         # Loop through each item in the queryData list
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  26)         for item in query_data:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  27)             # Extract the category, subcategory, and target from the item
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  28)             category = item[0]
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  29)             subcategory = item[1]
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  30)             target = item[2]
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  31) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  32)             # Prepare the target for the query string with quotes
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  33)             target = f'"{target}"'  # Enclose target in quotes
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  34) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  35)             # If the category is not already in query_parts, create a new list for it
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  36)             if category not in query_parts:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  37)                 query_parts[category] = []
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  38) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  39)             # Check if subcategory is provided
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  40)             if subcategory:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  41)                 if category:
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  42)                     # Create a string in the format "category.subcategory:target" 
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  43)                     # and add it to the list
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  44)                     query_parts[category].append(f"{category}.{subcategory}:{target}")
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  45)                 else:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  46)                     # If no category, just "subcategory:target"
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  47)                     query_parts[category].append(f"{subcategory}:{target}")
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  48)             else:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  49)                 if category:
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  50)                     # Create a string in the format "category:target" 
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  51)                     # and add it to the list
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  52)                     query_parts[category].append(f"{category}:{target}")
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  53)                 else:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  54)                     # If no category or subcategory, just "target"
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  55)                     query_parts[category].append(target)
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  56) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  57)         # Prepare to construct the final query
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  58)         final_query_parts = []
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  59) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  60)         # Loop through each list of items in query_parts
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  61)         for items in query_parts.values():
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  62)             # If there is more than one item in the list
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  63)             if len(items) > 1:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  64)                 # Combine the items with "OR" and add parentheses around them
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  65)                 final_query_parts.append(f"({' OR '.join(items)})")
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  66)             else:
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  67)                 # If there's only one item, still wrap it in parentheses
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  68)                 final_query_parts.append(f"({items[0]})")
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  69) 
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  70)         # Join all parts with "AND" to form the final query string
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  71)         final_query = " AND ".join(final_query_parts)
+e764d9b6 (TelloViz      2024-10-19 12:05:06 -0700  72)         return final_query
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  73) 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  74)     def query_api(self, query: str) -> list[Card]:
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  75)         """
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  76)         Queries the Pokemon TCG API using the constructed query string.
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  77)         Args: 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  78)             query (str): The query string to spend to the API.
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  79)             
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  80)         Returns: 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  81)             list[Card]: A list of Card objects returned by the API.
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  82)         """
+08b2d447 (Christian     2024-10-24 11:01:48 -0700  83)         return Card.where(q=query)
+02ba584b (TelloViz      2024-10-19 12:08:28 -0700  84) 
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  85)     def all_sets(self) -> list[Set]:
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  86)         """
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  87)         Retrieves all available sets from the Pokemon TCG API.
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  88)         
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  89)         Returns:
+4b87ed7b (Christian     2024-10-16 13:14:41 -0700  90)             list[Set]: A list of Set objects retrieved from the API.
+39e9daa4 (TelloViz      2024-10-16 15:03:43 -0700  91)         """
+ae38840f (Christian     2024-10-17 10:46:11 -0700  92)         return Set.all()
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700  93) 
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700  94)     def fetch_data(self, param_list : list[tuple[str,str,str]]) -> list[Card]:
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700  95)         """
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700  96)         ### Description
+72f05e03 (Batu Demirtas 2024-10-29 20:57:50 -0700  97)             Abstracts the logic for constructing a query
+72f05e03 (Batu Demirtas 2024-10-29 20:57:50 -0700  98)             and using it to query the API for card data.
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700  99) 
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 100)         ### Args:
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 101)             self,
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 102)             param_list (list[tuple[str, str, str]]): 
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 103)                 List of tuples of the form (category, subcategory, target)
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 104)         ### Returns:
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 105)             list[Card]
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 106)         """
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 107)         string = self.construct_query(param_list)        
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 108)         card_list = self.query_api(string)
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 109) 
+f55ba70e (Batu Demirtas 2024-10-29 20:46:22 -0700 110)         return card_list

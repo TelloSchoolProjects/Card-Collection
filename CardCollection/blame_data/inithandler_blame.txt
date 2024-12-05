@@ -1,0 +1,22 @@
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  1) from pokemontcgsdk import Set
+1579f8da (TelloViz      2024-10-15 10:17:51 -0700  2) import backend
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  3) 
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  4) class InitHandler:
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  5)     """
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  6)     Handles any front end requests for requesting data for the front end to initalize components.
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  7)     """
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  8) 
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700  9)     def handle_sets_retrieve(self) -> list[Set]:
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700 10)         """
+a9db5a0c (TelloViz      2024-10-23 18:46:06 -0700 11)         Description:
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700 12)             Provide an interface for the front end to retrieve all available sets.
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700 13)         Args:
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700 14)             params none
+a9db5a0c (TelloViz      2024-10-23 18:46:06 -0700 15)         Returns:
+a9db5a0c (TelloViz      2024-10-23 18:46:06 -0700 16)             list[Set]
+21f89905 (TelloViz      2024-10-15 10:16:36 -0700 17)         """
+fe152c08 (Batu Demirtas 2024-10-23 14:49:45 -0700 18) 
+fe152c08 (Batu Demirtas 2024-10-23 14:49:45 -0700 19)         # call backend's all_sets function to retrieve sets
+933f7f3c (TelloViz      2024-10-23 18:45:06 -0700 20)         return backend.Backend.all_sets(self)
+fe152c08 (Batu Demirtas 2024-10-23 14:49:45 -0700 21) 
+933f7f3c (TelloViz      2024-10-23 18:45:06 -0700 22)        

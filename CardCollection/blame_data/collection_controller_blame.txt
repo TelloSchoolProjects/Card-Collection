@@ -1,0 +1,23 @@
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  1) import QtQuick
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  2) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  3) QtObject {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  4)     id: controller
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  5) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  6)     property var collectionCards: []  // Array to store collected cards
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  7) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  8)     signal addToCollection(string imageUrl)
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  9)     signal removeFromCollection(string imageUrl)
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 10) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 11)     function addToCollection(button) {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 12)         collectionCards.push(button.cardImageUrl);  // Add card to collection
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 13)         console.log("Added to collection:", button.cardImageUrl);
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 14)     }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 15) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 16)     function removeFromCollection(button) {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 17)         var index = collectionCards.indexOf(button.cardImageUrl);
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 18)         if (index !== -1) {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 19)             collectionCards.splice(index, 1);  // Remove card from collection
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 20)             console.log("Removed from collection:", button.cardImageUrl);
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 21)         }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 22)     }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 23) }

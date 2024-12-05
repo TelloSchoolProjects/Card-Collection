@@ -1,0 +1,122 @@
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   1) import QtQuick 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   2) import QtQuick.Controls 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   3) import QtQuick.Layouts 2.15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   4) import Qt5Compat.GraphicalEffects
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   5) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   6) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   7) Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   8)     id: root
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700   9) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  10)     property alias descText: descriptionText.text
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  11)     property alias isVisible: root.visible
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  12) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  13)     // Exposed properties
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  14)     property color blockBG: "#ff0000"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  15)     property color blockBorderColor:"#00ff0000"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  16)     property color mainColor: "#c80d0d"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  17)     property color bezelColor: "#b2b2b2"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  18)     property color bezelBorderColor: "#616161"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  19)     property color screenColor: "#02d20b"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  20)     property color dimScreenColor: "#1c3e1d"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  21)     property color screenShadeColor: "#128c17"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  22)     property color screenHighlightColor: "#25fb2e"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  23)     property color textColor: "#095f0c"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  24)     property color dropTextColor: "#c5002a02"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  25)     property color borderColor: "#6c0101"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  26)     property color dropBorderColor: "#25fb2e"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  27) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  28)     // Width and Height
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  29)     width: 250 // Default value, can be overridden
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  30)     height: 150
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  31)     color: blockBG
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  32)     radius: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  33)     border.color: "#6c0101"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  34)     border.width: 2 // Default value, can be overridden
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  35)     //anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  36)    // anchors.leftMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  37)     //anchors.rightMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  38)     //anchors.topMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  39)     //anchors.bottomMargin: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  40) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  41)     Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  42)         id: descriptionTextBezel
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  43)         color: bezelColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  44)         radius: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  45)         border.color: bezelBorderColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  46)         border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  47)         anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  48)         anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  49)         anchors.rightMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  50)         anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  51)         anchors.bottomMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  52) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  53)         Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  54)             id: textScreen
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  55)             color: screenColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  56)             radius: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  57)             border.color: screenShadeColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  58)             border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  59)             anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  60)             anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  61)             anchors.rightMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  62)             anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  63)             anchors.bottomMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  64) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  65)             Text {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  66)                 id: descriptionDropText
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  67)                 visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  68)                 color: dropTextColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  69)                 text: descriptionText.text
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  70)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  71)                 anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  72)                 anchors.rightMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  73)                 anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  74)                 anchors.bottomMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  75)                 horizontalAlignment: Text.AlignHCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  76)                 verticalAlignment: Text.AlignVCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  77)                 wrapMode: Text.Wrap
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  78)                 font.pointSize: descriptionText.font.pointSize
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  79)                 minimumPointSize: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  80)                 minimumPixelSize: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  81)                 z: 1
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  82)                 fontSizeMode: Text.Fit
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  83)                 font.styleName: "ExtraBold Italic"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  84)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  85) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  86)             Text {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  87)                 id: descriptionText
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  88)                 visible: true
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  89)                 color: textColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  90)                 text: "Flavor Text"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  91)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  92)                 anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  93)                 anchors.rightMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  94)                 anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  95)                 anchors.bottomMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  96)                 horizontalAlignment: Text.AlignHCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  97)                 verticalAlignment: Text.AlignVCenter
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  98)                 wrapMode: Text.Wrap
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700  99)                 font.pointSize: 15
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 100)                 minimumPointSize: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 101)                 minimumPixelSize: 6
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 102)                 z: 0
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 103)                 fontSizeMode: Text.Fit
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 104)                 font.styleName: "ExtraBold Italic"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 105)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 106) 
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 107)             Rectangle {
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 108)                 id: highlightBorder
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 109)                 color: "#00ffffff"
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 110)                 radius: 8
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 111)                 border.color: screenHighlightColor
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 112)                 border.width: 2
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 113)                 anchors.fill: parent
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 114)                 anchors.leftMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 115)                 anchors.rightMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 116)                 anchors.topMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 117)                 anchors.bottomMargin: 4
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 118)             }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 119)         }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 120)     }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 121) }
+a3e6761b (TelloViz 2024-10-31 11:36:29 -0700 122) 

@@ -1,0 +1,66 @@
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  1) import QtQuick 2.13
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  2) import QtQuick.Controls 2.13
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  3) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  4) Button {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  5)     id: collectionButton
+557c20b3 (TelloViz 2024-11-09 14:34:54 -0800  6)     // text: "Mark for collection"  // You can replace this with an icon if preferred
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  7) 
+557c20b3 (TelloViz 2024-11-09 14:34:54 -0800  8)     property bool oldCheckedStatus: false
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800  9)     property var alreadyMarkedCards: []
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 10)     // Checkable state
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 11)     //property bool checked: false  // Track whether the card is marked
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 12) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 13)     property var card
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 14) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 15)     property real pressedOpacity: 1
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 16)     property real unpressedOpacity: 0.5
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 17)     width: 100
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 18)     height: 100
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 19)     clip: true  // Property to store the card data
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 20)     checkable: true
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 21) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 22)     // Change the visual appearance of the button based on the checked state
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 23)     // background: Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 24)     //     color: checked ? "red" : "green"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 25)     //     radius: 5
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 26)     // }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 27) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 28)     // Handle the click to toggle the checked state
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 29)     onClicked: {
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 30)     }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 31) 
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 32)     // Listen for changes in the checked state and trigger necessary actions
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 33)     onCheckedChanged: {
+557c20b3 (TelloViz 2024-11-09 14:34:54 -0800 34) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 35)         if(checked) checkedImage.opacity = pressedOpacity
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 36)         else checkedImage.opacity = unpressedOpacity
+557c20b3 (TelloViz 2024-11-09 14:34:54 -0800 37)     }
+557c20b3 (TelloViz 2024-11-09 14:34:54 -0800 38) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 39)     Rectangle {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 40)         id: rectangle
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 41)         x: -50
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 42)         y: -95
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 43)         width: 200
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 44)         height: 200
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 45)         opacity: 1
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 46)         color: "#ffffff"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 47)         radius: 0
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 48)         border.width: 0
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 49)         z: 0
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 50)         clip: true
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 51) 
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 52)         Image {
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 53)             id: checkedImage
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 54)             x: -25
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 55)             y: 77
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 56)             width: 250
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 57)             height: 250
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 58)             opacity: 0.5
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 59)             source: "https://images.pokemontcg.io/g1/65_hires.png"
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 60)             sourceSize.height: 400
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 61)             sourceSize.width: 400
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 62)             fillMode: Image.PreserveAspectCrop
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 63)             scale: 1
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 64)         }
+750d0557 (TelloViz 2024-11-08 23:43:56 -0800 65)     }
+89f8cc5c (TelloViz 2024-11-14 13:56:10 -0800 66) }

@@ -1,0 +1,24 @@
+2415 lines: ./Collection.qml
+2252 lines: ./Discover.qml
+2162 lines: ./Search.qml
+1661 lines: ./AttackInfoBlock.qml
+1178 lines: ./MySearchFilterTools.qml
+ 284 lines: ./Type.qml
+ 280 lines: ./AbilityInfoBlock.qml
+ 180 lines: ./main.qml
+ 159 lines: ./MySearchTools.qml
+ 136 lines: ./SetSymbolBlock.qml
+ 132 lines: ./SubtypeBlock.qml
+ 131 lines: ./SetLogoBlock.qml
+ 112 lines: ./Subtype.qml
+ 100 lines: ./FlavorTextBlock.qml
+  80 lines: ./CompareButton.qml
+  44 lines: ./CollectionButton.qml
+  41 lines: ./CompareController.qml
+  39 lines: ./TypeBlock.qml
+  17 lines: ./CollectionController.qml
+  11 lines: ./SettingsWindow.qml
+=====================================\n
+File Line Counts (excluding blank lines, comments, and whitespace):
+\nTotal Lines:
+11414

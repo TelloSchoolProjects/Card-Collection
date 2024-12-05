@@ -1,0 +1,46 @@
+7290ba5f (TelloViz      2024-10-25 10:02:56 -0700  1) from pokemontcgsdk import Card
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700  2) from backend import Backend
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700  3) from cardprocessor import CardProcessor
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700  4) 
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700  5) class SearchHandler:
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700  6)     """
+bdcee8dc (Batu Demirtas 2024-10-21 19:34:49 -0700  7)     The SearchHandler class performs the heavy lifting for the searching functionality. This class contains the method handle_search, which calls methods from the Backend class to execute the search requested by the user.
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700  8) 
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700  9)     Methods:
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 10)         handle_search(search_parameters): Constructs a query string using the Backend class, construct_query function.
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 11)     """
+bdcee8dc (Batu Demirtas 2024-10-21 19:34:49 -0700 12) 
+216f4961 (Christian     2024-10-29 11:47:37 -0700 13)     def handle_search(self, search_parameters: list[tuple[str, str, str]]) -> list[dict[str, str]]:
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700 14)         """
+bdcee8dc (Batu Demirtas 2024-10-21 19:34:49 -0700 15)         A function that takes a list of tuples representing search parameters, constructs a query string using the Backend class, and retrieves a list of Card objects from the API.
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700 16) 
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700 17)         Args:
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 18)             search_parameters (List[Tuple[str, str, str]]): A list of tuples where each tuple contains:
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 19)                 - category (str): The main category for the search.
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 20)                 - subcategory (str): The subcategory to refine the search.
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 21)                 - target (str): The search target (value being searched).
+5bcbc94e (Batu Demirtas 2024-10-21 18:21:35 -0700 22) 
+ee6d0cbc (Batu Demirtas 2024-10-21 19:16:09 -0700 23)         Returns:
+216f4961 (Christian     2024-10-29 11:47:37 -0700 24)             list[dict[str, str]: A list of dictionaries:
+216f4961 (Christian     2024-10-29 11:47:37 -0700 25)                 - key: card attribute defined by API
+216f4961 (Christian     2024-10-29 11:47:37 -0700 26)                 - value: card data string for that attribute
+372992dd (Christian     2024-10-24 11:11:40 -0700 27)         """
+7290ba5f (TelloViz      2024-10-25 10:02:56 -0700 28) 
+a3e6761b (TelloViz      2024-10-31 11:36:29 -0700 29)         query = Backend.construct_query(self, search_parameters)
+a3e6761b (TelloViz      2024-10-31 11:36:29 -0700 30)         results = Backend.query_api(self, query)
+f9f1ed47 (Christian     2024-10-29 11:51:35 -0700 31)         return self.handle_card_process(results)
+216f4961 (Christian     2024-10-29 11:47:37 -0700 32)     
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 33)     def handle_card_process(self, cards: list[Card]) -> list[dict[str, str]]:
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 34)         """
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 35)         A function that takes a list of tuples representing search parameters, constructs a query string using the Backend class, and retrieves a list of Card objects from the API.
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 36) 
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 37)         Args:
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 38)             cards: list[Card]: A list of Card objects as defined by the API
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 39)         Returns:
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 40)            list[dict[str, str]: A list of dictionaries:
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 41)                 - key: card attribute defined by API
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 42)                 - value: card data string for that attribute
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 43)         """
+e31bfcf8 (Christian     2024-10-29 11:31:13 -0700 44)         
+a3e6761b (TelloViz      2024-10-31 11:36:29 -0700 45)         return CardProcessor.process_cards(cards)
+85e9b437 (TelloViz      2024-10-31 10:31:05 -0700 46) 

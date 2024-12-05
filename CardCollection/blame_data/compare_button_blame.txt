@@ -1,0 +1,99 @@
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  1) import QtQuick 2.13
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  2) import QtQuick.Controls 2.2
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  3) import QtQuick.Layouts
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  4) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  5) Item {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  6)     id: _root
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  7)     width: 100
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  8)     height: 100
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  9) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 10)     property QtObject controller  // Reference to CompareController
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 11)     property string cardImageUrl  // URL for the card image
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 12) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 13)     // Define signals for left and right comparisons
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 14)     signal leftCompare(string imageUrl)
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 15)     signal rightCompare(string imageUrl)
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 16) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 17)     function toggleImages(mouse) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 18)         if (mouse.button === Qt.LeftButton) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 19)             if (!leftHalfImage.visible) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 20)                 controller.setLeft(_root);  // Set this button as the active left
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 21)                 leftCompare(cardImageUrl);  // Emit left compare signal with image URL
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 22)             } else {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 23)                 controller.clearLeft();  // Clear left compare if clicked again
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 24)             }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 25)         } else if (mouse.button === Qt.RightButton) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 26)             if (!rightHalfImage.visible) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 27)                 controller.setRight(_root);  // Set this button as the active right
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 28)                 rightCompare(cardImageUrl);  // Emit right compare signal with image URL
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 29)             } else {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 30)                 controller.clearRight();  // Clear right compare if clicked again
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 31)             }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 32)         }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 33)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 34) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 35)     // Activate and deactivate image visibility from controller
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 36)     function activateLeft() {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 37)         leftHalfImage.visible = true
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 38)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 39) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 40)     function deactivateLeft() {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 41)         leftHalfImage.visible = false
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 42)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 43) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 44)     function activateRight() {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 45)         rightHalfImage.visible = true
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 46)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 47) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 48)     function deactivateRight() {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 49)         rightHalfImage.visible = false
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 50)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 51) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 52)     Button {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 53)         width: 100
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 54)         height: 100
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 55)         opacity: 0.5
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 56)         anchors.fill: parent
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 57) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 58)         MouseArea {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 59)             id: clickArea
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 60)             anchors.fill: parent
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 61)             acceptedButtons: Qt.LeftButton | Qt.RightButton
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 62) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 63)             onClicked: function(mouse) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 64)                 _root.toggleImages(mouse);  // Call toggle function in the parent Item
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 65)             }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 66)         }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 67)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 68) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 69)     Image {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 70)         id: leftHalfImage
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 71)         y: -100
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 72)         visible: false
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 73)         anchors.left: parent.left
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 74)         anchors.right: parent.right
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 75)         anchors.top: parent.top
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 76)         anchors.bottom: parent.bottom
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 77)         anchors.leftMargin: 0
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 78)         anchors.rightMargin: 0
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 79)         anchors.topMargin: 0
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 80)         anchors.bottomMargin: 0
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 81) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 82)         source: "topBall.png"
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 83)         mirror: false
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 84)         z: 0
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 85)         fillMode: Image.PreserveAspectFit
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 86)         scale: 1
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 87)         rotation: 90
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 88)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 89) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 90)     Image {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 91)         id: rightHalfImage
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 92)         visible: false
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 93)         anchors.fill: parent
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 94)         source: "bottomBall.png"
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 95)         fillMode: Image.PreserveAspectFit
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 96)         scale: 1
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 97)         rotation: -90
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 98)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 99) }

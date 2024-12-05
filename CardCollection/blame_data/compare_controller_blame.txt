@@ -1,0 +1,57 @@
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  1) import QtQuick
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  2) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  3) QtObject {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  4)     id: controller
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  5) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  6)     property var leftCompareButton: null
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  7)     property var rightCompareButton: null
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800  8) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800  9)     // Emit a signal with the image URL for left comparison
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 10)     signal leftCompare(string imageUrl)
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 11) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 12)     // Emit a signal with the image URL for right comparison
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 13)     signal rightCompare(string imageUrl)
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 14) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 15)     function setLeft(button) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 16)         if (leftCompareButton) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 17)             leftCompareButton.deactivateLeft();  // Deactivate previous left compare
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 18)         }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 19)         leftCompareButton = button;
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 20)         leftCompareButton.activateLeft();
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 21)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 22) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 23)     function setRight(button) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 24)         if (rightCompareButton) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 25)             rightCompareButton.deactivateRight();  // Deactivate previous right compare
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 26)         }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 27)         rightCompareButton = button;
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 28)         rightCompareButton.activateRight();
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 29)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 30) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 31)     function clearLeft() {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 32)         if (leftCompareButton) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 33)             leftCompareButton.deactivateLeft();
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 34)             leftCompareButton = null;
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 35)         }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 36)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 37) 
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 38)     function clearRight() {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 39)         if (rightCompareButton) {
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 40)             rightCompareButton.deactivateRight();
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 41)             rightCompareButton = null;
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 42)         }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 43)     }
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 44) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 45)     // Emit the left comparison signal
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 46)     function emitLeftCompare(imageUrl) {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 47)         console.log("CompareController: Emitting left compare...");
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 48)         leftCompare(imageUrl);  // Emit signal with image URL
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 49)     }
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 50) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 51)     // Emit the right comparison signal
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 52)     function emitRightCompare(imageUrl) {
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 53)         console.log("CompareController: Emitting right compare...");
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 54) 
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 55)         rightCompare(imageUrl);  // Emit signal with image URL
+052e98a6 (TelloViz 2024-11-08 09:30:15 -0800 56)     }
+60c4ec65 (TelloViz 2024-11-07 21:13:35 -0800 57) }
