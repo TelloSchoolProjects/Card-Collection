@@ -1,0 +1,48 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 7 items
+
+test_discoverhandler.py::test_handle_discover_basic PASSED               [ 14%]
+test_discoverhandler.py::test_random_select_single_category PASSED       [ 28%]
+test_discoverhandler.py::test_random_select_multiple_categories PASSED   [ 42%]
+test_discoverhandler.py::test_handle_discover_no_results PASSED          [ 57%]
+test_discoverhandler.py::test_handle_discover_incompatible_type_set PASSED [ 71%]
+test_discoverhandler.py::test_handle_discover_incompatible_type_set_with_alternatives PASSED [ 85%]
+test_discoverhandler.py::test_handle_discover_no_valid_combinations FAILED [100%]
+
+=================================== FAILURES ===================================
+__________________ test_handle_discover_no_valid_combinations __________________
+
+mock_choice = <MagicMock name='choice' id='136851813527680'>
+mock_processor = <MagicMock name='CardProcessor' id='136851802529216'>
+mock_backend = <MagicMock name='Backend' id='136851813524416'>
+discover_handler = <discoverhandler.DiscoverHandler object at 0x7c774bbb51f0>
+
+    @patch('discoverhandler.Backend')
+    @patch('discoverhandler.CardProcessor')
+    @patch('random.choice')
+    def test_handle_discover_no_valid_combinations(mock_choice, mock_processor, mock_backend, discover_handler):
+        # Setup mocks
+        mock_backend.query_api.return_value = []
+        mock_processor.process_cards.return_value = []
+        mock_choice.side_effect = IndexError
+    
+        params = [
+            ("types", "", "Fairy"),
+            ("set", "name", "Base")
+        ]
+    
+        with pytest.raises(NoValidCombinationError):
+            discover_handler.handle_discover(params, max_attempts=1)
+    
+>       assert mock_backend.query_api.called
+E       AssertionError: assert False
+E        +  where False = <MagicMock name='Backend.query_api' id='136851813523648'>.called
+E        +    where <MagicMock name='Backend.query_api' id='136851813523648'> = <MagicMock name='Backend' id='136851813524416'>.query_api
+
+test_discoverhandler.py:119: AssertionError
+=========================== short test summary info ============================
+FAILED test_discoverhandler.py::test_handle_discover_no_valid_combinations - ...
+========================= 1 failed, 6 passed in 0.11s ==========================

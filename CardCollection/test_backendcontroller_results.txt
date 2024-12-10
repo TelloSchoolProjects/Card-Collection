@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 6 items
+
+test_backendcontroller.py::test_request_sets_retrieve PASSED             [ 16%]BackendController being destructed
+
+test_backendcontroller.py::test_request_search PASSED                    [ 33%]
+test_backendcontroller.py::test_request_discover PASSED                  [ 50%]
+test_backendcontroller.py::test_request_load_collection DEBUG: Invoking _emit_load_results on main thread via QueuedConnection
+PASSED           [ 66%]BackendController being destructed
+
+test_backendcontroller.py::test_request_save_collection PASSED           [ 83%]BackendController being destructed
+
+test_backendcontroller.py::test_error_handling PASSED                    [100%]
+
+============================== 6 passed in 0.21s ===============================
+BackendController being destructed
+BackendController being destructed
+BackendController being destructed

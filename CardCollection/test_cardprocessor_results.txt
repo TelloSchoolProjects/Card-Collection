@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 13 items
+
+test_cardprocessor.py::test_process_cards_empty_list PASSED              [  7%]
+test_cardprocessor.py::test_process_abilities_no_abilities PASSED        [ 15%]
+test_cardprocessor.py::test_process_abilities_with_one_ability PASSED    [ 23%]
+test_cardprocessor.py::test_process_abilities_with_multiple_abilities PASSED [ 30%]
+test_cardprocessor.py::test_process_abilities_with_wrong_data PASSED     [ 38%]
+test_cardprocessor.py::test_process_abilities_with_malformed_ability PASSED [ 46%]
+test_cardprocessor.py::test_process_abilities_with_too_many PASSED       [ 53%]
+test_cardprocessor.py::test_process_types_no_types PASSED                [ 61%]
+test_cardprocessor.py::test_process_types_with_types PASSED              [ 69%]
+test_cardprocessor.py::test_process_subtypes_no_subtypes PASSED          [ 76%]
+test_cardprocessor.py::test_process_subtypes_with_subtypes PASSED        [ 84%]
+test_cardprocessor.py::test_process_rules_no_rules PASSED                [ 92%]
+test_cardprocessor.py::test_process_rules_with_rules PASSED              [100%]
+
+============================== 13 passed in 0.08s ==============================

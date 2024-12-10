@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 9 items
+
+test_backend.py::test_construct_query_single_param PASSED                [ 11%]
+test_backend.py::test_construct_query_multiple_params_same_category PASSED [ 22%]
+test_backend.py::test_construct_query_multiple_categories PASSED         [ 33%]
+test_backend.py::test_construct_query_with_subcategory PASSED            [ 44%]
+test_backend.py::test_query_api PASSED                                   [ 55%]
+test_backend.py::test_all_sets PASSED                                    [ 66%]
+test_backend.py::test_fetch_data_integration PASSED                      [ 77%]
+test_backend.py::test_construct_query_empty_params PASSED                [ 88%]
+test_backend.py::test_construct_query_complex PASSED                     [100%]
+
+============================== 9 passed in 0.13s ===============================

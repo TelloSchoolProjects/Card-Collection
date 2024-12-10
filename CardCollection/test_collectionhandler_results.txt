@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 6 items
+
+test_collectionhandler.py::test_init PASSED                              [ 16%]
+test_collectionhandler.py::test_handle_load_collection PASSED            [ 33%]
+test_collectionhandler.py::test_handle_save_collection PASSED            [ 50%]
+test_collectionhandler.py::test_load_collection_file_not_found PASSED    [ 66%]
+test_collectionhandler.py::test_load_collection_invalid_json PASSED      [ 83%]
+test_collectionhandler.py::test_save_collection_writes_valid_json PASSED [100%]
+
+============================== 6 passed in 0.09s ===============================

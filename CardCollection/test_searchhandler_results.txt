@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 4 items
+
+test_searchhandler.py::test_handle_search_with_params PASSED             [ 25%]
+test_searchhandler.py::test_handle_search_basic PASSED                   [ 50%]
+test_searchhandler.py::test_handle_search_with_invalid_params PASSED     [ 75%]
+test_searchhandler.py::test_handle_search_query_error PASSED             [100%]
+
+============================== 4 passed in 5.89s ===============================

@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.5.0 -- /home/lollisjosh/Card-Collection/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/lollisjosh/Card-Collection/CardCollection
+collecting ... collected 3 items
+
+test_inithandler.py::test_handle_sets_retrieve_success PASSED            [ 33%]
+test_inithandler.py::test_handle_sets_retrieve_empty PASSED              [ 66%]
+test_inithandler.py::test_handle_sets_retrieve_error PASSED              [100%]
+
+============================== 3 passed in 0.12s ===============================
