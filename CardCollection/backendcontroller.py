@@ -59,7 +59,7 @@ class BackendController(QObject):
             self.setsResults.emit(json.dumps(setList))
 
         except Exception as e:
-            self.setsResults.emit(json.dump({"error": str(e)}))
+            self.setsResults.emit(json.dumps({"error": str(e)}))
 
     @Slot(list)
     def request_search(self, params: list[tuple[str, str, str]]):
