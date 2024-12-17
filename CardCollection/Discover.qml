@@ -961,7 +961,7 @@ Item { // Page 2: Discover Page
                             scale: 1
                             clip: false
                             z: 1
-                            visible: true
+                            visible: false
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.horizontalCenter: parent.horizontalCenter
 

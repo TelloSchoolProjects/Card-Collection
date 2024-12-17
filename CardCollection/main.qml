@@ -22,7 +22,7 @@ Window {
 
     // property int selectedIndex: 0
     // property var cards: [] // List of card objects
-    property int selectedTabIndex: 1
+    property int selectedTabIndex: 0
 
     // Define color scheme properties
     property color primaryColor: "#c80d0d"

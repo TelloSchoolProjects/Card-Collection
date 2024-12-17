@@ -16,6 +16,7 @@ Button {
     property real unpressedOpacity: 0.5
     width: 100
     height: 100
+    flat: false
     clip: true  // Property to store the card data
     checkable: true
 
@@ -62,5 +63,23 @@ Button {
             fillMode: Image.PreserveAspectCrop
             scale: 1
         }
+    }
+
+    Rectangle {
+        id: rectangle1
+        color: "#00ffffff"
+        radius: width * 0.08
+        border.color: "#ff0000"
+        border.width: width * 0.04
+        anchors.fill: parent
+    }
+
+    Rectangle {
+        id: rectangle2
+        color: "#00ffffff"
+        radius: 0
+        border.color: "#ff0000"
+        border.width: width * 0.03
+        anchors.fill: parent
     }
 }

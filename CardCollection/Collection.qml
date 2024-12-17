@@ -131,10 +131,11 @@ Item { // Page 2: Collection Page
     }
     // Handle the left compare signal and set the material source for the left view
     function onLeftCompareSignal(leftCompareImageUrl: string) {
-        // console.log("onLeftCompare signal caught..." );
+       // console.log("onLeftCompare signal caught..." );
         // console.log("trying to set viewLeft.leftImage.source with: " + leftCompareImageUrl);
         leftImage.source = leftCompareImageUrl;
         //console.log("leftCardImage set to: " + leftCardImage);
+        viewLeft.visible = true;
 
     }
 
@@ -142,10 +143,12 @@ Item { // Page 2: Collection Page
 
     // Handle the right compare signal and set the material source for the right view
     function onRightCompareSignal(rightCompareImageUrl: string) {
+
         //console.log("onrightCompare signal caught..." );
         // console.log("trying to set viewright.rightImage.source with: " + rightCompareImageUrl);
         rightImage.source = rightCompareImageUrl;
         // console.log("rightCardImage set to: " + rightCardImage);
+        viewRight.visible = true;
 
     }
 
@@ -724,7 +727,7 @@ Item { // Page 2: Collection Page
                         id: viewRight
                         clip: false
                         z: 0
-                        visible: true
+                        visible: false
                         anchors.fill: parent
                         camera: rightCam
 
@@ -1066,10 +1069,6 @@ Item { // Page 2: Collection Page
                         z: 0
 
                     }
-
-
-
-
                     clip: true
                 }
 
@@ -1281,7 +1280,7 @@ Item { // Page 2: Collection Page
                         scale: 1
                         clip: false
                         z: 0
-                        visible: true
+                        visible: false
                         anchors.fill: parent
                         camera: leftCam
 

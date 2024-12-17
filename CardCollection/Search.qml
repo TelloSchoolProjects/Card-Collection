@@ -1181,7 +1181,7 @@ Item {
 
                     CollectionButton {
                         id: collectionButton
-                        width: 77
+                        width: 20
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.leftMargin: 10
